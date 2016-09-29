@@ -1,0 +1,16 @@
+*.elc
+*~
+.DS_Store
+.achievements
+.cask
+.emacs.desktop*
+.flycheck_*
+/snippets
+/themes
+/var/pcache
+custom.el
+elpa
+savefile/
+session*
+tramp
+url

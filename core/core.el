@@ -1,0 +1,89 @@
+;;; core.el --- Emacs config core
+;;; Commentary:
+;;; Code:
+
+
+;;-----------------------------------------------------------------------------
+;; Startup
+;;-----------------------------------------------------------------------------
+
+(setq load-prefer-newer t
+      gc-cons-threshold 50000000
+      large-file-warning-threshold 100000000)
+
+;; Automatically start server
+(require 'server)
+(unless (server-running-p) (server-start))
+
+
+;;-----------------------------------------------------------------------------
+;; Macros
+;;-----------------------------------------------------------------------------
+
+(defmacro advise-commands (advice-name commands class &rest body)
+  "Apply advice named ADVICE-NAME to multiple COMMANDS.
+
+The body of the advice is in BODY."
+  `(progn
+     ,@(mapcar (lambda (command)
+                 `(defadvice ,command (,class ,(intern (concat (symbol-name command) "-" advice-name)) activate)
+                    ,@body))
+               commands)))
+
+(defmacro with-region-or-buffer (func)
+  "When called with no active region, call FUNC on current buffer."
+  `(defadvice ,func (before with-region-or-buffer activate compile)
+     (interactive
+      (if mark-active
+          (list (region-beginning) (region-end))
+        (list (point-min) (point-max))))))
+
+
+;;-----------------------------------------------------------------------------
+;; Load paths
+;;-----------------------------------------------------------------------------
+
+(require 'package)
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+(setq package-user-dir (expand-file-name "elpa" emacs-root-dir))
+(package-initialize)
+
+(require 'use-package)
+(setq use-package-always-ensure t)
+
+;; Add Homebrew to the load path
+(let ((default-directory "/usr/local/share/emacs/site-lisp/"))
+  (normal-top-level-add-subdirs-to-load-path))
+
+(defvar savefile-dir (expand-file-name "savefile" emacs-root-dir)
+  "This folder stores all the automatically generated save/history-files.")
+
+;; Create savefile dir if necessary
+(unless (file-exists-p savefile-dir)
+  (make-directory savefile-dir))
+
+(setq semanticdb-default-save-directory
+      (expand-file-name "semanticdb" savefile-dir))
+
+
+;;-----------------------------------------------------------------------------
+;; Core modules
+;;-----------------------------------------------------------------------------
+
+(require 'core-auto-modes)
+(require 'core-compilation)
+(require 'core-defuns)
+(require 'core-editing)
+(require 'core-global-keys)
+(require 'core-modeline)
+(require 'core-packages)
+(require 'core-projectile)
+(require 'core-ui)
+(require 'core-yank)
+(require 'core-whitespace)
+
+(when (eq system-type 'darwin)
+  (require 'core-macos))
+
+(provide 'core)
+;;; core.el ends here
