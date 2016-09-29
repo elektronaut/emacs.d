@@ -1,4 +1,4 @@
-;;; module-crux -- Crux
+;;; core-crux -- Crux
 ;;; Author: Inge Jørgensen <inge@elektronaut.no>
 
 ;;; Commentary:
@@ -37,5 +37,5 @@
   (global-set-key [(control shift return)] 'crux-smart-open-line-above)
   (crux-with-region-or-line kill-region))
 
-(provide 'module-crux)
-;;; module-crux ends here
+(provide 'core-crux)
+;;; core-crux ends here

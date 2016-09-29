@@ -7,8 +7,6 @@
 
 ;;; Code:
 
-(require 'module-rainbow)
-
 (define-key read-expression-map (kbd "TAB") 'completion-at-point)
 
 (defun module-lisp-defaults ()

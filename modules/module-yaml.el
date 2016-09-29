@@ -7,8 +7,6 @@
 
 ;;; Code:
 
-(require 'core-whitespace)
-
 (use-package yaml-mode
   :mode "\\.yaml\\'" "\\.yml\\'"
   :config

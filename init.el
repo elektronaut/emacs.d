@@ -11,25 +11,13 @@
               user-mail-address "inge@elektronaut.no")
 
 ;; Bootstrap load paths
-(defvar emacs-root-dir (file-name-directory load-file-name)
-  "The Emacs config dir.")
-(add-to-list 'load-path (expand-file-name "core" emacs-root-dir))
-(add-to-list 'load-path (expand-file-name "modules" emacs-root-dir))
+(add-to-list 'load-path (expand-file-name "core" user-emacs-directory))
+(add-to-list 'load-path (expand-file-name "modules" user-emacs-directory))
 
 ;; Core
 (require 'core)
 
-;; Features
-(require 'module-company)
-(require 'module-crux)
-(require 'module-erc)
-(require 'module-helm)
-(require 'module-ido)
-(require 'module-ivy)
-(require 'module-python)
-(require 'module-smartparens)
-
-;; Language support
+;; Modules
 (require 'module-c)
 (require 'module-clojure)
 (require 'module-common-lisp)
@@ -44,16 +32,17 @@
 (require 'module-org)
 (require 'module-perl)
 (require 'module-puppet)
+(require 'module-python)
 (require 'module-ruby)
 (require 'module-scala)
 (require 'module-scheme)
 (require 'module-shell)
+(require 'module-web)
 (require 'module-xml)
 (require 'module-yaml)
-(require 'module-web)
 
 ;; Load custom settings
-(setq custom-file (expand-file-name "custom.el" emacs-root-dir))
+(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 (load custom-file)
 
 (message "Init complete in %.2f seconds"

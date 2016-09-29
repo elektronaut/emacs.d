@@ -1,4 +1,4 @@
-;;; module-ivy -- Ivy config
+;;; core-ivy -- Ivy config
 ;;; Author: Inge Jørgensen <inge@elektronaut.no>
 
 ;;; Commentary:
@@ -33,5 +33,5 @@
     (interactive)
     (counsel-ag (thing-at-point 'symbol) (projectile-project-root))))
 
-(provide 'module-ivy)
-;;; module-ivy ends here
+(provide 'core-ivy)
+;;; core-ivy ends here

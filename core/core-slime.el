@@ -1,4 +1,4 @@
-;;; module-slime -- Slime
+;;; core-slime -- Slime
 ;;; Author: Inge Jørgensen <inge@elektronaut.no>
 
 ;;; Commentary:
@@ -39,5 +39,5 @@
               (smartparens-strict-mode +1)
               (whitespace-mode -1))))
 
-(provide 'module-slime)
-;;; module-slime ends here
+(provide 'core-slime)
+;;; core-slime ends here

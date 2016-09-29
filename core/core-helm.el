@@ -1,4 +1,4 @@
-;;; module-helm -- Helm
+;;; core-helm -- Helm
 ;;; Author: Inge Jørgensen <inge@elektronaut.no>
 
 ;;; Commentary:
@@ -32,5 +32,5 @@
   (use-package helm-spaces)
   (use-package helm-swoop))
 
-(provide 'module-helm)
-;;; module-helm ends here
+(provide 'core-helm)
+;;; core-helm ends here

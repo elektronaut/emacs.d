@@ -7,8 +7,6 @@
 
 ;;; Code:
 
-(require 'module-rainbow)
-
 (defun module-css-defaults ()
   (rainbow-mode +1))
 

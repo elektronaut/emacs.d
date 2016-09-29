@@ -7,7 +7,6 @@
 
 ;;; Code:
 
-(require 'module-flycheck)
 (require 'module-lisp)
 
 (define-key emacs-lisp-mode-map (kbd "C-c C-c") 'eval-defun)
@@ -19,7 +18,7 @@
   (add-hook 'after-save-hook
             (lambda ()
               (when (and
-                     (string-prefix-p emacs-root-dir (file-truename buffer-file-name))
+                     (string-prefix-p user-emacs-directory (file-truename buffer-file-name))
                      (file-exists-p (byte-compile-dest-file buffer-file-name)))
                 (emacs-lisp-byte-compile)))
             nil

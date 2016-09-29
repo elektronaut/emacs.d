@@ -1,4 +1,4 @@
-;;; module-flycheck -- Flycheck
+;;; core-flycheck -- Flycheck
 ;;; Author: Inge Jørgensen <inge@elektronaut.no>
 
 ;;; Commentary:
@@ -17,5 +17,5 @@
   (flycheck-add-mode 'javascript-eslint 'web-mode)
   (add-hook 'prog-mode-hook 'flycheck-mode))
 
-(provide 'module-flycheck)
-;;; module-flycheck ends here
+(provide 'core-flycheck)
+;;; core-flycheck ends here

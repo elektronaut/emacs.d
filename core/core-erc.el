@@ -1,4 +1,4 @@
-;;; module-erc -- ERC
+;;; core-erc -- ERC
 ;;; Author: Inge Jørgensen <inge@elektronaut.no>
 
 ;;; Commentary:
@@ -81,5 +81,5 @@ that can occur between two notifications.  The default is
     (with-current-buffer buffer
       (erc-quit-server "Asta la vista"))))
 
-(provide 'module-erc)
-;;; module-erc ends here
+(provide 'core-erc)
+;;; core-erc ends here

@@ -1,4 +1,4 @@
-;;; module-company -- Company
+;;; core-company -- Company
 ;;; Author: Inge Jørgensen <inge@elektronaut.no>
 
 ;;; Commentary:
@@ -24,5 +24,5 @@
     (add-to-list 'company-backends 'company-web-html))
   (global-company-mode 1))
 
-(provide 'module-company)
-;;; module-company ends here
+(provide 'core-company)
+;;; core-company ends here

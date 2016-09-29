@@ -7,7 +7,6 @@
 
 ;;; Code:
 
-(require 'module-company)
 (require 'electric)
 
 (use-package python-mode

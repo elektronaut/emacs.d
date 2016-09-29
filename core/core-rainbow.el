@@ -1,4 +1,4 @@
-;;; module-rainbow -- Rainbow delimiters
+;;; core-rainbow -- Rainbow delimiters
 ;;; Author: Inge Jørgensen <inge@elektronaut.no>
 
 ;;; Commentary:
@@ -10,5 +10,5 @@
 (use-package rainbow-delimiters)
 (use-package rainbow-mode)
 
-(provide 'module-rainbow)
-;;; module-rainbow ends here
+(provide 'core-rainbow)
+;;; core-rainbow ends here

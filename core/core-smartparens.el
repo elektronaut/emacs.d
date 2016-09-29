@@ -1,4 +1,4 @@
-;;; module-smartparens -- Smartparens
+;;; core-smartparens -- Smartparens
 ;;; Author: Inge Jørgensen <inge@elektronaut.no>
 
 ;;; Commentary:
@@ -7,7 +7,7 @@
 
 ;;; Code:
 
-(require 'module-crux)
+(require 'core-crux)
 
 (use-package smartparens
   :init
@@ -38,5 +38,5 @@
     (sp-local-tag "=" "<%= " " %>")
     (sp-local-tag "#" "<%# " " %>")))
 
-(provide 'module-smartparens)
+(provide 'core-smartparens)
 ;;; module-smartparens ends here

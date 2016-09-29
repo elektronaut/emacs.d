@@ -45,7 +45,7 @@ The body of the advice is in BODY."
 
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
-(setq package-user-dir (expand-file-name "elpa" emacs-root-dir))
+(setq package-user-dir (expand-file-name "elpa" user-emacs-directory))
 (package-initialize)
 
 (require 'use-package)
@@ -55,7 +55,7 @@ The body of the advice is in BODY."
 (let ((default-directory "/usr/local/share/emacs/site-lisp/"))
   (normal-top-level-add-subdirs-to-load-path))
 
-(defvar savefile-dir (expand-file-name "savefile" emacs-root-dir)
+(defvar savefile-dir (expand-file-name "savefile" user-emacs-directory)
   "This folder stores all the automatically generated save/history-files.")
 
 ;; Create savefile dir if necessary
@@ -71,16 +71,26 @@ The body of the advice is in BODY."
 ;;-----------------------------------------------------------------------------
 
 (require 'core-auto-modes)
+(require 'core-company)
 (require 'core-compilation)
+(require 'core-crux)
 (require 'core-defuns)
 (require 'core-editing)
+(require 'core-erc)
+(require 'core-flycheck)
 (require 'core-global-keys)
+(require 'core-helm)
+(require 'core-ido)
+(require 'core-ivy)
 (require 'core-modeline)
 (require 'core-packages)
 (require 'core-projectile)
+(require 'core-rainbow)
+(require 'core-slime)
+(require 'core-smartparens)
 (require 'core-ui)
-(require 'core-yank)
 (require 'core-whitespace)
+(require 'core-yank)
 
 (when (eq system-type 'darwin)
   (require 'core-macos))

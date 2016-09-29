@@ -8,7 +8,6 @@
 ;;; Code:
 
 (require 'module-lisp)
-(require 'module-slime)
 
 (add-to-list 'auto-mode-alist '("\\.sbclrc\\'" . lisp-mode))
 (add-to-list 'auto-mode-alist '("\\.cl\\'" . lisp-mode))

@@ -7,8 +7,6 @@
 
 ;;; Code:
 
-(require 'module-company)
-
 (use-package go-mode
   :mode "\\.go\\'"
   :bind (:map go-mode-map
