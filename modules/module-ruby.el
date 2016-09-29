@@ -37,23 +37,23 @@
         "\\.rb\\'"
         "\\.ru\\'"
         "\\.thor\\'"
-  :init
+  :config
   (setq-default enh-ruby-bounce-deep-indent t
                 enh-ruby-hanging-indent-level 2)
   ;; CamelCase aware editing
   (add-hook 'enh-ruby-mode-hook 'subword-mode)
   (use-package inf-ruby
-    :init
+    :config
     (add-hook 'enh-ruby-mode-hook 'inf-ruby-minor-mode))
   (use-package robe
-    :init
+    :config
     (add-hook 'enh-ruby-mode-hook 'robe-mode))
   (use-package ruby-tools
-    :init
+    :config
     (add-hook 'enh-ruby-mode-hook 'ruby-tools-mode)))
 
 (use-package projectile-rails
-  :init
+  :config
   (add-hook 'projectile-mode-hook 'projectile-rails-on))
 
 (use-package slim-mode :mode "\\.slim\\'")

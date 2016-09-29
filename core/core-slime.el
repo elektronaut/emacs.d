@@ -8,8 +8,7 @@
 ;;; Code:
 
 (use-package slime
-  :bind (("TAB"     . slime-indent-and-complete-symbol)
-         ("C-c C-s" . slime-selector))
+  :bind (("C-c C-s" . slime-selector))
   :init
   ;; A list of alternative Common Lisp implementations that can be
   ;; used with SLIME. Note that their presence render
