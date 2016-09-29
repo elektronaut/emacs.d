@@ -177,21 +177,6 @@
                  calendar-norway-andre-merkedagar
                  calendar-norway-dst)))
 
-(use-package coffee-mode
-  :mode "\\.coffee\\'"
-  :init
-  (setq-default coffee-tab-width 2)
-  :config
-  (add-hook 'coffee-mode-hook 'subword-mode)
-  (defun my-coffee-mode-hook ()
-    ;; Compile on save if the compiled file exists
-    (and (buffer-file-name)
-         (file-exists-p (buffer-file-name))
-         (file-exists-p (coffee-compiled-file-name (buffer-file-name)))
-         (coffee-cos-mode t)))
-  (add-hook 'coffee-mode-hook 'my-coffee-mode-hook)
-  (add-to-list 'coffee-args-compile "--no-header"))
-
 (use-package delight
   :config
   (delight '((yas-minor-mode nil yasnippet)

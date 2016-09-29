@@ -20,6 +20,7 @@
 ;; Modules
 (require 'module-c)
 (require 'module-clojure)
+(require 'module-coffee)
 (require 'module-common-lisp)
 (require 'module-css)
 (require 'module-elixir)
