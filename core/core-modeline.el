@@ -105,36 +105,36 @@
 
 ;; Selected window
 
-(defvar mode-line-selected-window nil)
+(defvar core-modeline-selected-window nil)
 
-(defun mode-line-set-selected-window (&rest _)
+(defun core-modeline-set-selected-window (&rest _)
   "Set selected window."
   (let ((window (frame-selected-window)))
     (when (and (windowp window)
                (not (minibuffer-window-active-p window)))
-      (setq mode-line-selected-window window))))
+      (setq core-modeline-selected-window window))))
 
-(add-hook 'window-configuration-change-hook #'mode-line-set-selected-window)
-(add-hook 'focus-in-hook #'mode-line-set-selected-window)
-(advice-add 'select-window :after 'mode-line-set-selected-window)
-(advice-add 'select-frame  :after 'mode-line-set-selected-window)
+(add-hook 'window-configuration-change-hook #'core-modeline-set-selected-window)
+(add-hook 'focus-in-hook #'core-modeline-set-selected-window)
+(advice-add 'select-window :after 'core-modeline-set-selected-window)
+(advice-add 'select-frame  :after 'core-modeline-set-selected-window)
 
 
 ;; Helpers
 
-(defun mode-line-short-buffer-name ()
+(defun core-modeline-short-buffer-name ()
   "Return only the file name if `buffer-name' is a path."
   (if buffer-file-name
       (car (last (split-string (buffer-name) "/")))
     (buffer-name)))
 
-(defun project-relative-buffer-path ()
+(defun core-modeline-project-relative-buffer-path ()
   (if (projectile-project-p)
       (replace-regexp-in-string "^.\/" ""
         (car (projectile-make-relative-to-root (list default-directory))))
     (abbreviate-file-name default-directory)))
 
-(defun shorten-directory (dir max-length)
+(defun core-modeline-shorten-directory (dir max-length)
   "Show up to `MAX-LENGTH' characters of a directory name `DIR'."
   (let ((path (reverse (split-string (abbreviate-file-name dir) "/")))
         (output ""))
@@ -147,19 +147,18 @@
       (setq output (concat ".../" output)))
     output))
 
-(defun *buffer-encoding-abbrev ()
+;; Mode line parts
+
+(defun core-modeline-buffer-encoding-abbrev ()
   "The line ending convention used in the buffer."
   (if (memq buffer-file-coding-system '(utf-8 utf-8-unix prefer-utf-8-unix undecided-unix))
       ""
     (symbol-name buffer-file-coding-system)))
 
-
-;; Mode line parts
-
-(defun *buffer-name ()
+(defun core-modeline-buffer-name ()
   (unless (eq major-mode 'dired-mode)
     (propertize
-     (if buffer-file-name (mode-line-short-buffer-name) "%b")
+     (if buffer-file-name (core-modeline-short-buffer-name) "%b")
      'face (cond ((buffer-modified-p)
                   'mode-line-filename-modified-face)
                  (active
@@ -167,18 +166,18 @@
                       'mode-line-filename-readonly-face
                     'mode-line-filename-face))))))
 
-(defun *buffer-path ()
+(defun core-modeline-buffer-path ()
   (propertize
    (if (or buffer-file-name (eq major-mode 'dired-mode))
-       (shorten-directory (project-relative-buffer-path) 20) "")
+       (core-modeline-shorten-directory (core-modeline-project-relative-buffer-path) 20) "")
    'face (if active 'mode-line-folder-face)))
 
-(defun *macro-recording ()
+(defun core-modeline-macro-recording ()
   "Display current macro being recorded."
   (if (and active defining-kbd-macro)
       (propertize "[rec] " 'face 'mode-line-highlight)))
 
-(defun *major-mode ()
+(defun core-modeline-major-mode ()
   "The major mode, including process, environment and text-scale info."
   (concat (propertize (format-mode-line mode-name)
                       'face (if active 'mode-line-mode-face))
@@ -188,14 +187,14 @@
                (/= text-scale-mode-amount 0)
                (format " (%+d)" text-scale-mode-amount))))
 
-(defun *position ()
+(defun core-modeline-position ()
   (concat (propertize
            " %l:%c "
            'face (if (and active (>= (current-column) 81))
                      'mode-line-80col-face
                    'mode-line-position-face)) "%p"))
 
-(defun *projectile ()
+(defun core-modeline-projectile ()
   (if (and (projectile-project-p)
            (or buffer-file-name (eq major-mode 'dired-mode)))
       (concat (propertize (projectile-project-name)
@@ -203,7 +202,7 @@
               (propertize "/"
                           'face (if active 'mode-line-folder-face)))))
 
-(defun *vc ()
+(defun core-modeline-vc ()
   "Displays the current branch, colored based on its state."
   (when vc-mode
     (let ((backend vc-mode)
@@ -219,22 +218,22 @@
 
 ;; Mode line
 
-(defun core-mode-line (&optional id)
+(defun core-modeline-format (&optional id)
   `(:eval
-    (let* ((active (eq (selected-window) mode-line-selected-window))
+    (let* ((active (eq (selected-window) core-modeline-selected-window))
            (lhs (list
                  " "
                  ;;(if active "active" "inactive")
-                 (*macro-recording)
-                 (*projectile)
-                 (*buffer-path)
-                 (*buffer-name)))
+                 (core-modeline-macro-recording)
+                 (core-modeline-projectile)
+                 (core-modeline-buffer-path)
+                 (core-modeline-buffer-name)))
            (rhs (list
-                 (*buffer-encoding-abbrev)
-                 (*vc)
+                 (core-modeline-buffer-encoding-abbrev)
+                 (core-modeline-vc)
                  " "
-                 (*major-mode)
-                 (*position)))
+                 (core-modeline-major-mode)
+                 (core-modeline-position)))
            (spacing (propertize
                      " "
                      'display `((space :align-to
@@ -242,7 +241,7 @@
                                           ,(1+ (string-width (format-mode-line rhs)))))))))
       (list lhs spacing rhs))))
 
-(setq-default mode-line-format (core-mode-line))
+(setq-default mode-line-format (core-modeline-format))
 
 (line-number-mode t)
 (column-number-mode t)
