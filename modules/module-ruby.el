@@ -15,6 +15,13 @@
   (global-rbenv-mode))
 
 (use-package enh-ruby-mode
+  :config
+  (setq-default enh-ruby-bounce-deep-indent t
+                enh-ruby-hanging-indent-level 2)
+  (add-hook 'enh-ruby-mode-hook 'subword-mode))
+
+(use-package ruby-mode
+  :ensure nil
   :mode "Appraisals\\'"
         "Berksfile\\'"
         "Capfile\\'"
@@ -38,19 +45,22 @@
         "\\.ru\\'"
         "\\.thor\\'"
   :config
-  (setq-default enh-ruby-bounce-deep-indent t
-                enh-ruby-hanging-indent-level 2)
-  ;; CamelCase aware editing
-  (add-hook 'enh-ruby-mode-hook 'subword-mode)
-  (use-package inf-ruby
-    :config
-    (add-hook 'enh-ruby-mode-hook 'inf-ruby-minor-mode))
-  (use-package robe
-    :config
-    (add-hook 'enh-ruby-mode-hook 'robe-mode))
-  (use-package ruby-tools
-    :config
-    (add-hook 'enh-ruby-mode-hook 'ruby-tools-mode)))
+  (add-hook 'ruby-mode-hook 'subword-mode))
+
+(use-package inf-ruby
+  :config
+  (add-hook 'enh-ruby-mode-hook 'inf-ruby-minor-mode)
+  (add-hook 'ruby-mode-hook 'inf-ruby-minor-mode))
+
+(use-package robe
+  :config
+  (add-hook 'enh-ruby-mode-hook 'robe-mode)
+  (add-hook 'ruby-mode-hook 'robe-mode))
+
+(use-package ruby-tools
+  :config
+  (add-hook 'enh-ruby-mode-hook 'ruby-tools-mode)
+  (add-hook 'ruby-mode-hook 'ruby-tools-mode))
 
 (use-package projectile-rails
   :config

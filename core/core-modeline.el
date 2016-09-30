@@ -2,6 +2,7 @@
 ;;; Author: Inge Jørgensen <inge@elektronaut.no>
 
 ;;; Commentary:
+
 ;;  Based on doom-themes by Henrik Lissner <henrik@lissner.net>
 ;;  https://github.com/hlissner/.emacs.d
 

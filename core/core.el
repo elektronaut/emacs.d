@@ -78,6 +78,7 @@ The body of the advice is in BODY."
 (require 'core-editing)
 (require 'core-erc)
 (require 'core-flycheck)
+(require 'core-git)
 (require 'core-global-keys)
 (require 'core-helm)
 (require 'core-ido)

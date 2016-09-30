@@ -11,16 +11,15 @@
 
 (use-package ivy
   :bind (:map ivy-minibuffer-map
-              ("C-m"       . ivy-alt-done)
-              :map ivy-mode-map
-              ("\C-s"      . swiper)
-              ("M-x"       . counsel-M-x)
-              ("C-x b"     . ivy-switch-buffer)
-              ("C-x C-b"   . ivy-switch-buffer)
-              ("C-x C-f"   . counsel-find-file)
-              ("C-c f"     . counsel-recentf)
-              ("M-y"       . counsel-yank-pop)
-              ("C-c p s s" . counsel-projectile-ag))
+         ("C-m"       . ivy-alt-done)
+         :map ivy-mode-map
+         ("\C-s"      . swiper)
+         ("M-x"       . counsel-M-x)
+         ("C-x b"     . ivy-switch-buffer)
+         ("C-x C-f"   . counsel-find-file)
+         ("C-c f"     . counsel-recentf)
+         ("M-y"       . counsel-yank-pop)
+         ("C-c p s s" . counsel-projectile-ag))
   :init
   (setq ivy-use-virtual-buffers t)
   (setq projectile-completion-system 'ivy)

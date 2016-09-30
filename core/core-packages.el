@@ -212,29 +212,11 @@
   (define-key flyspell-mouse-map [down-mouse-3] #'flyspell-correct-word)
   (define-key flyspell-mouse-map [mouse-3] #'undefined))
 
-(use-package gist)
-
-(use-package git-timemachine)
-
-(use-package gitconfig-mode)
-
-(use-package gitignore-mode)
-
 (use-package god-mode
   :bind (("s-g" . god-local-mode)))
 
 (use-package imenu-anywhere
   :bind (("C-c i" . imenu-anywhere)))
-
-(use-package magit
-  :bind (("C-x g"   . magit-status)
-         ("C-x M-g" . magit-dispatch-popup)
-         ("s-m m"   . magit-status)
-         ("s-m l"   . magit-log)
-         ("s-m f"   . magit-log-buffer-file)
-         ("s-m b"   . magit-blame))
-  :init
-  (setq-default magit-use-overlays nil))
 
 (use-package move-text
   :config
@@ -244,7 +226,7 @@
   (global-set-key [(meta shift down)]  'move-text-down))
 
 (use-package multiple-cursors
-  :bind (("C-S-c C-S-c" . mc/edit-lines)
+  :bind (("C-S-e"       . mc/edit-lines)
          ("C-S-n"       . mc/mark-next-like-this)
          ("M-<mouse-1>" . mc/add-cursor-on-click))
   :init
