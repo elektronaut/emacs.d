@@ -45,6 +45,10 @@
         "\\.ru\\'"
         "\\.thor\\'"
   :config
+  (setq ruby-align-chained-calls t
+        ruby-align-to-stmt-keywords t
+        ruby-custom-encoding-magic-comment-template "# encoding: %s"
+        ruby-deep-indent-paren nil)
   (add-hook 'ruby-mode-hook 'subword-mode))
 
 (use-package inf-ruby
@@ -56,6 +60,15 @@
   :config
   (add-hook 'enh-ruby-mode-hook 'robe-mode)
   (add-hook 'ruby-mode-hook 'robe-mode))
+
+(use-package rspec-mode
+  :config
+  (rspec-install-snippets))
+
+(use-package rubocop
+  :config
+  (add-hook 'enh-ruby-mode-hook #'rubocop-mode)
+  (add-hook 'ruby-mode-hook #'rubocop-mode))
 
 (use-package ruby-tools
   :config
