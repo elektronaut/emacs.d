@@ -10,6 +10,7 @@
 /var/pcache
 custom.el
 elpa
+rake.cache
 savefile/
 session*
 tramp

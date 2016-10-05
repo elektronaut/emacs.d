@@ -14,6 +14,7 @@
          ("C-m"       . ivy-alt-done)
          :map ivy-mode-map
          ("\C-s"      . swiper)
+         ("C-S-s"     . swiper-at-point)
          ("M-x"       . counsel-M-x)
          ("C-x b"     . ivy-switch-buffer)
          ("C-x C-f"   . counsel-find-file)
@@ -27,6 +28,10 @@
   (setq ivy-re-builders-alist '((t . ivy--regex-plus)))
   :config
   (ivy-mode 1)
+  (defun swiper-at-point ()
+    "Search for thing at point"
+    (interactive)
+    (swiper (thing-at-point 'symbol)))
   (defun counsel-projectile-ag ()
     "Search in projectile root"
     (interactive)
