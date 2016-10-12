@@ -10,6 +10,8 @@
 ;; Ignore Rubinius bytecode
 (add-to-list 'completion-ignored-extensions ".rbc")
 
+(use-package bundler)
+
 (use-package rbenv
   :config
   (global-rbenv-mode))

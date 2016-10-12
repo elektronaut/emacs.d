@@ -62,6 +62,8 @@
 (use-package lua-mode
   :mode "\\.lua\\'")
 
+(use-package nginx-mode)
+
 (use-package php-mode
   :mode "\\.php\\'")
 

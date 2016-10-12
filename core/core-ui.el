@@ -17,7 +17,10 @@
 ;; (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
 ;; (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/atom-one-dark-theme")
 ;; (load-theme 'atom-one-dark t)
-(load-theme 'doom-one t)
+(use-package doom-themes
+  :config
+  (load-theme 'doom-one t))
+
 (set-mouse-color "white")
 
 ;; Cursor

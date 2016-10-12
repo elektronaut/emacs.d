@@ -20,6 +20,7 @@
 (use-package clojure-mode
   :mode "\\.clj\\'"
   :config
+  (use-package flycheck-clojure)
   (add-hook 'clojure-mode-hook 'module-clojure-defaults))
 
 (use-package cider

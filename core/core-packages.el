@@ -16,11 +16,15 @@
   (read-abbrev-file (expand-file-name "abbrev_defs" savefile-dir))
   (add-hook 'text-mode-hook 'abbrev-mode))
 
+(use-package ag)
+
 (use-package bookmark
   :ensure nil
   :config
   (setq bookmark-default-file (expand-file-name "bookmarks" savefile-dir)
         bookmark-save-flag 1))
+
+(use-package browse-at-remote)
 
 ;; Calendar
 (use-package calendar
@@ -75,6 +79,8 @@
                                            try-complete-lisp-symbol-partially
                                            try-complete-lisp-symbol)))
 
+(use-package lorem-ipsum)
+
 (use-package mu4e
   :ensure nil
   :init
@@ -90,6 +96,8 @@
 
 ;; Clean up obsolete buffers automatically
 (use-package midnight :ensure nil)
+
+(use-package nlinum)
 
 (use-package re-builder
   :ensure nil

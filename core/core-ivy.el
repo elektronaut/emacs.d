@@ -9,6 +9,12 @@
 
 (require 'thingatpt)
 
+(use-package counsel
+  :config
+  (use-package counsel-projectile))
+
+(use-package swiper)
+
 (use-package ivy
   :bind (:map ivy-minibuffer-map
          ("C-m"       . ivy-alt-done)

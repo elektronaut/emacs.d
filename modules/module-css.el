@@ -23,7 +23,8 @@
 (use-package scss-mode
   :mode "\\.scss\\'" "\\.scss\\.erb\\'"
   :init
-  (setq-default scss-compile-at-save nil)
+  (setq-default scss-compile-at-save nil
+                scss-sass-command "~/.rbenv/shims/sass")
   (add-hook 'scss-mode-hook 'module-css-defaults))
 
 (provide 'module-css)
