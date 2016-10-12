@@ -20,12 +20,13 @@
 
 (use-package sass-mode :mode "\\.sass\\'")
 
-(use-package scss-mode
-  :mode "\\.scss\\'" "\\.scss\\.erb\\'"
-  :init
-  (setq-default scss-compile-at-save nil
-                scss-sass-command "~/.rbenv/shims/sass")
-  (add-hook 'scss-mode-hook 'module-css-defaults))
+;; scss-mode is now built-in
+;(use-package scss-mode
+;  :mode "\\.scss\\'" "\\.scss\\.erb\\'"
+;  :init
+;  (setq-default scss-compile-at-save nil
+;                scss-sass-command "~/.rbenv/shims/sass")
+;  (add-hook 'scss-mode-hook 'module-css-defaults))
 
 (provide 'module-css)
 ;;; module-css ends here

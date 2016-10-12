@@ -45,7 +45,7 @@ The body of the advice is in BODY."
 
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
-(setq package-user-dir (expand-file-name "elpa" user-emacs-directory))
+;;(setq package-user-dir (expand-file-name "elpa" user-emacs-directory))
 (package-initialize)
 
 (require 'use-package)
