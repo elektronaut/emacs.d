@@ -19,5 +19,9 @@
       org-hide-leading-stars nil
       org-log-done t)
 
+(use-package org-journal
+  :init
+  (setq org-journal-dir "~/Dropbox/org/journal"))
+
 (provide 'module-org)
 ;;; module-org ends here

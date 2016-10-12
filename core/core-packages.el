@@ -37,7 +37,13 @@
         dired-recursive-deletes 'always
         dired-recursive-copies 'always
         dired-dwim-target t)
-  (use-package dired-x :ensure nil))
+  (use-package dired-x
+    :ensure nil
+    :config
+    (setq dired-omit-files
+          (concat dired-omit-files "\\|^.bundle$\\|^.git$\\|^.DS_Store$\\|^.projectile$"))
+    (add-hook 'dired-mode-hook #'dired-omit-mode)))
+
 
 (use-package ediff
   :ensure nil
