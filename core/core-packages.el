@@ -164,8 +164,9 @@
   (global-anzu-mode))
 
 (use-package avy
-  :bind (("C-c j" . avy-goto-word-or-subword-1)
-         ("s-." . avy-goto-word-or-subword-1))
+  :bind (("C-c j" . avy-goto-char)
+         ("C-c J" . avy-goto-word-or-subword-1)
+         ("s-."   . avy-goto-word-or-subword-1))
   :init
   (setq avy-background t
         avy-style 'at-full))

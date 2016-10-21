@@ -26,6 +26,7 @@
          ("C-x C-f"   . counsel-find-file)
          ("C-c f"     . counsel-recentf)
          ("M-y"       . counsel-yank-pop)
+         :map projectile-mode-map
          ("C-c p s s" . counsel-projectile-ag))
   :init
   (setq ivy-use-virtual-buffers t)

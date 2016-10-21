@@ -83,7 +83,6 @@ The body of the advice is in BODY."
 (require 'core-helm)
 (require 'core-ido)
 (require 'core-ivy)
-(require 'core-modeline)
 (require 'core-packages)
 (require 'core-projectile)
 (require 'core-rainbow)
@@ -92,6 +91,8 @@ The body of the advice is in BODY."
 (require 'core-ui)
 (require 'core-whitespace)
 (require 'core-yank)
+
+(require 'core-modeline) ; Needs to be loaded after core-ui
 
 (when (eq system-type 'darwin)
   (require 'core-macos))

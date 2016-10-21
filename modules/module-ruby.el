@@ -47,10 +47,11 @@
         "\\.ru\\'"
         "\\.thor\\'"
   :config
-  (setq ruby-align-chained-calls t
-        ruby-align-to-stmt-keywords t
+  (setq ruby-use-smie t
+        ruby-align-chained-calls t
+        ruby-align-to-stmt-keywords nil
         ruby-custom-encoding-magic-comment-template "# encoding: %s"
-        ruby-deep-indent-paren nil)
+        ruby-deep-indent-paren t)
   (add-hook 'ruby-mode-hook 'subword-mode))
 
 (use-package inf-ruby
