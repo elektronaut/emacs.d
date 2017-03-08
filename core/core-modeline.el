@@ -45,7 +45,7 @@
   (set-face-attribute 'mode-line-inactive nil
                       :inherit 'mode-line-face
                       :foreground faded
-                      :box '(:line-width 6 :color "#20272e" :style nil))
+                      :box '(:line-width 6 :color "#21242b" :style nil))
   (set-face-attribute 'mode-line-highlight nil
                       :inherit 'mode-line-face
                       :foreground red :background nil)
