@@ -88,6 +88,7 @@ The body of the advice is in BODY."
 (require 'core-rainbow)
 (require 'core-slime)
 (require 'core-smartparens)
+(require 'core-term)
 (require 'core-ui)
 (require 'core-whitespace)
 (require 'core-yank)
