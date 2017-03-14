@@ -17,6 +17,7 @@
 ;; (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
 ;; (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/atom-one-dark-theme")
 ;; (load-theme 'atom-one-dark t)
+
 (use-package doom-themes
   :config
   (load-theme 'doom-one t))
