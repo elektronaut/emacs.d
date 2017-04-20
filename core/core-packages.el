@@ -63,6 +63,10 @@
   ;; Start a new eshell even if one is active.
   (global-set-key (kbd "C-x M") (lambda () (interactive) (eshell t))))
 
+(use-package etags-select
+  :ensure nil
+  :bind (("C-x t" . etags-select-find-tag-at-point)))
+
 (use-package hippie-expand
   :ensure nil
   :bind (("s-/" . hippie-expand)
