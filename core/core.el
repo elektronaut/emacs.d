@@ -70,6 +70,12 @@ The body of the advice is in BODY."
 (setq semanticdb-default-save-directory
       (expand-file-name "semanticdb" savefile-dir))
 
+(use-package bookmark
+  :ensure nil
+  :config
+  (setq bookmark-default-file (expand-file-name "bookmarks" savefile-dir)
+        bookmark-save-flag 1))
+
 (use-package savehist
   :config
   (setq savehist-additional-variables
@@ -98,18 +104,23 @@ The body of the advice is in BODY."
 ;; Core modules
 ;;-----------------------------------------------------------------------------
 
+(require 'core-calendar)
 (require 'core-compilation)
 (require 'core-completion)
 (require 'core-crux)
 (require 'core-defuns)
+(require 'core-dired)
 (require 'core-editing)
+(require 'core-email)
 (require 'core-erc)
 (require 'core-flycheck)
+(require 'core-flyspell)
 (require 'core-git)
 (require 'core-global-keys)
 (require 'core-helm)
 (require 'core-ido)
 (require 'core-ivy)
+(require 'core-navigation)
 (require 'core-packages)
 (require 'core-projectile)
 (require 'core-rainbow)

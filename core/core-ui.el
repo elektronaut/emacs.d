@@ -62,6 +62,14 @@
                            (abbreviate-file-name (buffer-file-name))
                          "%b"))))
 
+
+;;-----------------------------------------------------------------------------
+;; Packages
+;;-----------------------------------------------------------------------------
+
+(use-package ace-window
+  :bind (("s-w" . ace-window)))
+
 ;; Highlight cursor when changing windows.
 (use-package beacon
   :init
@@ -80,6 +88,33 @@
              (whitespace-mode nil whitespace))))
 
 (use-package diminish)
+
+(use-package nlinum)
+
+(use-package uniquify
+  :ensure nil
+  :init
+  (setq uniquify-buffer-name-style 'forward
+        uniquify-separator "/"
+        uniquify-after-kill-buffer-p t
+        uniquify-ignore-buffers-re "^\\*"))
+
+;; Navigate windows with shift+arrow keys
+(use-package windmove
+  :ensure nil
+  :config
+  (windmove-default-keybindings))
+
+(use-package winner
+  :ensure nil
+  :config
+  (winner-mode +1))
+
+;; Show the name of the current function definition in the modeline
+(use-package which-func
+  :ensure nil
+  :config
+  (which-function-mode 1))
 
 (provide 'core-ui)
 ;;; core-ui.el ends here

@@ -30,5 +30,10 @@ indent yanked text (with prefix arg don't indent)."
       (let ((transient-mark-mode nil))
         (yank-advised-indent-function (region-beginning) (region-end)))))
 
+(use-package browse-kill-ring
+  :bind (("s-y" . browse-kill-ring))
+  :config
+  (browse-kill-ring-default-keybindings))
+
 (provide 'core-yank)
 ;;; core-yank.el ends here

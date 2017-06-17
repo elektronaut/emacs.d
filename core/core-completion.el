@@ -49,9 +49,11 @@
                                            try-complete-lisp-symbol-partially
                                            try-complete-lisp-symbol)))
 
+(use-package lorem-ipsum)
+
 (use-package yasnippet
   :init
   (yas-global-mode 1))
 
 (provide 'core-completion)
-;;; core-company ends here
+;;; core-completion ends here

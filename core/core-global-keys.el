@@ -2,6 +2,9 @@
 ;;; Commentary:
 ;;; Code:
 
+(use-package god-mode
+  :bind (("s-g" . god-local-mode)))
+
 (global-unset-key (kbd "M-<down-mouse-1>"))
 (global-set-key (kbd "C-M-,") 'comment-or-uncomment-region-or-line)
 (global-set-key (kbd "C-x C-b") 'ibuffer-list-buffers)

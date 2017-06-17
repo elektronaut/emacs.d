@@ -90,5 +90,5 @@
   :mode "\\.ml\\'"
   :ensure tuareg)
 
-(provide 'core-auto-modes)
+(provide 'module-misc)
 ;;; module-misc ends here

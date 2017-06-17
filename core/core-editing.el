@@ -64,5 +64,55 @@ and file 'filename' will be opened and cursor set on line 'linenumber'"
                   fn))) files)))
 
 
+;;-----------------------------------------------------------------------------
+;; Packages
+;;-----------------------------------------------------------------------------
+
+(use-package easy-kill
+  :config
+  (global-set-key [remap kill-ring-save] 'easy-kill)
+  (global-set-key [remap mark-sexp] 'easy-mark))
+
+(use-package expand-region
+  :bind (("C-=" . er/expand-region)))
+
+(use-package move-text
+  :config
+  (global-set-key [(control shift up)]  'move-text-up)
+  (global-set-key [(control shift down)]  'move-text-down)
+  (global-set-key [(meta shift up)]  'move-text-up)
+  (global-set-key [(meta shift down)]  'move-text-down))
+
+(use-package multiple-cursors
+  :bind (("C-S-e"       . mc/edit-lines)
+         ("C-S-n"       . mc/mark-next-like-this)
+         ("M-<mouse-1>" . mc/add-cursor-on-click))
+  :init
+  (setq mc/list-file (expand-file-name "mc-lists.el" savefile-dir)))
+
+(use-package smartrep)
+(use-package operate-on-number
+  :config
+  (smartrep-define-key global-map "C-c ."
+    '(("+" . apply-operation-to-number-at-point)
+      ("-" . apply-operation-to-number-at-point)
+      ("*" . apply-operation-to-number-at-point)
+      ("/" . apply-operation-to-number-at-point)
+      ("\\" . apply-operation-to-number-at-point)
+      ("^" . apply-operation-to-number-at-point)
+      ("<" . apply-operation-to-number-at-point)
+      (">" . apply-operation-to-number-at-point)
+      ("#" . apply-operation-to-number-at-point)
+      ("%" . apply-operation-to-number-at-point)
+      ("'" . operate-on-number-at-point))))
+
+(use-package viking-mode
+  :config
+  (viking-global-mode))
+
+(use-package zop-to-char
+  :bind (("M-z" . zop-up-to-char)
+         ("M-Z" . zop-to-char)))
+
 (provide 'core-editing)
 ;;; core-editing.el ends here
