@@ -30,6 +30,7 @@
 (require 'module-haskell)
 (require 'module-js)
 (require 'module-markdown)
+(require 'module-misc)
 (require 'module-org)
 (require 'module-perl)
 (require 'module-puppet)

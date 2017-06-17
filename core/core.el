@@ -98,7 +98,6 @@ The body of the advice is in BODY."
 ;; Core modules
 ;;-----------------------------------------------------------------------------
 
-(require 'core-auto-modes)
 (require 'core-compilation)
 (require 'core-completion)
 (require 'core-crux)

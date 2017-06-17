@@ -1,4 +1,4 @@
-;;; core-auto-modes -- Auto modes
+;;; module-mic -- Misc modes
 ;;; Author: Inge Jørgensen <inge@elektronaut.no>
 
 ;;; Commentary:
@@ -91,4 +91,4 @@
   :ensure tuareg)
 
 (provide 'core-auto-modes)
-;;; core-auto-modes ends here
+;;; module-misc ends here
