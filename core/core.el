@@ -55,6 +55,11 @@ The body of the advice is in BODY."
 (let ((default-directory "/usr/local/share/emacs/site-lisp/"))
   (normal-top-level-add-subdirs-to-load-path))
 
+
+;;-----------------------------------------------------------------------------
+;; Save files
+;;-----------------------------------------------------------------------------
+
 (defvar savefile-dir (expand-file-name "savefile" user-emacs-directory)
   "This folder stores all the automatically generated save/history-files.")
 
@@ -65,14 +70,37 @@ The body of the advice is in BODY."
 (setq semanticdb-default-save-directory
       (expand-file-name "semanticdb" savefile-dir))
 
+(use-package savehist
+  :config
+  (setq savehist-additional-variables
+        '(search-ring regexp-search-ring)
+        savehist-autosave-interval 60
+        savehist-file (expand-file-name "savehist" savefile-dir))
+  (savehist-mode +1))
+
+(use-package saveplace
+  :ensure nil
+  :config
+  (setq save-place-file (expand-file-name "saveplace" savefile-dir))
+  (setq-default save-place t))
+
+(use-package recentf
+  :ensure nil
+  :config
+  (setq recentf-save-file (expand-file-name "recentf" savefile-dir)
+        recentf-max-saved-items 500
+        recentf-max-menu-items 15
+        recentf-auto-cleanup 'never)
+  (recentf-mode +1))
+
 
 ;;-----------------------------------------------------------------------------
 ;; Core modules
 ;;-----------------------------------------------------------------------------
 
 (require 'core-auto-modes)
-(require 'core-company)
 (require 'core-compilation)
+(require 'core-completion)
 (require 'core-crux)
 (require 'core-defuns)
 (require 'core-editing)

@@ -84,5 +84,9 @@
 
 (use-package slim-mode :mode "\\.slim\\'")
 
+(use-package yari
+  :init
+  (define-key 'help-command (kbd "R") 'yari))
+
 (provide 'module-ruby)
 ;;; module-ruby ends here

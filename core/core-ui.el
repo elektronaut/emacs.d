@@ -62,5 +62,24 @@
                            (abbreviate-file-name (buffer-file-name))
                          "%b"))))
 
+;; Highlight cursor when changing windows.
+(use-package beacon
+  :init
+  (setq-default beacon-color "#3E4451"
+                beacon-blink-duration 0.2
+                beacon-blink-delay 0.05)
+  :config
+  (beacon-mode +1))
+
+;; Delight modes.
+(use-package delight
+  :config
+  (delight '((yas-minor-mode nil yasnippet)
+             (abbrev-mode nil abbrev)
+             (flyspell-mode nil flyspell)
+             (whitespace-mode nil whitespace))))
+
+(use-package diminish)
+
 (provide 'core-ui)
 ;;; core-ui.el ends here

@@ -6,27 +6,12 @@
 ;; Built-ins
 ;;-----------------------------------------------------------------------------
 
-;; Abbreviations
-(use-package abbrev
-  :ensure nil
-  :config
-  (setq-default abbrev-mode t
-                abbrev-file-name (expand-file-name "abbrev_defs" savefile-dir)
-                save-abbrevs t)
-  (read-abbrev-file (expand-file-name "abbrev_defs" savefile-dir))
-  (add-hook 'text-mode-hook 'abbrev-mode))
-
-(use-package ag)
-
 (use-package bookmark
   :ensure nil
   :config
   (setq bookmark-default-file (expand-file-name "bookmarks" savefile-dir)
         bookmark-save-flag 1))
 
-(use-package browse-at-remote)
-
-;; Calendar
 (use-package calendar
   :ensure nil
   :init
@@ -48,7 +33,6 @@
           (concat dired-omit-files "\\|^.bundle$\\|^.git$\\|^.DS_Store$\\|^.projectile$"))
     (add-hook 'dired-mode-hook #'dired-omit-mode)))
 
-
 (use-package ediff
   :ensure nil
   :config
@@ -62,28 +46,6 @@
   :config
   ;; Start a new eshell even if one is active.
   (global-set-key (kbd "C-x M") (lambda () (interactive) (eshell t))))
-
-(use-package etags-select
-  :ensure nil
-  :bind (("C-x t" . etags-select-find-tag-at-point)))
-
-(use-package hippie-expand
-  :ensure nil
-  :bind (("s-/" . hippie-expand)
-         ("M-/" . hippie-expand))
-  :init
-  (setq hippie-expand-try-functions-list '(try-expand-dabbrev
-                                           try-expand-dabbrev-all-buffers
-                                           try-expand-dabbrev-from-kill
-                                           try-complete-file-name-partially
-                                           try-complete-file-name
-                                           try-expand-all-abbrevs
-                                           try-expand-list
-                                           try-expand-line
-                                           try-complete-lisp-symbol-partially
-                                           try-complete-lisp-symbol)))
-
-(use-package lorem-ipsum)
 
 (use-package mu4e
   :ensure nil
@@ -108,12 +70,6 @@
   :config
   (setq reb-re-syntax 'string))
 
-(use-package saveplace
-  :ensure nil
-  :config
-  (setq save-place-file (expand-file-name "saveplace" savefile-dir))
-  (setq-default save-place t))
-
 ;; Navigate windows with shift+arrow keys
 (use-package windmove
   :ensure nil
@@ -130,15 +86,6 @@
   :ensure nil
   :config
   (winner-mode +1))
-
-(use-package recentf
-  :ensure nil
-  :config
-  (setq recentf-save-file (expand-file-name "recentf" savefile-dir)
-        recentf-max-saved-items 500
-        recentf-max-menu-items 15
-        recentf-auto-cleanup 'never)
-  (recentf-mode +1))
 
 (use-package tramp
   :ensure nil
@@ -161,6 +108,8 @@
 (use-package ace-window
   :bind (("s-w" . ace-window)))
 
+(use-package ag)
+
 (use-package anzu
   :bind (("M-%"   . anzu-query-replace)
          ("C-M-%" . anzu-query-replace-regexp))
@@ -175,13 +124,7 @@
   (setq avy-background t
         avy-style 'at-full))
 
-(use-package beacon
-  :init
-  (setq-default beacon-color "#3E4451"
-                beacon-blink-duration 0.2
-                beacon-blink-delay 0.05)
-  :config
-  (beacon-mode +1))
+(use-package browse-at-remote)
 
 (use-package browse-kill-ring
   :bind (("s-y" . browse-kill-ring))
@@ -196,20 +139,11 @@
                  calendar-norway-andre-merkedagar
                  calendar-norway-dst)))
 
-(use-package delight
-  :config
-  (delight '((yas-minor-mode nil yasnippet)
-             (abbrev-mode nil abbrev)
-             (flyspell-mode nil flyspell)
-             (whitespace-mode nil whitespace))))
-
 (use-package diff-hl
   :config
   (global-diff-hl-mode +1)
   (add-hook 'dired-mode-hook 'diff-hl-dired-mode)
   (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh))
-
-(use-package diminish)
 
 (use-package discover-my-major
   :bind (("C-c m" . discover-my-major)))
@@ -218,6 +152,10 @@
   :config
   (global-set-key [remap kill-ring-save] 'easy-kill)
   (global-set-key [remap mark-sexp] 'easy-mark))
+
+(use-package etags-select
+  :ensure nil
+  :bind (("C-x t" . etags-select-find-tag-at-point)))
 
 (use-package expand-region
   :bind (("C-=" . er/expand-region)))
@@ -237,6 +175,8 @@
 (use-package imenu-anywhere
   :bind (("C-c i" . imenu-anywhere)))
 
+(use-package lorem-ipsum)
+
 (use-package move-text
   :config
   (global-set-key [(control shift up)]  'move-text-up)
@@ -253,14 +193,6 @@
 
 (use-package project-explorer
   :bind (("C-c p x" . project-explorer-open)))
-
-(use-package savehist
-  :config
-  (setq savehist-additional-variables
-        '(search-ring regexp-search-ring)
-        savehist-autosave-interval 60
-        savehist-file (expand-file-name "savehist" savefile-dir))
-  (savehist-mode +1))
 
 (use-package smartrep)
 (use-package operate-on-number
@@ -294,14 +226,6 @@
 
 (use-package wgrep-ag
   :bind (("C-c p s S" . projectile-ag)))
-
-(use-package yari
-  :init
-  (define-key 'help-command (kbd "R") 'yari))
-
-(use-package yasnippet
-  :init
-  (yas-global-mode 1))
 
 (use-package zop-to-char
   :bind (("M-z" . zop-up-to-char)
