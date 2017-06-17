@@ -24,11 +24,6 @@
 
 (set-default 'imenu-auto-rescan t)
 
-(use-package tabify
-  :ensure nil
-  :config
-  (with-region-or-buffer untabify))
-
 (with-region-or-buffer indent-region)
 
 (defadvice set-buffer-major-mode (after set-major-mode activate compile)
@@ -68,6 +63,12 @@ and file 'filename' will be opened and cursor set on line 'linenumber'"
 ;; Packages
 ;;-----------------------------------------------------------------------------
 
+(use-package anzu
+  :bind (("M-%"   . anzu-query-replace)
+         ("C-M-%" . anzu-query-replace-regexp))
+  :config
+  (global-anzu-mode))
+
 (use-package easy-kill
   :config
   (global-set-key [remap kill-ring-save] 'easy-kill)
@@ -105,6 +106,11 @@ and file 'filename' will be opened and cursor set on line 'linenumber'"
       ("#" . apply-operation-to-number-at-point)
       ("%" . apply-operation-to-number-at-point)
       ("'" . operate-on-number-at-point))))
+
+(use-package tabify
+  :ensure nil
+  :config
+  (with-region-or-buffer untabify))
 
 (use-package viking-mode
   :config

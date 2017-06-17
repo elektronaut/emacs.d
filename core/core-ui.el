@@ -89,7 +89,18 @@
 
 (use-package diminish)
 
+(use-package discover-my-major
+  :bind (("C-c m" . discover-my-major)))
+
+;; Clean up obsolete buffers automatically
+(use-package midnight :ensure nil)
+
 (use-package nlinum)
+
+(use-package re-builder
+  :ensure nil
+  :config
+  (setq reb-re-syntax 'string))
 
 (use-package uniquify
   :ensure nil
@@ -115,6 +126,10 @@
   :ensure nil
   :config
   (which-function-mode 1))
+
+(use-package which-key
+  :config
+  (which-key-mode +1))
 
 (provide 'core-ui)
 ;;; core-ui.el ends here
