@@ -17,39 +17,8 @@
 
 
 ;;-----------------------------------------------------------------------------
-;; Macros
-;;-----------------------------------------------------------------------------
-
-(defmacro advise-commands (advice-name commands class &rest body)
-  "Apply advice named ADVICE-NAME to multiple COMMANDS.
-
-The body of the advice is in BODY."
-  `(progn
-     ,@(mapcar (lambda (command)
-                 `(defadvice ,command (,class ,(intern (concat (symbol-name command) "-" advice-name)) activate)
-                    ,@body))
-               commands)))
-
-(defmacro with-region-or-buffer (func)
-  "When called with no active region, call FUNC on current buffer."
-  `(defadvice ,func (before with-region-or-buffer activate compile)
-     (interactive
-      (if mark-active
-          (list (region-beginning) (region-end))
-        (list (point-min) (point-max))))))
-
-
-;;-----------------------------------------------------------------------------
 ;; Load paths
 ;;-----------------------------------------------------------------------------
-
-(require 'package)
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
-;;(setq package-user-dir (expand-file-name "elpa" user-emacs-directory))
-(package-initialize)
-
-(require 'use-package)
-(setq use-package-always-ensure t)
 
 ;; Add Homebrew to the load path
 (let ((default-directory "/usr/local/share/emacs/site-lisp/"))
@@ -103,6 +72,8 @@ The body of the advice is in BODY."
 ;;-----------------------------------------------------------------------------
 ;; Core modules
 ;;-----------------------------------------------------------------------------
+
+(require 'core-macros)
 
 (require 'core-calendar)
 (require 'core-compilation)

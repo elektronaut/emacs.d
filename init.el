@@ -14,6 +14,15 @@
 (add-to-list 'load-path (expand-file-name "core" user-emacs-directory))
 (add-to-list 'load-path (expand-file-name "modules" user-emacs-directory))
 
+;; Enable packages
+(require 'package)
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+;;(setq package-user-dir (expand-file-name "elpa" user-emacs-directory))
+(package-initialize)
+
+(require 'use-package)
+(setq use-package-always-ensure t)
+
 ;; Core
 (require 'core)
 
@@ -49,8 +58,5 @@
 
 (message "Init complete in %.2f seconds"
          (- (time-to-seconds (current-time)) (time-to-seconds emacs-start-time)))
-
-;; Commented out to make package.el happy.
-; (package-initialize)
 
 ;;; init.el ends here
