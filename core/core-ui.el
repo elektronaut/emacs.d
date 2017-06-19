@@ -53,7 +53,8 @@
                   keyboard-quit mwheel-scroll down up next-line previous-line
                   backward-char forward-char minibuffer-keyboard-quit))
     (ding)))
-(setq-default ring-bell-function 'core-bell-function)
+(setq-default ring-bell-function 'core-bell-function
+              visible-bell 'top-bottom)
 
 ;; Frame title
 (setq-default frame-title-format
