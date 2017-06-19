@@ -2,6 +2,8 @@
 ;;; Commentary:
 ;;; Code:
 
+(require 'core-macros)
+
 ;; Autosave
 (setq backup-directory-alist `((".*" . ,temporary-file-directory)))
 (setq auto-save-file-name-transforms `((".*" ,temporary-file-directory t)))

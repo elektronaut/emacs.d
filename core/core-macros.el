@@ -1,4 +1,4 @@
-;;; macros.el --- Macros
+;;; core-macros.el --- Macros
 ;;; Commentary:
 ;;; Code:
 
@@ -8,7 +8,8 @@
 The body of the advice is in BODY."
   `(progn
      ,@(mapcar (lambda (command)
-                 `(defadvice ,command (,class ,(intern (concat (symbol-name command) "-" advice-name)) activate)
+                 `(defadvice ,command
+                      (,class ,(intern (concat (symbol-name command) "-" advice-name)) activate)
                     ,@body))
                commands)))
 
@@ -20,5 +21,5 @@ The body of the advice is in BODY."
           (list (region-beginning) (region-end))
         (list (point-min) (point-max))))))
 
-(provide 'macros)
-;;; macros.el ends here
+(provide 'core-macros)
+;;; core-macros.el ends here

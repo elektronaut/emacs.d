@@ -47,18 +47,21 @@
 (unless (file-exists-p savefile-dir)
   (make-directory savefile-dir))
 
-;; Add init to load path
-(add-to-list 'load-path (expand-file-name "init" user-emacs-directory))
 
 ;;-----------------------------------------------------------------------------
 ;; Load configuration
 ;;-----------------------------------------------------------------------------
 
-(require 'macros)
-(require 'defuns)
-(require-dir "core")
-(require-dir "modules")
-(require 'modeline)
+(defun init-dir (dir)
+  "Add DIR to load path and require all files within."
+  (let ((fullpath (expand-file-name dir user-emacs-directory)))
+    (add-to-list 'load-path fullpath)
+    (mapc (lambda (name)
+            (require (intern (file-name-sans-extension name))))
+          (directory-files fullpath nil "\\.elc?$"))))
+
+(init-dir "core")
+(init-dir "modules")
 
 ;; Load custom settings
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))

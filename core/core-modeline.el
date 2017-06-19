@@ -1,4 +1,4 @@
-;;; modeline.el -- Mode line
+;;; core-modeline.el -- Mode line
 ;;; Author: Inge Jørgensen <inge@elektronaut.no>
 
 ;;; Commentary:
@@ -9,6 +9,8 @@
 ;;; Licence: MIT
 
 ;;; Code:
+
+(require 'core-ui)
 
 (make-face 'mode-line-read-only-face)
 (make-face 'mode-line-modified-face)
@@ -248,5 +250,5 @@
 (column-number-mode t)
 (size-indication-mode t)
 
-(provide 'modeline)
-;;; modeline.el ends here
+(provide 'core-modeline)
+;;; core-modeline.el ends here

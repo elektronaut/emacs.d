@@ -2,6 +2,8 @@
 ;;; Commentary:
 ;;; Code:
 
+(require 'core-macros)
+
 (defvar yank-indent-threshold 1000
   "Max threshold for automatic indentation.")
 

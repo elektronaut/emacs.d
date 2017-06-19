@@ -1,17 +1,6 @@
-;;; defuns.el --- Misc functions
+;;; core-defuns.el --- Misc functions
 ;;; Commentary:
 ;;; Code:
-
-(defun require-all (dir)
-  "`require' all elisp files from directory DIR."
-  (mapc (lambda (name)
-          (require (intern (file-name-sans-extension name))))
-        (directory-files dir nil "\\.elc?$")))
-
-(defun require-dir (dir)
-  "Add DIR to load path and load all files within."
-  (add-to-list 'load-path (expand-file-name dir user-emacs-directory))
-  (require-all (expand-file-name dir user-emacs-directory)))
 
 (defun split-n (n)
   "Split frame in N windows."
@@ -115,5 +104,5 @@
       (narrow-to-region start end)
       (while (re-search-forward "[, ]" nil t) (replace-match "" nil t)))))
 
-(provide 'defuns)
-;;; defuns.el ends here
+(provide 'core-defuns)
+;;; core-defuns.el ends here
