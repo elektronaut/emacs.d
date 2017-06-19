@@ -28,24 +28,25 @@
 (make-face 'mode-line-process-face)
 (make-face 'mode-line-80col-face)
 
-(let ((background        "#21242b")
-      (foreground        "#B5BABF")
-      (faded             "#525E6C")
-      (white             "#eeeeee")
-      (red               "#ff665c")
-      (blue              "#00b3ef")
-      (blue-d            "#00437F")
-      (green             "#7bc275")
-      (yellow            "#ECBE7B"))
+(let ((background          "#282c34")
+      (background-inactive "#1c1f24")
+      (foreground          "#B5BABF")
+      (faded               "#525E6C")
+      (white               "#eeeeee")
+      (red                 "#ff665c")
+      (blue                "#00b3ef")
+      (blue-d              "#00437F")
+      (green               "#7bc275")
+      (yellow              "#ECBE7B"))
 
   (set-face-attribute 'mode-line nil
                       :foreground foreground :background background
                       :inverse-video nil
-                      :box '(:line-width 6 :color "#21242b" :style nil))
+                      :box '(:line-width 6 :color "#282c34" :style nil))
   (set-face-attribute 'mode-line-inactive nil
                       :inherit 'mode-line-face
-                      :foreground faded :background background
-                      :box '(:line-width 6 :color "#21242b" :style nil))
+                      :foreground faded :background background-inactive
+                      :box '(:line-width 6 :color "#1c1f24" :style nil))
   (set-face-attribute 'mode-line-highlight nil
                       :inherit 'mode-line-face
                       :foreground red :background nil)
@@ -232,8 +233,9 @@
            (rhs (list
                  (core-modeline-buffer-encoding-abbrev)
                  (core-modeline-vc)
-                 " "
+                 "  "
                  (core-modeline-major-mode)
+                 " "
                  (core-modeline-position)))
            (spacing (propertize
                      " "
