@@ -5,52 +5,60 @@
 
 ;;; Code:
 
-(defconst emacs-start-time (current-time))
-
 (setq-default user-full-name    "Inge Jørgensen"
               user-mail-address "inge@elektronaut.no")
 
-;; Bootstrap load paths
-(add-to-list 'load-path (expand-file-name "core" user-emacs-directory))
-(add-to-list 'load-path (expand-file-name "modules" user-emacs-directory))
+
+;;-----------------------------------------------------------------------------
+;; Startup
+;;-----------------------------------------------------------------------------
+
+(defconst emacs-start-time (current-time))
+
+(setq load-prefer-newer t
+      gc-cons-threshold 50000000
+      large-file-warning-threshold 100000000)
+
+;; Automatically start server
+(require 'server)
+(unless (server-running-p) (server-start))
+
+
+;;-----------------------------------------------------------------------------
+;; Packages and paths
+;;-----------------------------------------------------------------------------
 
 ;; Enable packages
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
-;;(setq package-user-dir (expand-file-name "elpa" user-emacs-directory))
 (package-initialize)
 
+;; Enable use-package
 (require 'use-package)
 (setq use-package-always-ensure t)
 
-;; Core
-(require 'core)
+;; Add Homebrew to the load path
+(let ((default-directory "/usr/local/share/emacs/site-lisp/"))
+  (normal-top-level-add-subdirs-to-load-path))
 
-;; Modules
-(require 'module-c)
-(require 'module-clojure)
-(require 'module-coffee)
-(require 'module-common-lisp)
-(require 'module-css)
-(require 'module-elixir)
-(require 'module-elm)
-(require 'module-emacs-lisp)
-(require 'module-go)
-(require 'module-haskell)
-(require 'module-js)
-(require 'module-markdown)
-(require 'module-misc)
-(require 'module-org)
-(require 'module-perl)
-(require 'module-puppet)
-(require 'module-python)
-(require 'module-ruby)
-(require 'module-scala)
-(require 'module-scheme)
-(require 'module-shell)
-(require 'module-web)
-(require 'module-xml)
-(require 'module-yaml)
+;; Set and create savefile dir
+(defvar savefile-dir (expand-file-name "savefile" user-emacs-directory)
+  "This folder stores all the automatically generated save/history-files.")
+(unless (file-exists-p savefile-dir)
+  (make-directory savefile-dir))
+
+;; Add init to load path
+(add-to-list 'load-path (expand-file-name "init" user-emacs-directory))
+
+;;-----------------------------------------------------------------------------
+;; Load configuration
+;;-----------------------------------------------------------------------------
+
+(require 'macros)
+(require 'defuns)
+(require-dir "core")
+(require-dir "modules")
+(require 'modeline)
 
 ;; Load custom settings
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))

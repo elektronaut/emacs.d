@@ -1,4 +1,4 @@
-;;; core-macros.el --- Macros
+;;; macros.el --- Macros
 ;;; Commentary:
 ;;; Code:
 
@@ -20,5 +20,5 @@ The body of the advice is in BODY."
           (list (region-beginning) (region-end))
         (list (point-min) (point-max))))))
 
-(provide 'core-macros)
-;;; core-macros.el ends here
+(provide 'macros)
+;;; macros.el ends here
