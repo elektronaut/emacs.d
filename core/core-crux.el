@@ -22,7 +22,7 @@
          ("C-c d"   . crux-duplicate-current-line-or-region)
          ("C-c M-d" . crux-duplicate-and-comment-current-line-or-region)
          ("C-c r"   . crux-rename-buffer-and-file)
-         ("C-c t"   . crux-visit-term-buffer)
+         ;; ("C-c t"   . crux-visit-term-buffer)
          ("C-c k"   . crux-kill-other-buffers)
          ("C-c TAB" . crux-indent-rigidly-and-copy-to-clipboard)
          ("C-c I"   . crux-find-user-init-file)

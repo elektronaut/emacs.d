@@ -16,5 +16,8 @@
   ;; Start a new eshell even if one is active.
   (global-set-key (kbd "C-x M") (lambda () (interactive) (eshell t))))
 
+(use-package multi-term
+  :bind (("C-c t" . multi-term-dedicated-toggle)))
+
 (provide 'core-shell)
 ;;; core-shell ends here
