@@ -12,10 +12,11 @@
   :config
   (add-hook 'dired-mode-hook 'dired-hide-details-mode)
   (put 'dired-find-alternate-file 'disabled nil)
-  (setq dired-use-ls-dired nil
+  (setq dired-use-ls-dired t
         dired-recursive-deletes 'always
         dired-recursive-copies 'always
-        dired-dwim-target t)
+        dired-dwim-target t
+        dired-listing-switches "-aBhl")
   (use-package dired-x
     :ensure nil
     :config
