@@ -12,6 +12,7 @@ custom.el
 elpa
 rake.cache
 savefile/
+secrets.el
 session*
 tramp
 url
