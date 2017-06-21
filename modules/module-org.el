@@ -7,6 +7,7 @@
 
 ;;; Code:
 
+(require 'core-secrets)
 (require 'org)
 (require 'org-agenda)
 
@@ -16,11 +17,23 @@
 (global-set-key "\C-ca" 'org-agenda)
 (global-set-key "\C-cb" 'org-iswitchb)
 
-(setq org-mobile-directory "~/Dropbox/Apps/MobileOrg"
+(setq org-directory "~/Dropbox/org"
+      org-mobile-directory "~/Dropbox/Apps/MobileOrg"
+      org-default-notes-file "~/Dropbox/org/organizer.org"
+      org-agenda-files '("~/Dropbox/org/organizer.org"
+                         "~/Dropbox/org/gcal-anyone.org")
       org-replace-disputed-keys t
-      org-src-fontify-natively t
-      org-hide-leading-stars nil
-      org-log-done t)
+      org-src-fontify-natively nil
+      org-hide-leading-stars t
+      org-log-done t
+      org-ellipsis " …")
+
+(setq org-capture-templates
+      '(("a" "Appointment" entry (file  "~/Dropbox/org/gcal-anyone.org" )
+	 "* %?\n\n%^T\n\n:PROPERTIES:\n\n:END:\n\n")
+        ("t" "Task" entry (file+headline "~/Dropbox/org/organizer.org" "Tasks")
+	 "* TODO %?\n%u" :prepend t)
+	))
 
 (with-eval-after-load 'org
   ;; Prevent Org from overriding the bindings for windmove.
@@ -50,6 +63,18 @@
 (use-package org-journal
   :init
   (setq org-journal-dir "~/Dropbox/org/journal"))
+
+(use-package org-gcal
+  :ensure t
+  :config
+  (setq org-gcal-dir (expand-file-name "org-gcal/" savefile-dir)
+        org-gcal-client-id (config-secret 'gcal-client-id)
+	org-gcal-client-secret (config-secret 'gcal-client-secret)
+	org-gcal-file-alist '(("inge@anyone.no" .  "~/Dropbox/org/gcal-anyone.org")))
+  (setq org-gcal-token-file (expand-file-name ".org-gcal-token" org-gcal-dir))
+  :init
+  (add-hook 'org-agenda-mode-hook (lambda () (org-gcal-sync) ))
+  (add-hook 'org-capture-after-finalize-hook (lambda () (org-gcal-sync) )))
 
 (provide 'module-org)
 ;;; module-org ends here

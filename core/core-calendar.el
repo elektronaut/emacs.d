@@ -10,15 +10,9 @@
 (use-package calendar
   :ensure nil
   :init
-  (setq-default calendar-week-start-day 1))
-
-(use-package calendar-norway
-  :config
-  (setq-default calendar-holidays
-                (append
-                 calendar-norway-raude-dagar
-                 calendar-norway-andre-merkedagar
-                 calendar-norway-dst)))
+  (setq-default calendar-week-start-day 1
+                calendar-time-display-form '(24-hours ":" minutes))
+  (calendar-set-date-style 'european))
 
 (provide 'core-calendar)
 ;;; core-calendar ends here

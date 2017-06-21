@@ -24,6 +24,10 @@
 
 (set-mouse-color "white")
 
+;; Set all org faces to the same height
+(dolist (face '(org-level-1 org-level-2 org-level-3 org-level-4 org-level-5))
+  (set-face-attribute face nil :weight 'semi-bold :height 1.0))
+
 ;; Cursor
 (setq-default cursor-type 'bar)
 
