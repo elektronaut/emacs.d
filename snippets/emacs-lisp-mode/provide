@@ -1,0 +1,11 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: provide
+# key: provide
+# binding: direct-keybinding
+# --
+;;; ${1:`(file-name-nondirectory (file-name-sans-extension (buffer-file-name)))`}.el --- ${2:Description}
+;;; Commentary:
+;;; Code:
+
+(provide '$1)
+;;; $1.el ends here

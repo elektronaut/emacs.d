@@ -1,0 +1,54 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: controller
+# key: controller
+# binding: direct-keybinding
+# --
+class ${1:Widgets}Controller < ApplicationController
+  before_action :find_${2:widget}, only: [:show, :edit, :update, :destroy]
+
+  def index
+    @$2s = $1.all
+  end
+
+  def show
+  end
+
+  def new
+    @$2 = $1.new
+  end
+
+  def edit
+  end
+
+  def create
+    @$2 = $1.create($2_params)
+    if @$2.valid?
+      redirect_to @$2
+    else
+      render action: :new
+    end
+  end
+
+  def update
+    if @$2.update($2_params)
+      redirect_to @$2
+    else
+      render action: :edit
+    end
+  end
+
+  def destroy
+    @$2.destroy
+    redirect_to $2s_url
+  end
+
+  private
+
+  def find_$2
+    @$2 = $1.find(params[:id])
+  end
+
+  def $2_params
+    params.require(:$2).permit()
+  end
+end
