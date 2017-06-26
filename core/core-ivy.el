@@ -11,7 +11,8 @@
 
 (use-package counsel
   :config
-  (use-package counsel-projectile))
+  (use-package counsel-projectile)
+  (use-package counsel-dash))
 
 (use-package swiper)
 
