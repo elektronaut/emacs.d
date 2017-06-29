@@ -17,16 +17,27 @@
 (global-set-key "\C-ca" 'org-agenda)
 (global-set-key "\C-cb" 'org-iswitchb)
 
-(setq org-directory "~/Dropbox/org"
-      org-mobile-directory "~/Dropbox/Apps/MobileOrg"
-      org-default-notes-file "~/Dropbox/org/organizer.org"
+(setq
       org-agenda-files '("~/Dropbox/org/organizer.org"
+                         "~/Dropbox/org/archive.org"
                          "~/Dropbox/org/gcal-anyone.org")
-      org-replace-disputed-keys t
-      org-src-fontify-natively nil
+      org-archive-location "~/Dropbox/org/archive.org::"
+      org-default-notes-file "~/Dropbox/org/organizer.org"
+      org-directory "~/Dropbox/org"
+      org-ellipsis " …"
       org-hide-leading-stars t
       org-log-done t
-      org-ellipsis " …")
+      org-mobile-directory "~/Dropbox/Apps/MobileOrg"
+      org-outline-path-complete-in-steps nil
+      org-refile-allow-creating-parent-nodes 'confirm
+      org-refile-targets '((org-agenda-files :maxlevel . 3))
+      org-refile-use-outline-path 'file
+      org-replace-disputed-keys t
+      org-src-fontify-natively nil
+      org-startup-indented t)
+
+(setq org-todo-keywords
+      '((sequence "TODO" "WAIT" "|" "DONE" "DELEGATED" "CANCELED")))
 
 (setq org-capture-templates
       '(("a" "Appointment" entry (file  "~/Dropbox/org/gcal-anyone.org" )
