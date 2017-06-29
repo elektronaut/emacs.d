@@ -16,29 +16,34 @@
 (global-set-key "\C-cl" 'org-store-link)
 (global-set-key "\C-ca" 'org-agenda)
 (global-set-key "\C-cb" 'org-iswitchb)
+(global-set-key "\C-cc" 'org-capture)
 
 (setq
-      org-agenda-files '("~/Dropbox/org/organizer.org"
-                         "~/Dropbox/org/archive.org"
-                         ;; "~/Dropbox/org/gcal-anyone.org"
-                         )
-      org-archive-location "~/Dropbox/org/archive.org::"
-      org-default-notes-file "~/Dropbox/org/organizer.org"
-      org-directory "~/Dropbox/org"
-      org-ellipsis " …"
-      org-hide-leading-stars t
-      org-log-done t
-      org-mobile-directory "~/Dropbox/Apps/MobileOrg"
-      org-outline-path-complete-in-steps nil
-      org-refile-allow-creating-parent-nodes 'confirm
-      org-refile-targets '((org-agenda-files :maxlevel . 3))
-      org-refile-use-outline-path 'file
-      org-replace-disputed-keys t
-      org-src-fontify-natively nil
-      org-startup-indented t)
+ org-agenda-files '("~/Dropbox/org/organizer.org"
+                    "~/Dropbox/org/archive.org"
+                    ;; "~/Dropbox/org/gcal-anyone.org"
+                    )
+ org-agenda-skip-deadline-if-done t
+ org-agenda-skip-scheduled-if-done t
+ org-agenda-span 14
+ org-reverse-note-order t
+ org-archive-location "~/Dropbox/org/archive.org::"
+ org-default-notes-file "~/Dropbox/org/organizer.org"
+ org-directory "~/Dropbox/org"
+ org-ellipsis " …"
+ org-hide-leading-stars t
+ org-log-done t
+ org-mobile-directory "~/Dropbox/Apps/MobileOrg"
+ org-outline-path-complete-in-steps nil
+ org-refile-allow-creating-parent-nodes 'confirm
+ org-refile-targets '((org-agenda-files :maxlevel . 3))
+ org-refile-use-outline-path 'file
+ org-replace-disputed-keys t
+ org-src-fontify-natively nil
+ org-startup-indented t)
 
 (setq org-todo-keywords
-      '((sequence "TODO" "WAIT" "|" "DONE" "DELEGATED" "CANCELED")))
+      '((sequence "MAYBE" "WAIT" "TODO(t)" "|" "DONE(d)" "DELEGATED" "CANCELED")))
 
 (setq org-capture-templates
       '(
