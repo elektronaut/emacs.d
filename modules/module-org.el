@@ -20,7 +20,8 @@
 (setq
       org-agenda-files '("~/Dropbox/org/organizer.org"
                          "~/Dropbox/org/archive.org"
-                         "~/Dropbox/org/gcal-anyone.org")
+                         ;; "~/Dropbox/org/gcal-anyone.org"
+                         )
       org-archive-location "~/Dropbox/org/archive.org::"
       org-default-notes-file "~/Dropbox/org/organizer.org"
       org-directory "~/Dropbox/org"
@@ -40,8 +41,9 @@
       '((sequence "TODO" "WAIT" "|" "DONE" "DELEGATED" "CANCELED")))
 
 (setq org-capture-templates
-      '(("a" "Appointment" entry (file  "~/Dropbox/org/gcal-anyone.org" )
-	 "* %?\n\n%^T\n\n:PROPERTIES:\n\n:END:\n\n")
+      '(
+        ;; ("a" "Appointment" entry (file  "~/Dropbox/org/gcal-anyone.org" )
+	;;  "* %?\n\n%^T\n\n:PROPERTIES:\n\n:END:\n\n")
         ("t" "Task" entry (file+headline "~/Dropbox/org/organizer.org" "Tasks")
 	 "* TODO %?\n%u" :prepend t)
 	))
@@ -75,17 +77,17 @@
   :init
   (setq org-journal-dir "~/Dropbox/org/journal"))
 
-(use-package org-gcal
-  :ensure t
-  :config
-  (setq org-gcal-dir (expand-file-name "org-gcal/" savefile-dir)
-        org-gcal-client-id (config-secret 'gcal-client-id)
-	org-gcal-client-secret (config-secret 'gcal-client-secret)
-	org-gcal-file-alist '(("inge@anyone.no" .  "~/Dropbox/org/gcal-anyone.org")))
-  (setq org-gcal-token-file (expand-file-name ".org-gcal-token" org-gcal-dir))
-  :init
-  (add-hook 'org-agenda-mode-hook (lambda () (org-gcal-sync) ))
-  (add-hook 'org-capture-after-finalize-hook (lambda () (org-gcal-sync) )))
+;; (use-package org-gcal
+;;   :ensure t
+;;   :config
+;;   (setq org-gcal-dir (expand-file-name "org-gcal/" savefile-dir)
+;;         org-gcal-client-id (config-secret 'gcal-client-id)
+;; 	org-gcal-client-secret (config-secret 'gcal-client-secret)
+;; 	org-gcal-file-alist '(("inge@anyone.no" .  "~/Dropbox/org/gcal-anyone.org")))
+;;   (setq org-gcal-token-file (expand-file-name ".org-gcal-token" org-gcal-dir))
+;;   :init
+;;   (add-hook 'org-agenda-mode-hook (lambda () (org-gcal-sync) ))
+;;   (add-hook 'org-capture-after-finalize-hook (lambda () (org-gcal-sync) )))
 
 (provide 'module-org)
 ;;; module-org ends here
