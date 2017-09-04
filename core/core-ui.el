@@ -32,6 +32,13 @@
 (dolist (face '(org-level-3 org-level-4 org-level-5))
   (set-face-attribute face nil :weight 'normal :height 1.0 :background "#282c34"))
 
+;; Minibuffer background
+(add-hook 'minibuffer-setup-hook
+          (lambda ()
+            (make-local-variable 'face-remapping-alist)
+            (add-to-list 'face-remapping-alist
+                         '(default (:background "#1c1f24")))))
+
 ;; Cursor
 (setq-default cursor-type 'bar)
 
