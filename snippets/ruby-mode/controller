@@ -3,8 +3,8 @@
 # key: controller
 # binding: direct-keybinding
 # --
-class ${1:Widgets}Controller < ApplicationController
-  before_action :find_${2:widget}, only: [:show, :edit, :update, :destroy]
+class ${1:Widget}sController < ApplicationController
+  before_action :find_${2:widget}, only: %i[show edit update destroy]
 
   def index
     @$2s = $1.all
