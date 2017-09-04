@@ -30,7 +30,8 @@
  org-archive-location "~/Dropbox/org/archive.org::"
  org-default-notes-file "~/Dropbox/org/organizer.org"
  org-directory "~/Dropbox/org"
- org-ellipsis " …"
+ org-cycle-separator-lines 2
+ org-ellipsis nil
  org-hide-leading-stars t
  org-log-done t
  org-mobile-directory "~/Dropbox/Apps/MobileOrg"
@@ -39,11 +40,11 @@
  org-refile-targets '((org-agenda-files :maxlevel . 3))
  org-refile-use-outline-path 'file
  org-replace-disputed-keys t
- org-src-fontify-natively nil
+ org-src-fontify-natively t
  org-startup-indented t)
 
 (setq org-todo-keywords
-      '((sequence "MAYBE" "WAIT" "TODO(t)" "|" "DONE(d)" "DELEGATED" "CANCELED")))
+      '((sequence "MAYBE" "WAITING" "TODO(t)" "|" "DONE(d)" "DELEGATED" "CANCELED")))
 
 (setq org-capture-templates
       '(

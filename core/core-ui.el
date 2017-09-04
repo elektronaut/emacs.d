@@ -9,9 +9,10 @@
 (setq inhibit-startup-screen t)
 
 ;; Typography
-(set-face-attribute 'default        nil :family "Inconsolata" :height 130)
-(set-face-attribute 'variable-pitch nil :family "Inconsolata" :height 130)
-(setq-default line-spacing 2)
+;;(set-face-attribute 'default        nil :family "Consolas" :height 130)
+(set-face-attribute 'default        nil :family "Inconsolata" :height 140)
+(set-face-attribute 'variable-pitch nil :family "Inconsolata" :height 140)
+(setq-default line-spacing 3)
 
 ;; Theme
 ;; (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
@@ -20,13 +21,16 @@
 
 (use-package doom-themes
   :config
-  (load-theme 'doom-one t))
+  (load-theme 'doom-one t)
+  (doom-themes-org-config))
 
 (set-mouse-color "white")
 
 ;; Set all org faces to the same height
-(dolist (face '(org-level-1 org-level-2 org-level-3 org-level-4 org-level-5))
-  (set-face-attribute face nil :weight 'semi-bold :height 1.0))
+(dolist (face '(org-level-1 org-level-2))
+  (set-face-attribute face nil :weight 'bold :height 1.0 :background "#282c34"))
+(dolist (face '(org-level-3 org-level-4 org-level-5))
+  (set-face-attribute face nil :weight 'normal :height 1.0 :background "#282c34"))
 
 ;; Cursor
 (setq-default cursor-type 'bar)

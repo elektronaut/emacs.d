@@ -28,10 +28,10 @@
 (make-face 'mode-line-process-face)
 (make-face 'mode-line-80col-face)
 
-(let ((background          "#282c34")
-      (background-inactive "#1c1f24")
+(let ((background          "#1c1f24")
+      (background-inactive "#222529")
       (foreground          "#B5BABF")
-      (faded               "#525E6C")
+      (faded               "#727E8C")
       (white               "#eeeeee")
       (red                 "#ff665c")
       (blue                "#00b3ef")
@@ -42,11 +42,11 @@
   (set-face-attribute 'mode-line nil
                       :foreground foreground :background background
                       :inverse-video nil
-                      :box '(:line-width 6 :color "#282c34" :style nil))
+                      :box '(:line-width 6 :color "#1c1f24" :style nil))
   (set-face-attribute 'mode-line-inactive nil
                       :inherit 'mode-line-face
                       :foreground faded :background background-inactive
-                      :box '(:line-width 6 :color "#1c1f24" :style nil))
+                      :box '(:line-width 6 :color "#222529" :style nil))
   (set-face-attribute 'mode-line-highlight nil
                       :inherit 'mode-line-face
                       :foreground red :background nil)
