@@ -5,6 +5,7 @@
 .cask
 .emacs.desktop*
 .flycheck_*
+.org-id-locations
 /themes
 /var/pcache
 custom.el
