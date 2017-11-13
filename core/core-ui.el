@@ -2,6 +2,8 @@
 ;;; Commentary:
 ;;; Code:
 
+(require 'org)
+
 ;; Enable desktop save mode
 (desktop-save-mode 1)
 
