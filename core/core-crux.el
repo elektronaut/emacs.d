@@ -13,7 +13,6 @@
          ("C-a"     . crux-move-beginning-of-line)
          ("M-o"     . crux-smart-open-line)
          ("C-c n"   . crux-cleanup-buffer-or-region)
-         ("C-c f"   . crux-recentf-ido-find-file)
          ("C-M-z"   . crux-indent-defun)
          ("C-c u"   . crux-view-url)
          ("C-c e"   . crux-eval-and-replace)
@@ -28,7 +27,6 @@
          ("C-c I"   . crux-find-user-init-file)
          ("C-c S"   . crux-find-shell-init-file)
          ("s-o"     . crux-smart-open-line-above)
-         ("s-r"     . crux-recentf-ido-find-file)
          ("s-j"     . crux-top-join-line)
          ("s-k"     . crux-kill-whole-line))
   :config
