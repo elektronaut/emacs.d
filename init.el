@@ -5,6 +5,9 @@
 
 ;;; Code:
 
+(setq gc-cons-threshold 402653184
+      gc-cons-percentage 0.6)
+
 (setq-default user-full-name    "Inge Jørgensen"
               user-mail-address "inge@elektronaut.no")
 
@@ -16,7 +19,6 @@
 (defconst emacs-start-time (current-time))
 
 (setq load-prefer-newer t
-      gc-cons-threshold 50000000
       large-file-warning-threshold 100000000)
 
 ;; Automatically start server
@@ -66,6 +68,9 @@
 ;; Load custom settings
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 (load custom-file)
+
+(add-hook 'emacs-startup-hook (lambda () (setq gc-cons-threshold 16777216
+                                               gc-cons-percentage 0.1)))
 
 (message "Init complete in %.2f seconds"
          (- (time-to-seconds (current-time)) (time-to-seconds emacs-start-time)))

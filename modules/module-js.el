@@ -20,9 +20,8 @@
     (js2-imenu-extras-mode +1))
   (add-hook 'js2-mode-hook 'my-js2-mode-hook))
 
-(use-package jsx-mode
-  :init
-  (setq-default jsx-indent-level 2))
+(use-package rjsx-mode
+  :mode "\\.jsx\\'")
 
 (provide 'module-js)
 ;;; module-js ends here

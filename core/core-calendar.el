@@ -11,8 +11,7 @@
   :ensure nil
   :init
   (setq-default calendar-week-start-day 1
-                calendar-time-display-form '(24-hours ":" minutes))
-  (calendar-set-date-style 'european))
+                calendar-time-display-form '(24-hours ":" minutes)))
 
 (provide 'core-calendar)
 ;;; core-calendar ends here

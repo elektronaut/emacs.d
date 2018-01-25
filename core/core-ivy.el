@@ -45,5 +45,11 @@
     (interactive)
     (counsel-ag (thing-at-point 'symbol) (projectile-project-root))))
 
+(use-package smex
+  :init
+  (setq smex-save-file (expand-file-name "smex-items" savefile-dir))
+  :config
+  (smex-initialize))
+
 (provide 'core-ivy)
 ;;; core-ivy ends here
