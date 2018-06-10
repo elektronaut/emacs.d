@@ -5,16 +5,25 @@
 (require 'org)
 
 ;; Enable desktop save mode
-(desktop-save-mode 1)
+;;(desktop-save-mode 1)
 
 ;; Disable startup screen
-(setq inhibit-startup-screen t)
+(setq inhibit-startup-screen t
+      initial-scratch-message nil)
+
+(add-hook 'after-init-hook
+          (lambda () (switch-to-buffer (find-file "~/Dropbox/org/anyone.org"))))
 
 ;; Typography
 ;;(set-face-attribute 'default        nil :family "Consolas" :height 130)
-(set-face-attribute 'default        nil :family "Inconsolata" :height 140)
-(set-face-attribute 'variable-pitch nil :family "Inconsolata" :height 140)
-(setq-default line-spacing 3)
+
+;;(set-face-attribute 'default        nil :family "Inconsolata" :height 140)
+;;(set-face-attribute 'variable-pitch nil :family "Inconsolata" :height 140)
+;;(setq-default line-spacing 3)
+
+(set-face-attribute 'default        nil :family "SF Mono" :height 120)
+(set-face-attribute 'variable-pitch nil :family "SF Mono" :height 140)
+(setq-default line-spacing 5)
 
 ;; Theme
 ;; (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
@@ -23,16 +32,24 @@
 
 (use-package doom-themes
   :config
-  (load-theme 'doom-one t)
+  (load-theme 'doom-vibrant t)
+  ;;(load-theme 'doom-one t)
+  ;;(load-theme 'doom-city-lights t)
+  ;;(load-theme 'doom-dracula t)
+  ;;(load-theme 'doom-tomorrow-night t)
   (doom-themes-org-config))
 
 (set-mouse-color "white")
 
 ;; Set all org faces to the same height
 (dolist (face '(org-level-1 org-level-2))
-  (set-face-attribute face nil :weight 'bold :height 1.0 :background "#282c34"))
+  (set-face-attribute face nil :weight 'bold :height 1.0 :background "#242730"))
 (dolist (face '(org-level-3 org-level-4 org-level-5))
-  (set-face-attribute face nil :weight 'normal :height 1.0 :background "#282c34"))
+  (set-face-attribute face nil :weight 'normal :height 1.0 :background "#242730"))
+(dolist (face '(org-agenda-structure))
+  (set-face-attribute face nil :weight 'bold :height 140))
+(dolist (face '(org-agenda-date org-agenda-date-today org-agenda-date-weekend))
+  (set-face-attribute face nil :weight 'bold :height 140))
 
 ;; Minibuffer background
 (add-hook 'minibuffer-setup-hook
@@ -135,8 +152,9 @@
 
 ;; Navigate windows with shift+arrow keys
 (use-package windmove
+  :defer t
   :ensure nil
-  :config
+  :init
   (windmove-default-keybindings))
 
 (use-package winner
