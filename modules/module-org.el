@@ -41,7 +41,8 @@
       org-replace-disputed-keys t
       org-reverse-note-order t
       org-src-fontify-natively t
-      org-startup-indented t)
+      org-startup-indented t
+      org-id-link-to-org-use-id t)
 
 (setq org-agenda-custom-commands
       '(("n" "Next actions"
@@ -60,7 +61,7 @@
           (todo "DELEGATED" ((org-agenda-overriding-header "Delegated")))))))
 
 (setq org-stuck-projects
-      '("+project+LEVEL=2/-DONE-MAYBE-CANCELLED" ("NEXT" "TODO" "WAITING") nil ""))
+      '("+project+LEVEL=2/-DONE-MAYBE-DELEGATED-CANCELLED" ("NEXT" "TODO" "WAITING") nil ""))
 
 (setq org-todo-keywords
       '((sequence "NEXT(n)" "TODO(t)" "WAITING" "MAYBE" "|"
@@ -88,11 +89,10 @@
                             ("@home"    . ?h)
                             (:endgroup)
                             ("project"  . ?p)
-                            ("personal" . ?P)
-                            ("band"     . ?b)
-                            ("pedals")
-                            ("work"     . ?w)
+                            ("meeting"  . ?m)
+                            ("maybe"    . ?M)
                             ("note"     . ?n)
+                            ("tasks"    . ?t)
                             ("flagged"  . ??))))
 
 (with-eval-after-load 'org

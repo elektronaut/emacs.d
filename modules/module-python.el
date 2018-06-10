@@ -10,11 +10,11 @@
 (require 'electric)
 
 (use-package python-mode
+  :defer t
   :mode "\\.py\\'"
-  :init
+  :config
   (when (fboundp 'exec-path-from-shell-copy-env)
     (exec-path-from-shell-copy-env "PYTHONPATH"))
-  :config
   (defun module-python-defaults ()
     "Defaults for Python programming."
     (subword-mode +1)

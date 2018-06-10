@@ -8,8 +8,9 @@
 ;;; Code:
 
 (use-package mu4e
+  :commands (mu4e)
   :ensure nil
-  :init
+  :config
   (setq-default mu4e-maildir          (expand-file-name "~/Mail/elektronaut")
                 mu4e-drafts-folder    "/Drafts"
                 mu4e-sent-folder      "/Sent Messages"

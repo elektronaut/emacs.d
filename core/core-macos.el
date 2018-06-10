@@ -2,6 +2,9 @@
 ;;; Commentary:
 ;;; Code:
 
+(add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
+(add-to-list 'default-frame-alist '(ns-appearance . dark))
+
 (when (eq system-type 'darwin)
   (setq-default default-input-method "MacOSX"
                 mac-option-modifier nil
@@ -21,6 +24,10 @@
   (setq insert-directory-program "/usr/local/bin/gls")
 
   (use-package exec-path-from-shell
+    :defer t
+    :commands (exec-path-from-shell-copy-env)
+    :init
+    (setq exec-path-from-shell-check-startup-files nil)
     :config
     (exec-path-from-shell-initialize))
 

@@ -8,6 +8,7 @@
 ;;; Code:
 
 (use-package helm
+  :defer t
   :bind (("C-c h" . helm-command-prefix)
          ("M-i"   . helm-swoop)
          ("M-I"   . helm-swoop-back-to-last-point)
@@ -28,7 +29,8 @@
         helm-move-to-line-cycle-in-source     t
         helm-ff-search-library-in-sexp        t
         helm-ff-file-name-history-use-recentf t)
-  (use-package helm-projectile)
+  (use-package helm-projectile
+    :bind (("C-c p h" . helm-projectile)))
   (use-package helm-spaces)
   (use-package helm-swoop))
 

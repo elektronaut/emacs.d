@@ -23,6 +23,7 @@
   (add-hook 'enh-ruby-mode-hook 'subword-mode))
 
 (use-package ruby-mode
+  :defer t
   :ensure nil
   :mode "Appraisals\\'"
         "Berksfile\\'"
@@ -60,6 +61,7 @@
   (add-hook 'ruby-mode-hook 'inf-ruby-minor-mode))
 
 (use-package robe
+  :defer t
   :config
   (add-hook 'enh-ruby-mode-hook 'robe-mode)
   (add-hook 'ruby-mode-hook 'robe-mode))

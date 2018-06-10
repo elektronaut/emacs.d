@@ -5,9 +5,6 @@
 
 ;;; Code:
 
-(setq gc-cons-threshold 402653184
-      gc-cons-percentage 0.6)
-
 (setq-default user-full-name    "Inge Jørgensen"
               user-mail-address "inge@elektronaut.no")
 
@@ -16,7 +13,19 @@
 ;; Startup
 ;;-----------------------------------------------------------------------------
 
-(defconst emacs-start-time (current-time))
+(setq gc-cons-threshold 402653184
+      gc-cons-percentage 0.6)
+
+(add-hook 'emacs-startup-hook (lambda () (setq gc-cons-threshold 16777216
+                                               gc-cons-percentage 0.1)))
+
+(add-hook 'emacs-startup-hook
+          (lambda ()
+            (message "Emacs started in %s with %d garbage collections."
+                     (format "%.2fs seconds"
+                             (float-time
+                              (time-subtract after-init-time before-init-time)))
+                     gcs-done)))
 
 (setq load-prefer-newer t
       large-file-warning-threshold 100000000)
@@ -37,7 +46,9 @@
 
 ;; Enable use-package
 (require 'use-package)
-(setq use-package-always-ensure t)
+(setq use-package-always-ensure t
+      use-package-compute-statistics nil
+      use-package-verbose nil)
 
 ;; Add Homebrew to the load path
 (let ((default-directory "/usr/local/share/emacs/site-lisp/"))
@@ -68,11 +79,5 @@
 ;; Load custom settings
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 (load custom-file)
-
-(add-hook 'emacs-startup-hook (lambda () (setq gc-cons-threshold 16777216
-                                               gc-cons-percentage 0.1)))
-
-(message "Init complete in %.2f seconds"
-         (- (time-to-seconds (current-time)) (time-to-seconds emacs-start-time)))
 
 ;;; init.el ends here

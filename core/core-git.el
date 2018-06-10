@@ -2,7 +2,8 @@
 ;;; Commentary:
 ;;; Code:
 
-(use-package gist)
+(use-package gist
+  :defer t)
 
 (use-package git-timemachine)
 
