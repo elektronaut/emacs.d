@@ -10,6 +10,7 @@
 
 ;;; Code:
 
+(require 'core-theme)
 (require 'core-ui)
 
 (make-face 'mode-line-read-only-face)
@@ -28,81 +29,90 @@
 (make-face 'mode-line-process-face)
 (make-face 'mode-line-80col-face)
 
-(let ((background          "#1c1f24")
-      (background-inactive "#2a2e38")
-      (foreground          "#B5BABF")
-      (faded               "#727E8C")
-      (white               "#eeeeee")
-      (red                 "#ff665c")
-      (blue                "#51afef")
-      (blue-d              "#1f5582")
-      (green               "#7bc275")
-      (yellow              "#FCCE7B"))
+(defun core-configure-modeline-faces ()
+  "Configures modeline faces."
+  (interactive)
 
-  (set-face-attribute 'mode-line nil
-                      :foreground foreground :background background
-                      :inverse-video nil
-                      :box '(:line-width 6 :color "#1c1f24" :style nil))
-  (set-face-attribute 'mode-line-inactive nil
-                      :inherit 'mode-line-face
-                      :foreground faded :background background-inactive
-                      :box '(:line-width 6 :color "#2a2e38" :style nil))
-  (set-face-attribute 'mode-line-highlight nil
-                      :inherit 'mode-line-face
-                      :foreground red :background nil)
-  (set-face-attribute 'mode-line-read-only-face nil
-                      :inherit 'mode-line-face
-                      :foreground blue
-                      :box '(:line-width 2 :color blue))
-  (set-face-attribute 'mode-line-modified-face nil
-                      :inherit 'mode-line-face
-                      :foreground red
-                      :box '(:line-width 2 :color red))
-  (set-face-attribute 'mode-line-project-face nil
-                      :inherit 'mode-line-face
-                      :foreground blue :weight 'bold)
-  (set-face-attribute 'mode-line-folder-face nil
-                      :inherit 'mode-line-face
-                      :foreground blue)
-  (set-face-attribute 'mode-line-filename-face nil
-                      :inherit 'mode-line-face
-                      :foreground white
-                      :weight 'bold)
-  (set-face-attribute 'mode-line-filename-modified-face nil
-                      :inherit 'mode-line-face
-                      :foreground yellow
-                      :weight 'bold)
-  (set-face-attribute 'mode-line-filename-readonly-face nil
-                      :inherit 'mode-line-face
-                      :foreground blue
-                      :weight 'bold)
-  (set-face-attribute 'mode-line-position-face nil
-                      :inherit 'mode-line-face)
-  (set-face-attribute 'mode-line-mode-face nil
-                      :inherit 'mode-line-face
-                      :foreground white)
-  (set-face-attribute 'mode-line-minor-mode-face nil
-                      ;;:inherit 'mode-line-mode-face
-                      :height 110)
-  (set-face-attribute 'mode-line-vcs-face nil
-                      :inherit 'mode-line-face
-                      :foreground green)
-  (set-face-attribute 'mode-line-vcs-info-face nil
-                      :inherit 'mode-line-vcs-face
-                      :foreground yellow)
-  (set-face-attribute 'mode-line-vcs-warning-face nil
-                      :inherit 'mode-line-vcs-face
-                      :foreground red)
-  (set-face-attribute 'mode-line-process-face nil
-                      :inherit 'mode-line-face
-                      :foreground green)
-  (set-face-attribute 'mode-line-80col-face nil
-                      :inherit 'mode-line-position-face
-                      :foreground red)
-  ;(set-face-attribute 'rbenv-active-ruby-face nil
-  ;                    :inherit 'mode-line-face
-  ;                    :foreground nil :weight 'normal)
-  )
+  (let ((background       (face-attribute 'vertical-border :background))
+        (background-faded (face-attribute 'hl-line :background))
+        (foreground       (face-attribute 'default :foreground))
+        (faded            (face-attribute 'font-lock-comment-face :foreground))
+        (context          (face-attribute 'font-lock-keyword-face :foreground))
+        (modified         (face-attribute 'warning :foreground))
+        (warning          (face-attribute 'error :foreground))
+        (ok               (face-attribute 'success :foreground)))
+
+    (set-face-attribute 'mode-line nil
+                        :foreground foreground :background background
+                        :inverse-video nil
+                        :box `(:line-width 6 :color ,background :style nil))
+    (set-face-attribute 'mode-line-inactive nil
+                        :inherit 'mode-line-face
+                        :foreground faded :background background-faded
+                        :box `(:line-width 6 :color ,background-faded :style nil))
+    (set-face-attribute 'mode-line-highlight nil
+                        :inherit 'mode-line-face
+                        :foreground warning :background nil)
+    (set-face-attribute 'mode-line-read-only-face nil
+                        :inherit 'mode-line-face
+                        :foreground context
+                        :box '(:line-width 2 :color context))
+    (set-face-attribute 'mode-line-modified-face nil
+                        :inherit 'mode-line-face
+                        :foreground warning
+                        :box '(:line-width 2 :color warning))
+    (set-face-attribute 'mode-line-project-face nil
+                        :inherit 'mode-line-face
+                        :foreground context :weight 'bold)
+    (set-face-attribute 'mode-line-folder-face nil
+                        :inherit 'mode-line-face
+                        :foreground context)
+    (set-face-attribute 'mode-line-filename-face nil
+                        :inherit 'mode-line-face
+                        :foreground foreground
+                        :weight 'bold)
+    (set-face-attribute 'mode-line-filename-modified-face nil
+                        :inherit 'mode-line-face
+                        :foreground modified
+                        :weight 'bold)
+    (set-face-attribute 'mode-line-filename-readonly-face nil
+                        :inherit 'mode-line-face
+                        :foreground context
+                        :weight 'bold)
+    (set-face-attribute 'mode-line-position-face nil
+                        :inherit 'mode-line-face)
+    (set-face-attribute 'mode-line-mode-face nil
+                        :inherit 'mode-line-face
+                        :foreground foreground)
+    (set-face-attribute 'mode-line-minor-mode-face nil
+                        ;;:inherit 'mode-line-mode-face
+                        :height 110)
+    (set-face-attribute 'mode-line-vcs-face nil
+                        :inherit 'mode-line-face
+                        :foreground ok)
+    (set-face-attribute 'mode-line-vcs-info-face nil
+                        :inherit 'mode-line-vcs-face
+                        :foreground modified)
+    (set-face-attribute 'mode-line-vcs-warning-face nil
+                        :inherit 'mode-line-vcs-face
+                        :foreground warning)
+    (set-face-attribute 'mode-line-process-face nil
+                        :inherit 'mode-line-face
+                        :foreground ok)
+    (set-face-attribute 'mode-line-80col-face nil
+                        :inherit 'mode-line-position-face
+                        :foreground warning)
+    ;;(set-face-attribute 'rbenv-active-ruby-face nil
+    ;;                    :inherit 'mode-line-face
+    ;;                    :foreground nil :weight 'normal)
+    ))
+
+(core-configure-modeline-faces)
+
+(defun load-theme--restore-modeline-faces(_ &rest _)
+  "Restore modeline faces after loading theme."
+  (core-configure-modeline-faces))
+(advice-add 'load-theme :after #'load-theme--restore-modeline-faces)
 
 
 ;; Selected window

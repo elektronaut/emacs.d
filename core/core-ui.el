@@ -2,8 +2,6 @@
 ;;; Commentary:
 ;;; Code:
 
-(require 'org)
-
 ;; Enable desktop save mode
 ;;(desktop-save-mode 1)
 
@@ -22,39 +20,6 @@
 ;;(setq-default line-spacing 3)
 
 (set-face-attribute 'default        nil :family "SF Mono" :height 120)
-
-;; Theme
-;; (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
-;; (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/atom-one-dark-theme")
-;; (load-theme 'atom-one-dark t)
-
-(use-package doom-themes
-  :config
-  (load-theme 'doom-vibrant t)
-  ;;(load-theme 'doom-one t)
-  ;;(load-theme 'doom-city-lights t)
-  ;;(load-theme 'doom-dracula t)
-  ;;(load-theme 'doom-tomorrow-night t)
-  (doom-themes-org-config))
-
-(set-mouse-color "white")
-
-;; Set all org faces to the same height
-(dolist (face '(org-level-1 org-level-2))
-  (set-face-attribute face nil :weight 'bold :height 1.0 :background "#242730"))
-(dolist (face '(org-level-3 org-level-4 org-level-5))
-  (set-face-attribute face nil :weight 'normal :height 1.0 :background "#242730"))
-(dolist (face '(org-agenda-structure))
-  (set-face-attribute face nil :weight 'bold :height 140))
-(dolist (face '(org-agenda-date org-agenda-date-today org-agenda-date-weekend))
-  (set-face-attribute face nil :weight 'bold :height 140))
-
-;; Minibuffer background
-(add-hook 'minibuffer-setup-hook
-          (lambda ()
-            (make-local-variable 'face-remapping-alist)
-            (add-to-list 'face-remapping-alist
-                         '(default (:background "#1c1f24")))))
 (set-face-attribute 'variable-pitch nil :family "SF Mono" :height 120)
 (setq-default line-spacing 4)
 
