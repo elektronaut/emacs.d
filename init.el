@@ -39,6 +39,9 @@
 ;; Packages and paths
 ;;-----------------------------------------------------------------------------
 
+(require 'gnutls)
+(add-to-list 'gnutls-trustfiles "/usr/local/etc/openssl/cert.pem")
+
 ;; Enable packages
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)

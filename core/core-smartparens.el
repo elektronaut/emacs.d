@@ -11,7 +11,7 @@
 
 (use-package smartparens
   :init
-  (setq-default sp-base-key-bindings 'paredit
+  (setq-default ;; sp-base-key-bindings 'paredit
                 sp-autoskip-closing-pair 'always
                 sp-hybrid-kill-entire-symbol nil)
   (add-hook 'prog-mode-hook 'smartparens-mode)
@@ -22,7 +22,7 @@
     (if (eq this-command 'eval-expression)
         (smartparens-mode 1)))
   (add-hook 'minibuffer-setup-hook 'conditionally-enable-smartparens-mode)
-  (sp-use-paredit-bindings)
+  ;; (sp-use-paredit-bindings)
   (show-smartparens-global-mode +1)
   (sp-pair "{" nil :post-handlers
 	   '(((lambda (&rest _ignored)

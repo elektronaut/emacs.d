@@ -29,11 +29,7 @@
     :init
     (setq exec-path-from-shell-check-startup-files nil)
     :config
-    (exec-path-from-shell-initialize))
-
-  (use-package vkill
-    :bind (("C-x p" . vkill)))
-  )
+    (exec-path-from-shell-initialize)))
 
 (provide 'core-macos)
 ;;; core-macos.el ends here

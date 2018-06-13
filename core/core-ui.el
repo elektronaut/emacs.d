@@ -22,8 +22,6 @@
 ;;(setq-default line-spacing 3)
 
 (set-face-attribute 'default        nil :family "SF Mono" :height 120)
-(set-face-attribute 'variable-pitch nil :family "SF Mono" :height 140)
-(setq-default line-spacing 5)
 
 ;; Theme
 ;; (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
@@ -57,6 +55,8 @@
             (make-local-variable 'face-remapping-alist)
             (add-to-list 'face-remapping-alist
                          '(default (:background "#1c1f24")))))
+(set-face-attribute 'variable-pitch nil :family "SF Mono" :height 120)
+(setq-default line-spacing 4)
 
 ;; Cursor
 (setq-default cursor-type 'bar)
@@ -72,6 +72,10 @@
 (menu-bar-mode -1)
 (scroll-bar-mode -1)
 (when (fboundp 'tool-bar-mode) (tool-bar-mode -1))
+
+;; Window split direction
+(setq split-width-threshold 120)
+(setq split-height-threshold nil)
 
 ;; Input config
 (setq-default scroll-margin 0
