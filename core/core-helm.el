@@ -7,6 +7,8 @@
 
 ;;; Code:
 
+(require 'core-projectile)
+
 (use-package helm
   :defer t
   :bind (("C-c h" . helm-command-prefix)

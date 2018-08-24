@@ -12,16 +12,44 @@
 (add-hook 'after-init-hook
           (lambda () (switch-to-buffer (find-file "~/Dropbox/org/anyone.org"))))
 
+
+;; Monitor detection
+(defvar core-frame-monitor-name nil
+  "Name of current monitor.")
+
+(defvar core-frame-monitor-hook nil
+  "Hook called after frame changes monitor.")
+
+(defun core-detect-frame-monitor-change ()
+  "Detects when frame change monitor."
+  (let ((monitor-name  (cdr (assq 'name (frame-monitor-attributes)))))
+    (unless (string-equal core-frame-monitor-name monitor-name)
+      (progn
+        (setq core-frame-monitor-name monitor-name)
+        (run-hooks 'core-frame-monitor-hook)))))
+
+(defvar core-frame-monitor-timer
+  (run-with-timer 1 2 'core-detect-frame-monitor-change))
+
+
 ;; Typography
-;;(set-face-attribute 'default        nil :family "Consolas" :height 130)
+(defun core-set-font-size ()
+  "Configures default font size based on current display."
+  (interactive)
+  (let* ((laptop-name   "Color LCD")
+         (monitor-name  (cdr (assq 'name (frame-monitor-attributes))))
+         (font-size     (if (string-equal monitor-name laptop-name)
+                            130 120)))
+    (dolist (face '(default variable-pitch))
+      (set-face-attribute face nil
+                          :family "SF Mono"
+                          :height font-size)))
+  (setq-default line-spacing 4))
 
-;;(set-face-attribute 'default        nil :family "Inconsolata" :height 140)
-;;(set-face-attribute 'variable-pitch nil :family "Inconsolata" :height 140)
-;;(setq-default line-spacing 3)
+(core-set-font-size)
+(add-hook 'window-configuration-change-hook 'core-set-font-size)
+(add-hook 'core-frame-monitor-hook 'core-set-font-size)
 
-(set-face-attribute 'default        nil :family "SF Mono" :height 120)
-(set-face-attribute 'variable-pitch nil :family "SF Mono" :height 120)
-(setq-default line-spacing 4)
 
 ;; Cursor
 (setq-default cursor-type 'bar)

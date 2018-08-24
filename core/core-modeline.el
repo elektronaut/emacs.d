@@ -12,6 +12,7 @@
 
 (require 'core-theme)
 (require 'core-ui)
+(require 'core-projectile)
 
 (make-face 'mode-line-read-only-face)
 (make-face 'mode-line-modified-face)

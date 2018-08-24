@@ -9,6 +9,8 @@
 
 (require 'thingatpt)
 
+(require 'core-projectile)
+
 (use-package counsel
   :config
   (use-package counsel-projectile)

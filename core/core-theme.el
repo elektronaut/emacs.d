@@ -24,7 +24,8 @@
   "Set all org faces to the same height and background."
   (let ((height     (face-attribute 'default :height))
         (background (face-attribute 'default :background)))
-    (dolist (face '(org-level-1
+    (dolist (face '(outline-1
+                    org-level-1
                     org-level-2))
       (set-face-attribute face nil :weight 'normal
                           :height 1.0 :background background))
@@ -48,13 +49,13 @@
 (advice-add 'load-theme :after #'load-theme--restore-theme-overrides)
 
 ;; Minibuffer background
-(add-hook 'minibuffer-setup-hook
-          (lambda ()
-            (make-local-variable 'face-remapping-alist)
-            (add-to-list 'face-remapping-alist
-                         '(default
-                            (:background (face-attribute
-                                          'mode-line :background))))))
+;; (add-hook 'minibuffer-setup-hook
+;;           (lambda ()
+;;             (make-local-variable 'face-remapping-alist)
+;;             (add-to-list 'face-remapping-alist
+;;                          '(default
+;;                             (:background (face-attribute
+;;                                           'mode-line :background))))))
 
 (provide 'core-theme)
 ;;; core-theme.el ends here

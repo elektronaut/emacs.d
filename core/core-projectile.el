@@ -10,7 +10,8 @@
 (use-package projectile
   :bind (("s-p"  . projectile-command-map))
   :init
-  (setq projectile-known-projects-file
+  (setq projectile-keymap-prefix (kbd "C-c p")
+        projectile-known-projects-file
           (expand-file-name "projectile-bookmarks.eld" savefile-dir)
         projectile-cache-file
           (expand-file-name  "projectile.cache" savefile-dir))

@@ -21,7 +21,8 @@
 
 (setq org-directory "~/Dropbox/org"
       org-agenda-compact-blocks nil
-      org-agenda-files '("~/Dropbox/org")
+      org-agenda-files '("~/Dropbox/org"
+                         "~/Dropbox/org/anyone")
       org-agenda-persistent-filter t
       org-agenda-skip-deadline-if-done t
       org-agenda-skip-scheduled-if-done t
@@ -81,7 +82,9 @@
         ("s" "Source note" entry (file+olp "~/Dropbox/org/organizer.org" "Notes")
 	 "* %? %U\n#+BEGIN_SRC\n%i\n#+END_SRC\nFrom: %a" :prepend t)
         ("j" "Journal entry" entry (file+datetree "~/Dropbox/org/journal.org")
-	 "* %?\n%i")))
+	 "* %?\n%i")
+        ("p" "Project" entry (file+olp "~/Dropbox/org/organizer.org" "Projects")
+	 "* %? :project:\n** Tasks [0/0]\n" :prepend t)))
 
 (setq org-tag-alist (quote ((:startgroup)
                             ("@errand"  . ?e)
