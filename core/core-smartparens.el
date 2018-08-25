@@ -15,6 +15,7 @@
                 sp-autoskip-closing-pair 'always
                 sp-hybrid-kill-entire-symbol nil)
   (add-hook 'prog-mode-hook 'smartparens-mode)
+  (add-hook 'org-mode-hook 'smartparens-mode)
   :config
   (require 'smartparens-config)
   (defun conditionally-enable-smartparens-mode ()
@@ -27,6 +28,8 @@
   (sp-pair "{" nil :post-handlers
 	   '(((lambda (&rest _ignored)
 		(crux-smart-open-line-above)) "RET")))
+  (sp-with-modes '(org-mode)
+    (sp-local-pair "*" "*"))
   (sp-with-modes '(web-mode)
     (sp-local-pair "%" "%"
                    :unless '(sp-in-string-p)

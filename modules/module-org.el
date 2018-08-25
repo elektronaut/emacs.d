@@ -11,6 +11,24 @@
 (require 'org)
 (require 'org-agenda)
 
+(defun skip-non-stuck-projects ()
+  "Skip trees that are not stuck projects"
+  ;; (bh/list-sublevels-for-projects-indented)
+  (save-restriction
+    (widen)
+    (let ((next-headline (save-excursion (or (outline-next-heading) (point-max)))))
+      (let* ((subtree-end (save-excursion (org-end-of-subtree t)))
+             (has-next ))
+        (save-excursion
+          (forward-line 1)
+          (while (and (not has-next) (< (point) subtree-end) (re-search-forward "^\\*+ NEXT " subtree-end t))
+            (unless (member "WAITING" (org-get-tags-at))
+              (setq has-next t))))
+        (if has-next
+            next-headline
+          nil)) ; a stuck project, has subtasks but no next task
+      next-headline)))
+
 (add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
 (add-to-list 'auto-mode-alist '("\\.org-archive\\'" . org-mode))
 
@@ -31,11 +49,15 @@
       org-cycle-separator-lines 2
       org-default-notes-file "~/Dropbox/org/organizer.org"
       org-ellipsis nil
+      org-global-properties (quote (("Effort_ALL" .
+                                     "0:15 0:30 0:45 1:00 2:00 3:00 4:00 5:00 6:00 0:00")
+                                    ("STYLE_ALL" . "habit")))
       org-hide-leading-stars t
       org-log-done t
       org-mobile-directory "~/Dropbox/Apps/MobileOrg"
       org-mobile-inbox-for-pull (concat org-directory "/from-mobile.org")
       org-outline-path-complete-in-steps nil
+      org-tags-exclude-from-inheritance '("project")
       org-refile-allow-creating-parent-nodes 'confirm
       org-refile-targets '((org-agenda-files :maxlevel . 3))
       org-refile-use-outline-path 'file
@@ -50,6 +72,8 @@
          ((agenda "" ((org-agenda-span 7)))
           (tags-todo "+PRIORITY=\"A\"" ((org-agenda-overriding-header "High priority")))
           (todo "NEXT"  ((org-agenda-overriding-header "Next actions")))
+          (tags "project/-DONE-MAYBE-DELEGATED-CANCELLED"
+                ((org-agenda-overriding-header "Active projects")))
           (todo "WAITING"  ((org-agenda-overriding-header "Waiting")))
           (stuck ""  ((org-agenda-overriding-header "Stuck projects")))))
         ("o" "Overview"
@@ -62,7 +86,7 @@
           (todo "DELEGATED" ((org-agenda-overriding-header "Delegated")))))))
 
 (setq org-stuck-projects
-      '("+project+LEVEL=2/-DONE-MAYBE-DELEGATED-CANCELLED" ("NEXT" "TODO" "WAITING") nil ""))
+      '("+project/-DONE-MAYBE-DELEGATED-CANCELLED" ("NEXT" "WAITING") nil ""))
 
 (setq org-todo-keywords
       '((sequence "NEXT(n)" "TODO(t)" "WAITING" "MAYBE" "|"
