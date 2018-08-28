@@ -47,7 +47,7 @@
       org-agenda-span 14
       org-archive-location "%s-archive::datetree/"
       org-cycle-separator-lines 2
-      org-default-notes-file "~/Dropbox/org/organizer.org"
+      org-default-notes-file "~/Dropbox/org/inbox.org"
       org-ellipsis nil
       org-global-properties (quote (("Effort_ALL" .
                                      "0:15 0:30 0:45 1:00 2:00 3:00 4:00 5:00 6:00 0:00")
@@ -71,6 +71,7 @@
       '(("n" "Next actions"
          ((agenda "" ((org-agenda-span 7)))
           (tags-todo "+PRIORITY=\"A\"" ((org-agenda-overriding-header "High priority")))
+          (tags-todo "+inbox"  ((org-agenda-overriding-header "Inbox")))
           (todo "NEXT"  ((org-agenda-overriding-header "Next actions")))
           (tags "project/-DONE-MAYBE-DELEGATED-CANCELLED"
                 ((org-agenda-overriding-header "Active projects")))
@@ -99,15 +100,15 @@
               ("MAYBE"   :foreground "#51afef" :weight bold))))
 
 (setq org-capture-templates
-      '(("t" "Task" entry (file+olp "~/Dropbox/org/organizer.org" "Tasks")
+      '(("t" "Task" entry (file+olp "~/Dropbox/org/inbox.org" "Tasks")
 	 "* TODO %?\n%U\n%i" :prepend t)
-        ("n" "Note" entry (file+olp "~/Dropbox/org/organizer.org" "Notes")
+        ("n" "Note" entry (file+olp "~/Dropbox/org/inbox.org" "Notes")
 	 "* %? %U\n%i" :prepend t)
-        ("s" "Source note" entry (file+olp "~/Dropbox/org/organizer.org" "Notes")
+        ("s" "Source note" entry (file+olp "~/Dropbox/org/inbox.org" "Notes")
 	 "* %? %U\n#+BEGIN_SRC\n%i\n#+END_SRC\nFrom: %a" :prepend t)
         ("j" "Journal entry" entry (file+datetree "~/Dropbox/org/journal.org")
 	 "* %?\n%i")
-        ("p" "Project" entry (file+olp "~/Dropbox/org/organizer.org" "Projects")
+        ("p" "Project" entry (file+olp "~/Dropbox/org/inbox.org" "Projects")
 	 "* %? :project:\n** Tasks [0/0]\n" :prepend t)))
 
 (setq org-tag-alist (quote ((:startgroup)
@@ -166,6 +167,43 @@
 ;;   :init
 ;;   (add-hook 'org-agenda-mode-hook (lambda () (org-gcal-sync) ))
 ;;   (add-hook 'org-capture-after-finalize-hook (lambda () (org-gcal-sync) )))
+
+
+;; From https://lists.gnu.org/archive/html/emacs-orgmode/2015-06/msg00266.html
+(defun org-agenda-delete-empty-blocks ()
+  "Remove empty agenda blocks.
+  A block is identified as empty if there are fewer than 2
+  non-empty lines in the block (excluding the line with
+  `org-agenda-block-separator' characters)."
+  (when org-agenda-compact-blocks
+    (user-error "Cannot delete empty compact blocks"))
+  (setq buffer-read-only nil)
+  (save-excursion
+    (goto-char (point-min))
+    (let* ((blank-line-re "^\\s-*$")
+           (content-line-count (if (looking-at-p blank-line-re) 0 1))
+           (start-pos (point))
+           (block-re (format "%c\\{10,\\}" org-agenda-block-separator)))
+      (while (and (not (eobp)) (forward-line))
+        (cond
+         ((looking-at-p block-re)
+          (when (< content-line-count 2)
+            (delete-region start-pos (1+ (point-at-bol))))
+          (setq start-pos (point))
+          (forward-line)
+          (setq content-line-count (if (looking-at-p blank-line-re) 0 1)))
+         ((not (looking-at-p blank-line-re))
+          (setq content-line-count (1+ content-line-count)))))
+      (when (< content-line-count 2)
+        (delete-region start-pos (point-max)))
+      (goto-char (point-min))
+      ;; The above strategy can leave a separator line at the beginning
+      ;; of the buffer.
+      (when (looking-at-p block-re)
+        (delete-region (point) (1+ (point-at-eol))))))
+  (setq buffer-read-only t))
+
+(add-hook 'org-agenda-finalize-hook #'org-agenda-delete-empty-blocks)
 
 (provide 'module-org)
 ;;; module-org ends here

@@ -11,15 +11,15 @@
   :commands (mu4e)
   :ensure nil
   :config
-  (setq-default mu4e-maildir          (expand-file-name "~/Mail/elektronaut")
-                mu4e-drafts-folder    "/Drafts"
-                mu4e-sent-folder      "/Sent Messages"
-                mu4e-trash-folder     "/Trash"
-                mu4e-get-mail-command "offlineimap"
+  (setq-default mu4e-maildir          (expand-file-name "~/Mail/anyone")
+                mu4e-drafts-folder    "/drafts"
+                mu4e-sent-folder      "/sent"
+                mu4e-trash-folder     "/trash"
+                mu4e-get-mail-command "mbsync -a"
                 ;;mu4e-sent-messages-behavior 'delete
                 mu4e-maildir-shortcuts '(("/"              . ?i)
-                                         ("/Sent Messages" . ?s)
-                                         ("/Trash"         . ?t))))
+                                         ("/sent" . ?s)
+                                         ("/trash"         . ?t))))
 
 (provide 'core-email)
 ;;; core-email ends here
