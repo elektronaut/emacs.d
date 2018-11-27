@@ -1,0 +1,7 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: project
+# key: project
+# binding: direct-keybinding
+# --
+** ${1:Project name}                                                 :project:
+*** Tasks [0%]

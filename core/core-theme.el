@@ -18,6 +18,8 @@
   (load-theme 'doom-vibrant t)
   (doom-themes-org-config))
 
+;;(load-theme 'atom-one-dark)
+
 (set-mouse-color "white")
 
 (defun core-configure-theme-overrides ()

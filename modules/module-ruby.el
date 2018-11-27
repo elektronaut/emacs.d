@@ -52,6 +52,7 @@
         ruby-align-chained-calls t
         ruby-align-to-stmt-keywords nil
         ruby-custom-encoding-magic-comment-template "# encoding: %s"
+        ruby-insert-encoding-magic-comment nil
         ruby-deep-indent-paren t)
   (add-hook 'ruby-mode-hook 'subword-mode))
 

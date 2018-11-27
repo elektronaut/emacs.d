@@ -3,15 +3,14 @@
 ;;; Code:
 
 ;; Enable desktop save mode
-;;(desktop-save-mode 1)
+(desktop-save-mode 1)
 
 ;; Disable startup screen
 (setq inhibit-startup-screen t
       initial-scratch-message nil)
 
-(add-hook 'after-init-hook
-          (lambda () (switch-to-buffer (find-file "~/Dropbox/org/anyone.org"))))
-
+;; (add-hook 'after-init-hook
+;;           (lambda () (switch-to-buffer (find-file "~/Dropbox/org/anyone.org"))))
 
 ;; Monitor detection
 (defvar core-frame-monitor-name nil
