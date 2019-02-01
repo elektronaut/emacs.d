@@ -20,6 +20,7 @@
   :bind (("<C-tab>" . company-complete))
   :init
   (setq company-idle-delay 0.5
+        company-show-numbers t
         company-tooltip-limit 10
         company-minimum-prefix-length 2
         company-tooltip-flip-when-above t)
@@ -31,6 +32,11 @@
     :ensure company-web
     :init
     (add-to-list 'company-backends 'company-web-html))
+  (use-package company-tabnine
+    :ensure t
+    :init
+    (add-to-list 'company-backends #'company-tabnine))
+  (company-tng-configure-default)
   (global-company-mode 1))
 
 (use-package hippie-expand
