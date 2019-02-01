@@ -7,6 +7,7 @@
 
 ;;; Code:
 
+(require 'core-hydra)
 (require 'core-secrets)
 (require 'org)
 (require 'org-agenda)
@@ -133,6 +134,7 @@
   (define-key org-agenda-mode-map (kbd "S-<down>") nil)
   (define-key org-agenda-mode-map (kbd "S-<left>") nil)
   (define-key org-agenda-mode-map (kbd "S-<right>") nil)
+  (define-key org-mode-map (kbd "C-c o") #'hydra-org/body)
 
   ;; Add replacements for the some of keybindings we just removed. It
   ;; looks like Org already binds C-up and C-down separately from M-{
@@ -204,6 +206,39 @@
   (setq buffer-read-only t))
 
 (add-hook 'org-agenda-finalize-hook #'org-agenda-delete-empty-blocks)
+
+(defhydra hydra-org (org-mode-map "C-c o" :hint nil)
+    "
+  ^Navigate^       ^Status^       ^Update^       ^Go To^          ^Dired^
+  ^^^^^^^^^^------------------------------------------------------------------------
+  _k_: ↑ previous  _t_: todo      _S_: schedule  _g i_: inbox     _g X_: root
+  _j_: ↓ next      _→_: right     _D_: deadline  _g w_: work      _g W_: projects
+  _c_: archive     _←_: left      _O_: sort      _g p_: personal
+  _d_: delete      _,_: priority  _r_: refile    _g j_: journal
+  "
+    ("<up>" org-previous-visible-heading)
+    ("<down>" org-next-visible-heading)
+    ("k" org-previous-visible-heading)
+    ("j" org-next-visible-heading)
+    ("<right>" org-shiftright)
+    ("<left>" org-shiftleft)
+    ("c" org-archive-subtree)
+    ("d" org-cut-subtree)
+    ("t" org-todo)
+    ("," org-priority)
+    ("r" org-refile)
+    ("T" org-todo)
+    ("S" org-schedule)
+    ("D" org-deadline)
+    ("O" org-sort)
+    ("g i" (find-file org-default-notes-file))
+    ("g w" (find-file "~/Dropbox/org/anyone.org"))
+    ("g p" (find-file "~/Dropbox/org/personal.org"))
+    ("g j" (find-file "~/Dropbox/org/journal.org"))
+    ("g X" (dired org-directory))
+    ("g W" (dired "~/Dropbox/org/anyone"))
+    ("<tab>" (org-cycle))
+    ("q" nil "quit"))
 
 (provide 'module-org)
 ;;; module-org ends here
