@@ -40,8 +40,11 @@
 (use-package project-explorer
   :bind (("C-c p x" . project-explorer-open)))
 
-(use-package wgrep-ag
-  :bind (("C-c p s S" . projectile-ag)))
+(use-package rg
+  :bind (("C-c p s S" . rg-project)))
+
+;; (use-package wgrep-ag
+;;   :bind (("C-c p s S" . projectile-ag)))
 
 (provide 'core-navigation)
 ;;; core-navigation ends here

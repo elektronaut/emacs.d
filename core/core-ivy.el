@@ -31,7 +31,7 @@
          ("C-c f"     . counsel-recentf)
          ("M-y"       . counsel-yank-pop)
          :map projectile-mode-map
-         ("C-c p s s" . counsel-projectile-ag))
+         ("C-c p s s" . counsel-projectile-rg))
   :init
   (setq ivy-use-virtual-buffers t)
   (setq projectile-completion-system 'ivy)
