@@ -45,6 +45,11 @@
                           :height font-size)))
   (setq-default line-spacing 4))
 
+;; Line spacing for the minibuffer
+(defun core-minibuffer-line-spacing ()
+  (setq-local line-spacing 4))
+(add-hook 'minibuffer-setup-hook #'core-minibuffer-line-spacing)
+
 (core-set-font-size)
 (add-hook 'window-configuration-change-hook 'core-set-font-size)
 (add-hook 'core-frame-monitor-hook 'core-set-font-size)
