@@ -73,7 +73,10 @@
          ((agenda "" ((org-agenda-span 7)))
           (tags-todo "+PRIORITY=\"A\"" ((org-agenda-overriding-header "High priority")))
           (tags-todo "+inbox"  ((org-agenda-overriding-header "Inbox")))
-          (todo "NEXT"  ((org-agenda-overriding-header "Next actions")))
+          (todo "NEXT"  ((org-agenda-skip-function
+                          '(org-agenda-skip-entry-if 'scheduled 'deadline
+                                                     'regexp "\\=.*\\[#A\\]"))
+                         (org-agenda-overriding-header "Next actions")))
           (tags "project/-DONE-MAYBE-DELEGATED-CANCELLED"
                 ((org-agenda-overriding-header "Active projects")))
           (todo "WAITING"  ((org-agenda-overriding-header "Waiting")))
@@ -135,6 +138,7 @@
   (define-key org-agenda-mode-map (kbd "S-<left>") nil)
   (define-key org-agenda-mode-map (kbd "S-<right>") nil)
   (define-key org-mode-map (kbd "C-c o") #'hydra-org/body)
+  (define-key org-mode-map (kbd "C-c :") #'org-time-stamp-inactive)
 
   ;; Add replacements for the some of keybindings we just removed. It
   ;; looks like Org already binds C-up and C-down separately from M-{
@@ -153,6 +157,8 @@
 (use-package org-autolist
   :config
   (add-hook 'org-mode-hook (lambda () (org-autolist-mode))))
+
+(use-package ox-clip)
 
 ;; (use-package org-journal
 ;;   :init

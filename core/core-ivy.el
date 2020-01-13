@@ -33,10 +33,11 @@
          :map projectile-mode-map
          ("C-c p s s" . counsel-projectile-rg))
   :init
-  (setq ivy-use-virtual-buffers t)
-  (setq projectile-completion-system 'ivy)
-  (setq ivy-height 15)
-  (setq ivy-re-builders-alist '((t . ivy--regex-plus)))
+  (setq ivy-height 15
+        ivy-re-builders-alist '((t . ivy--regex-plus))
+        ivy-use-virtual-buffers t
+        ivy-use-selectable-prompt t
+        projectile-completion-system 'ivy)
   :config
   (ivy-mode 1)
   (defun swiper-at-point ()

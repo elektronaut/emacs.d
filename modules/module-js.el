@@ -10,7 +10,8 @@
 (use-package js2-mode
   :mode "\\.js\\'" "\\.pac\\'"
   :init
-  (setq-default js-basic-offset 2)
+  (setq-default js-basic-offset 2
+                js-indent-level 2)
   :config
   (add-to-list 'interpreter-mode-alist '("node" . js2-mode))
   (defun my-js2-mode-hook ()

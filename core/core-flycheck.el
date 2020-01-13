@@ -15,6 +15,8 @@
                 flycheck-disabled-checkers (append flycheck-disabled-checkers
                                                    '(javascript-jshint)))
   (flycheck-add-mode 'javascript-eslint 'web-mode)
+  (flycheck-add-mode 'javascript-eslint 'js2-mode)
+  (flycheck-add-mode 'javascript-eslint 'js2-jsx-mode)
   (add-hook 'prog-mode-hook 'flycheck-mode))
 
 (provide 'core-flycheck)

@@ -10,9 +10,11 @@
 /var/pcache
 custom.el
 elpa
+/persp-confs
 rake.cache
 savefile/
 secrets.el
 session*
 tramp
+/transient
 url

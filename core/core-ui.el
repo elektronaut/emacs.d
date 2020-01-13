@@ -2,15 +2,18 @@
 ;;; Commentary:
 ;;; Code:
 
-;; Enable desktop save mode
-(desktop-save-mode 1)
+;; Disable desktop save mode
+(desktop-save-mode 0)
+
+;; Open org agenda by default
+(add-hook 'after-init-hook
+          (lambda ()
+            (persp-switch "org")
+            (switch-to-buffer (find-file "~/Dropbox/org/anyone.org"))))
 
 ;; Disable startup screen
 (setq inhibit-startup-screen t
       initial-scratch-message nil)
-
-;; (add-hook 'after-init-hook
-;;           (lambda () (switch-to-buffer (find-file "~/Dropbox/org/anyone.org"))))
 
 ;; Monitor detection
 (defvar core-frame-monitor-name nil

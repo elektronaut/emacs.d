@@ -43,6 +43,8 @@
 (use-package rg
   :bind (("C-c p s S" . rg-project)))
 
+(use-package deadgrep)
+
 ;; (use-package wgrep-ag
 ;;   :bind (("C-c p s S" . projectile-ag)))
 
