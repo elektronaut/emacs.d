@@ -15,7 +15,9 @@
   ;;(load-theme 'doom-city-lights t)
   ;;(load-theme 'doom-dracula t)
   ;;(load-theme 'doom-tomorrow-night t)
-  (load-theme 'doom-vibrant t)
+  ;;(load-theme 'doom-vibrant t)
+  (load-theme 'doom-tomorrow-night t)
+  ;;(load-theme 'doom-wilmersdorf t)
   (doom-themes-org-config))
 
 ;;(load-theme 'atom-one-dark)
