@@ -153,9 +153,16 @@
         (output ""))
     (when (and path (equal "" (car path)))
       (setq path (cdr path)))
-    (while (and path (< (length output) (- max-length 4)))
-      (setq output (concat (car path) "/" output))
-      (setq path (cdr path)))
+    ;; (setq depth (length path))
+    (while (and path
+                (< (length output) (- max-length 4)))
+      (let ((segment (car path)))
+        (unless (and (eq (length output) 0)
+                     (< (length segment) (- max-length 4)))
+          (setq segment (substring segment 0 1)))
+        (setq output (concat segment "/" output))
+        ;; (setq depth (- depth 1))
+        (setq path (cdr path))))
     (when path
       (setq output (concat ".../" output)))
     output))
@@ -179,10 +186,10 @@
                       'mode-line-filename-readonly-face
                     'mode-line-filename-face))))))
 
-(defun core-modeline-buffer-path ()
+(defun core-modeline-buffer-path (max-length)
   (propertize
    (if (or buffer-file-name (eq major-mode 'dired-mode))
-       (core-modeline-shorten-directory (core-modeline-project-relative-buffer-path) 20) "")
+       (core-modeline-shorten-directory (core-modeline-project-relative-buffer-path) max-length) "")
    'face (if active 'mode-line-folder-face)))
 
 (defun core-modeline-macro-recording ()
@@ -230,16 +237,26 @@
 
 
 ;; Mode line
-
 (defun core-modeline-format (&optional id)
   `(:eval
     (let* ((active (eq (selected-window) core-modeline-selected-window))
+           (width (window-total-width (selected-window)))
+           (path-width (max (- width
+                               (length (core-modeline-macro-recording))
+                               (length (core-modeline-projectile))
+                               (length (core-modeline-buffer-name))
+                               (length (core-modeline-buffer-encoding-abbrev))
+                               (length (core-modeline-vc))
+                               (length (core-modeline-major-mode))
+                               (length (core-modeline-position))
+                               5)
+                            4))
            (lhs (list
                  " "
                  ;;(if active "active" "inactive")
                  (core-modeline-macro-recording)
                  (core-modeline-projectile)
-                 (core-modeline-buffer-path)
+                 (core-modeline-buffer-path path-width)
                  (core-modeline-buffer-name)))
            (rhs (list
                  (core-modeline-buffer-encoding-abbrev)
