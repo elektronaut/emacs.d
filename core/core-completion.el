@@ -32,10 +32,6 @@
     :ensure company-web
     :init
     (add-to-list 'company-backends 'company-web-html))
-  (use-package company-tabnine
-    :ensure t
-    :init
-    (add-to-list 'company-backends #'company-tabnine))
   (company-tng-configure-default)
   (global-company-mode 1))
 
