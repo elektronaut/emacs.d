@@ -53,7 +53,7 @@
       org-global-properties (quote (("Effort_ALL" .
                                      "0:15 0:30 0:45 1:00 2:00 3:00 4:00 5:00 6:00 0:00")
                                     ("STYLE_ALL" . "habit")))
-      org-hide-leading-stars t
+      org-hide-leading-stars nil
       org-log-done t
       org-mobile-directory "~/Dropbox/Apps/MobileOrg"
       org-mobile-inbox-for-pull (concat org-directory "/from-mobile.org")

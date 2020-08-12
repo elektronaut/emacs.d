@@ -33,7 +33,6 @@
 (defvar core-frame-monitor-timer
   (run-with-timer 1 2 'core-detect-frame-monitor-change))
 
-
 ;; Typography
 (defun core-set-font-size ()
   "Configures default font size based on current display."
@@ -44,9 +43,14 @@
                             130 120)))
     (dolist (face '(default variable-pitch))
       (set-face-attribute face nil
-                          :family "SF Mono"
+                          ;:family "SF Mono"
+                          :family "JetBrains Mono"
                           :height font-size)))
-  (setq-default line-spacing 4))
+  ;(setq-default line-spacing 4)
+  (setq-default line-spacing 3))
+
+(set-face-attribute 'font-lock-comment-face nil
+                    :slant 'italic)
 
 ;; Line spacing for the minibuffer
 (defun core-minibuffer-line-spacing ()

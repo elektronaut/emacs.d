@@ -19,6 +19,9 @@
   (if (fboundp 'set-fontset-font)
       (set-fontset-font t 'unicode "Apple Color Emoji" nil 'prepend))
 
+  ;; Enable ligatures
+  (mac-auto-operator-composition-mode)
+
   ;; Use ls from coreutils. Install coreutils with Homebrew
   ;; to enable.
   (setq insert-directory-program "/usr/local/bin/gls")

@@ -36,6 +36,7 @@
         "Thorfile\\'"
         "Vagrantfile\\'"
         "\\.axlsx\\'"
+        "\\.builder\\'"
         "\\.cap\\'"
         "\\.gemspec\\'"
         "\\.gemspec\\'"
