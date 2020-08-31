@@ -18,3 +18,5 @@ session*
 tramp
 /transient
 url
+.dap-breakpoints
+.lsp-session-v1
