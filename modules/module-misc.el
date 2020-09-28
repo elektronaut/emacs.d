@@ -35,9 +35,6 @@
 (use-package dart-mode
   :mode "\\.dart\\'")
 
-(use-package dockerfile-mode
-  :mode "Dockerfile\\'")
-
 (use-package erlang
   :mode ("\\.erl\\'" . erlang-mode))
 
