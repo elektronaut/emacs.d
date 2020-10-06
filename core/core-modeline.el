@@ -20,6 +20,7 @@
 (make-face 'mode-line-filename-face)
 (make-face 'mode-line-filename-modified-face)
 (make-face 'mode-line-filename-readonly-face)
+(make-face 'mode-line-remote-host-face)
 (make-face 'mode-line-project-face)
 (make-face 'mode-line-vcs-face)
 (make-face 'mode-line-vcs-info-face)
@@ -62,6 +63,10 @@
                         :inherit 'mode-line-face
                         :foreground warning
                         :box '(:line-width 2 :color warning))
+    (set-face-attribute 'mode-line-remote-host-face nil
+                        :inherit 'mode-line-face
+                        :foreground context
+                        :weight 'bold)
     (set-face-attribute 'mode-line-project-face nil
                         :inherit 'mode-line-face
                         :foreground context :weight 'bold)
@@ -142,26 +147,29 @@
     (buffer-name)))
 
 (defun core-modeline-project-relative-buffer-path ()
-  (if (projectile-project-p)
+  (if (and (not (file-remote-p default-directory))
+           (projectile-project-p))
       (replace-regexp-in-string "^.\/" ""
         (car (projectile-make-relative-to-root (list default-directory))))
     (abbreviate-file-name default-directory)))
 
 (defun core-modeline-shorten-directory (dir max-length)
   "Show up to `MAX-LENGTH' characters of a directory name `DIR'."
-  (let ((path (reverse (split-string (abbreviate-file-name dir) "/")))
-        (output ""))
-    (when (and path (equal "" (car path)))
+  (let* ((host-local-dir (car (reverse (split-string (abbreviate-file-name dir) ":"))))
+         (path (reverse (split-string host-local-dir "/")))
+         (output ""))
+    (when (and path
+               (equal "" (car path)))
       (setq path (cdr path)))
-    ;; (setq depth (length path))
     (while (and path
                 (< (length output) (- max-length 4)))
       (let ((segment (car path)))
-        (unless (and (eq (length output) 0)
-                     (< (length segment) (- max-length 4)))
-          (setq segment (substring segment 0 1)))
+
+        (unless (equal "" segment)
+          (unless (and (eq (length output) 0)
+                       (< (length segment) (- max-length 4)))
+            (setq segment (substring segment 0 1))))
         (setq output (concat segment "/" output))
-        ;; (setq depth (- depth 1))
         (setq path (cdr path))))
     (when path
       (setq output (concat ".../" output)))
@@ -188,7 +196,8 @@
 
 (defun core-modeline-buffer-path (max-length)
   (propertize
-   (if (or buffer-file-name (eq major-mode 'dired-mode))
+   (if (or buffer-file-name
+           (eq major-mode 'dired-mode))
        (core-modeline-shorten-directory (core-modeline-project-relative-buffer-path) max-length) "")
    'face (if active 'mode-line-folder-face)))
 
@@ -215,12 +224,24 @@
                    'mode-line-position-face)) "%p"))
 
 (defun core-modeline-projectile ()
-  (if (and (projectile-project-p)
+  (if (and (not (file-remote-p default-directory))
+           (projectile-project-p)
            (or buffer-file-name (eq major-mode 'dired-mode)))
       (concat (propertize (projectile-project-name)
                           'face (if active 'mode-line-project-face))
               (propertize "/"
                           'face (if active 'mode-line-folder-face)))))
+
+(defun core-modeline-remote-host ()
+  "Displays the remote user and hostname if the current buffer is remote."
+  (if (file-remote-p default-directory)
+      (let* ((user (file-remote-p default-directory 'user))
+             (host (file-remote-p default-directory 'host))
+             (short-host (car (split-string host "\\."))))
+        (propertize (if user
+                        (concat user "@" short-host ":")
+                      (concat short-host ":"))
+                    'face (if active 'mode-line-remote-host-face)))))
 
 (defun core-modeline-vc ()
   "Displays the current branch, colored based on its state."
@@ -243,6 +264,7 @@
            (width (window-total-width (selected-window)))
            (path-width (max (- width
                                (length (core-modeline-macro-recording))
+                               (length (core-modeline-remote-host))
                                (length (core-modeline-projectile))
                                (length (core-modeline-buffer-name))
                                (length (core-modeline-buffer-encoding-abbrev))
@@ -253,8 +275,8 @@
                             4))
            (lhs (list
                  " "
-                 ;;(if active "active" "inactive")
                  (core-modeline-macro-recording)
+                 (core-modeline-remote-host)
                  (core-modeline-projectile)
                  (core-modeline-buffer-path path-width)
                  (core-modeline-buffer-name)))
