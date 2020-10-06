@@ -256,7 +256,6 @@
                         ('t 'mode-line-vcs-face)))))
       (if active (propertize backend 'face face) backend))))
 
-
 ;; Mode line
 (defun core-modeline-format (&optional id)
   `(:eval
