@@ -6,10 +6,10 @@
 (desktop-save-mode 0)
 
 ;; Open org agenda by default
-(add-hook 'after-init-hook
-          (lambda ()
-            (persp-switch "org")
-            (switch-to-buffer (find-file "~/Dropbox/org/anyone.org"))))
+;; (add-hook 'after-init-hook
+;;           (lambda ()
+;;             (persp-switch "org")
+;;             (switch-to-buffer (find-file "~/Dropbox/org/anyone.org"))))
 
 ;; Disable startup screen
 (setq inhibit-startup-screen t

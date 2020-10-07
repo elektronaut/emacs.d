@@ -11,6 +11,7 @@
 custom.el
 elpa
 /persp-confs
+projectile-bookmarks.eld
 rake.cache
 savefile/
 secrets.el
