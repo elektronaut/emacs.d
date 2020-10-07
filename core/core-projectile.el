@@ -17,16 +17,8 @@
           (expand-file-name  "projectile.cache" savefile-dir))
   :config
   (add-to-list 'projectile-globally-ignored-directories "import/site")
-  ;; Disable projectile on remote
-  (defadvice projectile-on (around exlude-tramp activate)
-    "This should disable projectile when visiting a remote file"
-    (unless  (--any? (and it (file-remote-p it))
-                     (list
-                      (buffer-file-name)
-                      list-buffers-directory
-                      default-directory
-                      dired-directory))
-      ad-do-it))
+  (defadvice projectile-project-root (around ignore-remote first activate)
+    (unless (file-remote-p default-directory) ad-do-it))
   (projectile-global-mode t))
 
 (provide 'core-projectile)
