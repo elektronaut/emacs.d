@@ -32,6 +32,7 @@
 
 ;; Automatically start server
 (require 'server)
+(setq server-port 12345)
 (unless (server-running-p) (server-start))
 
 

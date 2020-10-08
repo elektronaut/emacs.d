@@ -49,12 +49,14 @@
   (find-file path)
   (x-focus-frame nil))
 
-(defun core-tramp-server-perform (command args)
+(defun core-tramp-server-perform (proc command args)
   ;;(core-tramp-server-open-file payload)
   (core-tramp-server-log command)
   (cond ((string-equal command "open")
          (mapc (lambda (p) (core-tramp-server-open-file p)) args)
          "OK")
+        ((string-equal command "exit")
+         (delete-process proc))
         (t (concat "Unknown command: " command))))
 
 (defun core-tramp-server-filter (proc string)
@@ -74,7 +76,7 @@
         (core-tramp-server-log payload proc)
         (process-send-string
          proc
-         (core-tramp-server-perform command args)))
+         (core-tramp-server-perform proc command args)))
       (setq message (substring message index)))
     (setcdr pending message)))
 
