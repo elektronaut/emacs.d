@@ -1,4 +1,4 @@
-;;; core-perspective.el --- Perspective
+;;; core-persp.el --- Perspective
 ;;; Commentary:
 ;;; Code:
 
@@ -50,5 +50,5 @@
 ;;   :ensure t
 ;;   :after (perspective))
 
-(provide 'core-perspective)
-;;; core-perspective.el ends here
+(provide 'core-persp)
+;;; core-persp.el ends here

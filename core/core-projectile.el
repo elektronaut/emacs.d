@@ -7,7 +7,7 @@
 
 ;;; Code:
 
-(require 'core-perspective)
+(require 'core-persp)
 
 (use-package projectile
   :after (persp-mode)
