@@ -21,6 +21,7 @@
 (make-face 'mode-line-filename-modified-face)
 (make-face 'mode-line-filename-readonly-face)
 (make-face 'mode-line-remote-host-face)
+(make-face 'mode-line-persp-face)
 (make-face 'mode-line-project-face)
 (make-face 'mode-line-vcs-face)
 (make-face 'mode-line-vcs-info-face)
@@ -67,6 +68,9 @@
                         :inherit 'mode-line-face
                         :foreground context
                         :weight 'bold)
+    (set-face-attribute 'mode-line-persp-face nil
+                        :inherit 'mode-line-face
+                        :foreground modified)
     (set-face-attribute 'mode-line-project-face nil
                         :inherit 'mode-line-face
                         :foreground context :weight 'bold)
@@ -223,14 +227,28 @@
                      'mode-line-80col-face
                    'mode-line-position-face)) "%p"))
 
-(defun core-modeline-projectile ()
+(defun core-modeline-projectile-p ()
+  "Should we display the projectile modeline?"
   (if (and (not (file-remote-p default-directory))
-           (projectile-project-p)
+           (projectile-project-p)) t))
+
+(defun core-modeline-projectile ()
+  (if (and (core-modeline-projectile-p)
            (or buffer-file-name (eq major-mode 'dired-mode)))
       (concat (propertize (projectile-project-name)
                           'face (if active 'mode-line-project-face))
               (propertize "/"
                           'face (if active 'mode-line-folder-face)))))
+
+(defun core-modeline-persp-name ()
+  "Displays the current perspective name if it differs from the current projectile project."
+  (if persp-mode
+      (let* ((persp (get-frame-persp (selected-frame)))
+             (persp-name (safe-persp-name persp)))
+      (unless (and (core-modeline-projectile-p)
+                   (equal persp-name (projectile-project-name)))
+        (propertize (concat "[" persp-name "] ")
+                    'face (if active 'mode-line-persp-face))))))
 
 (defun core-modeline-remote-host ()
   "Displays the remote user and hostname if the current buffer is remote."
@@ -263,6 +281,7 @@
            (width (window-total-width (selected-window)))
            (path-width (max (- width
                                (length (core-modeline-macro-recording))
+                               (length (core-modeline-persp-name))
                                (length (core-modeline-remote-host))
                                (length (core-modeline-projectile))
                                (length (core-modeline-buffer-name))
@@ -275,6 +294,7 @@
            (lhs (list
                  " "
                  (core-modeline-macro-recording)
+                 (core-modeline-persp-name)
                  (core-modeline-remote-host)
                  (core-modeline-projectile)
                  (core-modeline-buffer-path path-width)
