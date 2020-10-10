@@ -12,7 +12,7 @@
   :init
   (setq-default gcmh-idle-delay 5
                 gcmh-high-cons-threshold (* 32 1024 1024)  ; 32mb
-                gcmh-verbose t)
+                gcmh-verbose nil)
   :config
   (gcmh-mode))
 
