@@ -144,18 +144,29 @@
 
 ;; Helpers
 
+(defvar-local core-modeline--project-relative-buffer-path nil)
+
 (defun core-modeline-short-buffer-name ()
   "Return only the file name if `buffer-name' is a path."
   (if buffer-file-name
       (car (last (split-string (buffer-name) "/")))
     (buffer-name)))
 
+(defun core-modeline-update-project-relative-buffer-path (&rest _)
+  "Update the cacher project relative buffer path."
+  (setq core-modeline--project-relative-buffer-path
+        (if (and (not (file-remote-p default-directory))
+                 (projectile-project-p))
+            (replace-regexp-in-string "^.\/" ""
+                                      (car (projectile-make-relative-to-root (list default-directory))))
+          (abbreviate-file-name default-directory))))
+
 (defun core-modeline-project-relative-buffer-path ()
-  (if (and (not (file-remote-p default-directory))
-           (projectile-project-p))
-      (replace-regexp-in-string "^.\/" ""
-        (car (projectile-make-relative-to-root (list default-directory))))
-    (abbreviate-file-name default-directory)))
+  core-modeline--project-relative-buffer-path)
+
+(add-hook 'find-file-hook #'core-modeline-update-project-relative-buffer-path)
+(add-hook 'projectile-after-switch-project-hook #'core-modeline-update-project-relative-buffer-path)
+(advice-add #'select-window :after #'core-modeline-update-project-relative-buffer-path)
 
 (defun core-modeline-shorten-directory (dir max-length)
   "Show up to `MAX-LENGTH' characters of a directory name `DIR'."
@@ -202,7 +213,7 @@
   (propertize
    (if (or buffer-file-name
            (eq major-mode 'dired-mode))
-       (core-modeline-shorten-directory (core-modeline-project-relative-buffer-path) max-length) "")
+       (core-modeline-shorten-directory core-modeline--project-relative-buffer-path max-length) "")
    'face (if active 'mode-line-folder-face)))
 
 (defun core-modeline-macro-recording ()
@@ -227,30 +238,88 @@
                      'mode-line-80col-face
                    'mode-line-position-face)) "%p"))
 
+;;
+;; projectile
+;;
+
+(defvar-local core-modeline--projectile nil)
+
 (defun core-modeline-projectile-p ()
   "Should we display the projectile modeline?"
   (if (and (not (file-remote-p default-directory))
            (projectile-project-p)) t))
 
+(defun core-modeline-update-projectile (&rest _)
+  "Update projectile name."
+  (setq core-modeline--projectile
+        (when (and (core-modeline-projectile-p)
+                   (or buffer-file-name (eq major-mode 'dired-mode)))
+          (projectile-project-name))))
+
 (defun core-modeline-projectile ()
-  (if (and (core-modeline-projectile-p)
-           (or buffer-file-name (eq major-mode 'dired-mode)))
-      (concat (propertize (projectile-project-name)
-                          'face (if active 'mode-line-project-face))
-              (propertize "/"
-                          'face (if active 'mode-line-folder-face)))))
+  "Projectile name."
+  (when core-modeline--projectile
+    (concat (propertize core-modeline--projectile
+                        'face (if active 'mode-line-project-face))
+            (propertize "/"
+                        'face (if active 'mode-line-folder-face)))))
+
+(add-hook 'find-file-hook #'core-modeline-update-projectile)
+(add-hook 'projectile-after-switch-project-hook #'core-modeline-update-projectile)
+(advice-add #'select-window :after #'core-modeline-update-projectile)
+
+;;
+;; Perspective
+;;
+
+(defvar-local core-modeline--persp-name nil)
+
+(defun core-modeline-update-persp-name (&rest _)
+  "Update the modeline persp name."
+  (setq core-modeline--persp-name
+        (if persp-mode
+            (let* ((persp (get-frame-persp (selected-frame)))
+                   (persp-name (safe-persp-name persp)))
+              (unless (and (core-modeline-projectile-p)
+                           (equal persp-name (projectile-project-name)))
+                persp-name)))))
 
 (defun core-modeline-persp-name ()
   "Displays the current perspective name if it differs from the current projectile project."
-  (if persp-mode
-      (let* ((persp (get-frame-persp (selected-frame)))
-             (persp-name (safe-persp-name persp)))
-      (unless (and (core-modeline-projectile-p)
-                   (equal persp-name (projectile-project-name)))
-        (propertize (concat "[" persp-name "] ")
-                    'face (if active 'mode-line-persp-face))))))
+  (when core-modeline--persp-name
+    (propertize (concat "[" core-modeline--persp-name "] ")
+                'face (if active 'mode-line-persp-face))))
+
+(add-hook 'find-file-hook #'core-modeline-update-persp-name)
+(add-hook 'persp-activated-functions #'core-modeline-update-persp-name)
+(add-hook 'persp-renamed-functions #'core-modeline-update-persp-name)
+(advice-add #'select-window :after #'core-modeline-update-persp-name)
+
+;;
+;; Perspective
+;;
+
+(defvar-local core-modeline--remote-host nil)
+
+(defun core-modeline-update-remote-host (&rest _)
+  (setq core-modeline--remote-host
+        (if (file-remote-p default-directory)
+            (let* ((user (file-remote-p default-directory 'user))
+                   (host (file-remote-p default-directory 'host))
+                   (short-host (car (split-string host "\\."))))
+              (if user
+                  (concat user "@" short-host ":")
+                (concat short-host ":"))))))
+
+(add-hook 'find-file-hook #'core-modeline-update-remote-host)
+(advice-add #'select-window :after #'core-modeline-update-remote-host)
 
 (defun core-modeline-remote-host ()
+  (when core-modeline--remote-host
+    (propertize core-modeline--remote-host
+                'face (if active 'mode-line-remote-host-face))))
+
+(defun core-modeline-remote-host2 ()
   "Displays the remote user and hostname if the current buffer is remote."
   (if (file-remote-p default-directory)
       (let* ((user (file-remote-p default-directory 'user))
@@ -260,6 +329,10 @@
                         (concat user "@" short-host ":")
                       (concat short-host ":"))
                     'face (if active 'mode-line-remote-host-face)))))
+
+;;
+;; vc
+;;
 
 (defun core-modeline-vc ()
   "Displays the current branch, colored based on its state."
