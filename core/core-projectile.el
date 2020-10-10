@@ -18,10 +18,11 @@
               ("C-c p O" . projectile-open-org))
   :init
   (setq projectile-keymap-prefix (kbd "C-c p")
-        projectile-known-projects-file
-        (expand-file-name "projectile-bookmarks.eld" savefile-dir)
-        projectile-cache-file
-        (expand-file-name  "projectile.cache" savefile-dir))
+        projectile-current-project-on-switch 'move-to-end
+        projectile-completion-system 'ivy
+        projectile-sort-order 'recentf
+        projectile-known-projects-file (expand-file-name "projectile-bookmarks.eld" savefile-dir)
+        projectile-cache-file (expand-file-name  "projectile.cache" savefile-dir))
   :config
   (add-to-list 'projectile-globally-ignored-directories "import/site")
 

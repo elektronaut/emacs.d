@@ -14,7 +14,8 @@
         "/Applications/MIT-Scheme.app/Contents/Resources")
 
 (use-package geiser
-  :config
+  :defer 10
+  :init
   (setq geiser-mode-start-repl-p t
         geiser-repl-history-filename (expand-file-name
                                       "geiser-history" savefile-dir)))

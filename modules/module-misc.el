@@ -59,7 +59,8 @@
 (use-package lua-mode
   :mode "\\.lua\\'")
 
-(use-package nginx-mode)
+(use-package nginx-mode
+  :defer t)
 
 (use-package php-mode
   :mode "\\.php\\'")

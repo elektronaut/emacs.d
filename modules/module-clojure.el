@@ -18,7 +18,6 @@
   (run-hooks 'module-lisp-interactive-hook))
 
 (use-package clojure-mode
-  :defer t
   :mode "\\.clj\\'"
   :config
   (use-package flycheck-clojure)

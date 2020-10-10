@@ -9,6 +9,7 @@
 
 (use-package eshell
   :ensure nil
+  :defer t
   :bind (("C-x m" . eshell))
   :init
   (setq eshell-directory-name (expand-file-name "eshell" savefile-dir))
@@ -17,7 +18,17 @@
   (global-set-key (kbd "C-x M") (lambda () (interactive) (eshell t))))
 
 (use-package multi-term
-  :bind (("C-c t" . multi-term-dedicated-toggle)))
+  :ensure t
+  :defer t)
+
+(use-package vterm
+  :ensure t
+  :defer t)
+
+(use-package multi-vterm
+  :defer t
+  :ensure t
+  :bind (("C-c t" . multi-vterm-dedicated-toggle)))
 
 (provide 'core-shell)
 ;;; core-shell ends here

@@ -12,6 +12,7 @@
               ("O" . persp-kill-other))
   :init
   (setq-default persp-keymap-prefix (kbd "C-x x")
+                persp-autokill-buffer-on-remove 'kill-weak
                 persp-autokill-persp-when-removed-last-buffer 'kill)
   :config
   ;;(persp-mode 1)
@@ -20,18 +21,23 @@
   (defun persp-kill-empty ()
     "Kill all perspectives without buffers."
     (interactive)
-    (--> (persp-names)
-         (-map 'persp-get-by-name it)
+    (->> (persp-names)
+         (-map 'persp-get-by-name)
          -flatten
-         (-filter (lambda (p) (= 0 (length (persp-buffers p)))) it)
-         (-map 'safe-persp-name it)
-         (-map 'persp-kill it)))
+         (-filter (lambda (p) (= 0 (length (persp-buffers p)))))
+         (-map 'safe-persp-name)
+         (-map 'persp-kill)))
 
   (defun persp-kill-other ()
     "Kill other perspectives."
     (interactive)
-    (mapc 'persp-kill (remove (safe-persp-name (get-current-persp))
-                              (remove "org" (persp-names))))))
+    (->> (persp-names)
+         (remove "org")
+         (remove "none")
+         (remove (safe-persp-name (get-current-persp)))
+         (mapc 'persp-kill))))
+
+
 
 ;; ;; https://github.com/nex3/perspective-el
 ;; (use-package perspective

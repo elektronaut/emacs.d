@@ -119,13 +119,13 @@
   :bind (("s-w" . ace-window)))
 
 ;; Highlight cursor when changing windows.
-(use-package beacon
-  :init
-  (setq-default beacon-color "#3E4451"
-                beacon-blink-duration 0.2
-                beacon-blink-delay 0.05)
-  :config
-  (beacon-mode +1))
+;; (use-package beacon
+;;   :init
+;;   (setq-default beacon-color "#3E4451"
+;;                 beacon-blink-duration 0.2
+;;                 beacon-blink-delay 0.05)
+;;   :config
+;;   (beacon-mode +1))
 
 ;; Delight modes.
 (use-package delight

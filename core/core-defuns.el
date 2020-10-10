@@ -59,12 +59,14 @@
 (defun kill-all-buffers ()
   "Kill all buffers."
   (interactive)
-  (mapc 'kill-buffer (buffer-list)))
+  (mapc 'kill-buffer (buffer-list))
+  (persp-kill-empty))
 
 (defun kill-other-buffers ()
   "Kill all other buffers."
   (interactive)
-  (mapc 'kill-buffer (cdr (buffer-list (current-buffer)))))
+  (mapc 'kill-buffer (cdr (buffer-list (current-buffer))))
+  (persp-kill-empty))
 
 (defun kill-everything ()
   "Kill all buffers and windows."

@@ -8,12 +8,15 @@
 ;;; Code:
 
 (use-package docker
-  :ensure t)
+  :ensure t
+  :defer 10)
 
 (use-package docker-compose-mode
-  :ensure t)
+  :ensure t
+  :mode "docker-compose.yml")
 
 (use-package dockerfile-mode
+  :defer t
   :mode "Dockerfile\\'")
 
 (provide 'module-docker)

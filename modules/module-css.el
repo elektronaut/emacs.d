@@ -16,9 +16,11 @@
   (setq css-indent-offset 2)
   (add-hook 'css-mode-hook 'module-css-defaults))
 
-(use-package less-css-mode :mode "\\.less\\'")
+(use-package less-css-mode
+  :mode "\\.less\\'")
 
-(use-package sass-mode :mode "\\.sass\\'")
+(use-package sass-mode
+  :mode "\\.sass\\'")
 
 ;; scss-mode is now built-in
 ;(use-package scss-mode
