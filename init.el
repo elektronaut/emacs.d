@@ -75,7 +75,8 @@
           (directory-files fullpath nil "\\.elc?$"))))
 
 (init-dir "core")
-(init-dir "modules")
+(init-dir "modules/languages")
+(init-dir "modules/os")
 
 ;; Load custom settings
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))

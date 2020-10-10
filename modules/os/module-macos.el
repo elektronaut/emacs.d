@@ -1,11 +1,11 @@
-;;; core-macos.el --- Settings for macOS
+;;; module-macos.el --- Settings for MacOS
 ;;; Commentary:
 ;;; Code:
 
-(add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
-(add-to-list 'default-frame-alist '(ns-appearance . dark))
-
 (when (eq system-type 'darwin)
+  (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
+  (add-to-list 'default-frame-alist '(ns-appearance . dark))
+
   (setq-default default-input-method "MacOSX"
                 mac-option-modifier nil
                 mac-right-option-modifier nil
@@ -34,5 +34,5 @@
     :config
     (exec-path-from-shell-initialize)))
 
-(provide 'core-macos)
-;;; core-macos.el ends here
+(provide 'module-macos)
+;;; module-macos.el ends here

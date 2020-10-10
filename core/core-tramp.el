@@ -11,8 +11,10 @@
 
 (use-package tramp
   :ensure nil
+  :init
+  (setq-default tramp-use-ssh-controlmaster-options nil
+                tramp-default-method "ssh")
   :config
-  (setq tramp-default-method "ssh")
   (setq vc-ignore-dir-regexp
         (format "\\(%s\\)\\|\\(%s\\)"
                 vc-ignore-dir-regexp

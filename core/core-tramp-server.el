@@ -29,6 +29,7 @@
      :filter 'core-tramp-server-filter
      :server 't)
     (setq core-tramp-server-clients '())
+    (set-process-query-on-exit-flag (get-process "core-tramp-server") nil)
     (core-tramp-server-log
      (propertize (concat "Server started, listening on port "
                          (number-to-string core-tramp-server-port))
@@ -76,7 +77,8 @@
         (core-tramp-server-log payload proc)
         (process-send-string
          proc
-         (core-tramp-server-perform proc command args)))
+         (core-tramp-server-perform proc command args))
+        )
       (setq message (substring message index)))
     (setcdr pending message)))
 

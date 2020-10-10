@@ -59,14 +59,23 @@
 (defun kill-all-buffers ()
   "Kill all buffers."
   (interactive)
-  (mapc 'kill-buffer (buffer-list))
-  (persp-kill-empty))
+  (when persp-mode
+    (persp-switch "none")
+    (mapc 'persp-kill (remove "none" (persp-names))))
+  (mapc 'kill-buffer (remove (get-buffer "*core-tramp-server*") (buffer-list)))
+  (switch-to-buffer "*scratch*"))
 
 (defun kill-other-buffers ()
   "Kill all other buffers."
   (interactive)
-  (mapc 'kill-buffer (cdr (buffer-list (current-buffer))))
-  (persp-kill-empty))
+  (let ((keep-buffer (current-buffer))
+        (persp-name (if persp-mode (safe-persp-name (get-current-persp)))))
+    (when persp-name
+      (persp-switch "none")
+      (mapc 'persp-kill (remove persp-name (remove "none" (persp-names)))))
+    (mapc 'kill-buffer (remove keep-buffer (remove (get-buffer "*core-tramp-server*") (buffer-list))))
+    (if persp-name (persp-switch persp-name))
+    (switch-to-buffer keep-buffer)))
 
 (defun kill-everything ()
   "Kill all buffers and windows."
