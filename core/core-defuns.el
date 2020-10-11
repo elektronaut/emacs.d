@@ -34,19 +34,6 @@
       (split-n 2))
   (balance-windows))
 
-(define-minor-mode big-font-mode
-  "Enable big fonts."
-  :global t
-  :lighter " big"
-  :after-hook
-  (let ((adjust (if big-font-mode 20 -20)))
-    (set-face-attribute
-     'default nil
-     :height (+ adjust (face-attribute 'default :height)))
-    (set-face-attribute
-     'variable-pitch nil
-     :height (+ adjust (face-attribute 'variable-pitch :height)))))
-
 (defun comment-or-uncomment-region-or-line ()
   "Comments or uncomments the region or the current line if there's no active region."
   (interactive)
