@@ -77,6 +77,7 @@
 (init-dir "core")
 (init-dir "modules/languages")
 (init-dir "modules/os")
+(init-dir "modules/ui")
 
 ;; Load custom settings
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
