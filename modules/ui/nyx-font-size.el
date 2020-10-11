@@ -43,10 +43,10 @@
   "Configures default font size based on current display."
   (interactive)
   (let* ((monitor-name  (cdr (assq 'name (frame-monitor-attributes))))
-         (font-size     (cdr (or (assoc monitor-name nyx-monitor-font-sizes)
-                                 (assoc 'default nyx-monitor-font-sizes)))))
-    (when big-font-mode
-      (setq font-size (+ font-size nyx-big-font-adjust)))
+         (base-font-size (cdr (or (assoc monitor-name nyx-monitor-font-sizes)
+                                  (assoc 'default nyx-monitor-font-sizes))))
+         (font-size (if big-font-mode (+ base-font-size nyx-big-font-adjust)
+                      base-font-size)))
     (dolist (face '(default variable-pitch))
       (set-face-attribute face nil
                           :family "JetBrains Mono"
