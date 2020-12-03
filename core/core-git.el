@@ -24,5 +24,8 @@
   :init
   (setq-default magit-use-overlays nil))
 
+(use-package forge
+  :after magit)
+
 (provide 'core-git)
 ;;; core-git.el ends here

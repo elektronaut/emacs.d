@@ -24,15 +24,7 @@
 
   ;; Use ls from coreutils. Install coreutils with Homebrew
   ;; to enable.
-  (setq insert-directory-program "/usr/local/bin/gls")
-
-  (use-package exec-path-from-shell
-    :defer t
-    :commands (exec-path-from-shell-copy-env)
-    :init
-    (setq exec-path-from-shell-check-startup-files nil)
-    :config
-    (exec-path-from-shell-initialize)))
+  (setq insert-directory-program "/usr/local/bin/gls"))
 
 (provide 'module-macos)
 ;;; module-macos.el ends here

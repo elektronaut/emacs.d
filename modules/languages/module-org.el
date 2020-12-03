@@ -213,6 +213,15 @@
 
 (add-hook 'org-agenda-finalize-hook #'org-agenda-delete-empty-blocks)
 
+;; Open zpl: links
+(defun org-zpl-open (path)
+  "Open PATH in Zeplin."
+  (start-process-shell-command
+   "open-org-zpl-process" nil
+   (concat "/usr/bin/open " (shell-quote-argument (concat "zpl:" path)))))
+
+(org-link-set-parameters "zpl" :follow #'org-zpl-open)
+
 (defhydra hydra-org (org-mode-map "C-c o" :hint nil)
     "
   ^Navigate^       ^Status^       ^Update^       ^Go To^          ^Dired^
