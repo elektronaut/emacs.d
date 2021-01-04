@@ -12,6 +12,7 @@
               ("O" . persp-kill-other))
   :init
   (setq-default persp-keymap-prefix (kbd "C-x x")
+                persp-add-buffer-on-after-change-major-mode t
                 persp-autokill-buffer-on-remove 'kill-weak
                 persp-autokill-persp-when-removed-last-buffer 'kill
                 persp-kill-foreign-buffer-behaviour-choices 'kill
@@ -19,6 +20,10 @@
   :config
   ;;(persp-mode 1)
   (add-hook 'window-setup-hook #'(lambda () (persp-mode 1)))
+
+  ;; Filter out ephemeral buffers
+  (add-hook 'persp-common-buffer-filter-functions
+            #'(lambda (b) (string-prefix-p "*" (buffer-name b))))
 
   (defun persp-kill-empty ()
     "Kill all perspectives without buffers."

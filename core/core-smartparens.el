@@ -10,10 +10,27 @@
 (require 'core-crux)
 
 (use-package smartparens
+  :bind (:map smartparens-mode-map
+              ("C-M-a" . sp-beginning-of-sexp)
+              ("C-M-e" . sp-end-of-sexp)
+              ("M-<up>" . sp-up-sexp)
+              ("M-<down>" . sp-down-sexp)
+              ("C-M-<up>" . sp-backward-up-sexp)
+              ("C-M-<down>" . sp-backward-down-sexp)
+              ("C-M-<right>" . sp-forward-sexp)
+              ("C-M-<left>" . sp-backward-sexp)
+
+              ("C-M-S-<up>" . sp-unwrap-sexp)
+              ("C-M-S-<down>" . sp-wrap-round)
+
+              ("C-S-<left>" . sp-forward-barf-sexp)
+              ("C-S-<right>" . sp-forward-slurp-sexp)
+              ("C-M-S-<left>" . sp-backward-slurp-sexp)
+              ("C-M-S-<right>" . sp-backward-barf-sexp))
   :init
   (setq-default ;; sp-base-key-bindings 'paredit
-                sp-autoskip-closing-pair 'always
-                sp-hybrid-kill-entire-symbol nil)
+   sp-autoskip-closing-pair 'always
+   sp-hybrid-kill-entire-symbol nil)
   (add-hook 'prog-mode-hook 'smartparens-mode)
   (add-hook 'org-mode-hook 'smartparens-mode)
   :config

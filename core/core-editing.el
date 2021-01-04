@@ -65,6 +65,11 @@ and file 'filename' will be opened and cursor set on line 'linenumber'"
 ;; Packages
 ;;-----------------------------------------------------------------------------
 
+(use-package aggressive-indent
+  :config
+  (global-aggressive-indent-mode 1)
+  (add-to-list 'aggressive-indent-excluded-modes 'html-mode))
+
 (use-package anzu
   :bind (("M-%"   . anzu-query-replace)
          ("C-M-%" . anzu-query-replace-regexp))

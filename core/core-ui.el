@@ -93,9 +93,6 @@
 (use-package discover-my-major
   :bind (("C-c m" . discover-my-major)))
 
-;; Clean up obsolete buffers automatically
-(use-package midnight :ensure nil)
-
 (use-package nlinum)
 
 (use-package re-builder
