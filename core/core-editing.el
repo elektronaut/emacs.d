@@ -51,30 +51,32 @@ Just call:
 
 and file 'filename' will be opened and cursor set on line 'linenumber'"
   (ad-set-arg 0
-    (mapcar (lambda (fn)
-              (let ((name (car fn)))
-                (if (string-match "^\\(.*?\\):\\([0-9]+\\)\\(?::\\([0-9]+\\)\\)?$" name)
-                    (cons
-                     (match-string 1 name)
-                     (cons (string-to-number (match-string 2 name))
-                           (string-to-number (or (match-string 3 name) ""))))
-                  fn))) files)))
+              (mapcar (lambda (fn)
+                        (let ((name (car fn)))
+                          (if (string-match "^\\(.*?\\):\\([0-9]+\\)\\(?::\\([0-9]+\\)\\)?$" name)
+                              (cons
+                               (match-string 1 name)
+                               (cons (string-to-number (match-string 2 name))
+                                     (string-to-number (or (match-string 3 name) ""))))
+                            fn))) files)))
 
 
 ;;-----------------------------------------------------------------------------
 ;; Packages
 ;;-----------------------------------------------------------------------------
 
-(use-package aggressive-indent
-  :config
-  (global-aggressive-indent-mode 1)
-  (add-to-list 'aggressive-indent-excluded-modes 'html-mode))
+;; (use-package aggressive-indent
+;;   :config
+;;   (global-aggressive-indent-mode 1)
+;;   (add-to-list 'aggressive-indent-excluded-modes 'html-mode))
 
 (use-package anzu
   :bind (("M-%"   . anzu-query-replace)
          ("C-M-%" . anzu-query-replace-regexp))
   :config
   (global-anzu-mode))
+
+(use-package darkroom)
 
 (use-package easy-kill
   :config
@@ -83,6 +85,11 @@ and file 'filename' will be opened and cursor set on line 'linenumber'"
 
 (use-package expand-region
   :bind (("C-=" . er/expand-region)))
+
+(use-package editorconfig
+  :ensure t
+  :config
+  (editorconfig-mode 1))
 
 (use-package move-text
   :config
@@ -113,6 +120,8 @@ and file 'filename' will be opened and cursor set on line 'linenumber'"
       ("#" . apply-operation-to-number-at-point)
       ("%" . apply-operation-to-number-at-point)
       ("'" . operate-on-number-at-point))))
+
+(use-package string-inflection)
 
 (use-package tabify
   :ensure nil

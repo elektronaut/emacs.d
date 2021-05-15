@@ -13,6 +13,7 @@ elpa
 games
 /persp-confs
 projectile-bookmarks.eld
+projects
 rake.cache
 savefile/
 secrets.el

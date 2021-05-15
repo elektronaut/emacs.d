@@ -12,6 +12,7 @@
 (use-package doom-themes
   :config
   (load-theme 'doom-horizon t)
+  ;;(load-theme 'doom-wilmersdorf t)
   ;;(load-theme 'doom-tomorrow-night t)
   (doom-themes-org-config))
 

@@ -22,7 +22,12 @@
          ("s-m f"   . magit-log-buffer-file)
          ("s-m b"   . magit-blame))
   :init
-  (setq-default magit-use-overlays nil))
+  (setq-default
+   magit-use-overlays nil
+   magit-repository-directories '(("~/Dev/anyone/apps" . 1)
+                                  ("~/Dev/gems" . 1))))
+
+
 
 (use-package forge
   :after magit)

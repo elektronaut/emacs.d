@@ -17,6 +17,7 @@
   (flycheck-add-mode 'javascript-eslint 'web-mode)
   (flycheck-add-mode 'javascript-eslint 'js2-mode)
   (flycheck-add-mode 'javascript-eslint 'js2-jsx-mode)
+  (flycheck-add-mode 'yaml-yamllint 'yaml-mode)
   (add-hook 'prog-mode-hook 'flycheck-mode))
 
 (provide 'core-flycheck)

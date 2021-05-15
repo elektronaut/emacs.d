@@ -13,8 +13,8 @@
   :bind (:map smartparens-mode-map
               ("C-M-a" . sp-beginning-of-sexp)
               ("C-M-e" . sp-end-of-sexp)
-              ("M-<up>" . sp-up-sexp)
-              ("M-<down>" . sp-down-sexp)
+              ;("M-<up>" . sp-up-sexp)
+              ;("M-<down>" . sp-down-sexp)
               ("C-M-<up>" . sp-backward-up-sexp)
               ("C-M-<down>" . sp-backward-down-sexp)
               ("C-M-<right>" . sp-forward-sexp)

@@ -77,7 +77,7 @@
                           '(org-agenda-skip-entry-if 'scheduled 'deadline
                                                      'regexp "\\=.*\\[#A\\]"))
                          (org-agenda-overriding-header "Next actions")))
-          (tags "project/-DONE-MAYBE-DELEGATED-CANCELLED"
+          (tags "project/-DONE-MAYBE-DELEGATED-CANCELLED-WAITING"
                 ((org-agenda-overriding-header "Active projects")))
           (todo "WAITING"  ((org-agenda-overriding-header "Waiting")))
           (stuck ""  ((org-agenda-overriding-header "Stuck projects")))))
