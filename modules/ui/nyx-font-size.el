@@ -23,7 +23,7 @@
   "Hook called after frame changes monitor.")
 
 (defvar nyx-monitor-font-sizes
-  '(("Color LCD" . 130) ; Macbook Pro
+  '(("Colour LCD" . 120) ; Macbook Pro
     (default . 120))
   "Font size mapping for monitors.")
 

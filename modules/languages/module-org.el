@@ -13,7 +13,7 @@
 (require 'org-agenda)
 
 (defun skip-non-stuck-projects ()
-  "Skip trees that are not stuck projects"
+  "Skip trees that are not stuck projects."
   ;; (bh/list-sublevels-for-projects-indented)
   (save-restriction
     (widen)
@@ -65,6 +65,7 @@
       org-replace-disputed-keys t
       org-reverse-note-order t
       org-src-fontify-natively t
+      org-startup-folded "overview"
       org-startup-indented t
       org-id-link-to-org-use-id t)
 
