@@ -25,6 +25,19 @@
 
 (defun split-2 () "Split frame in 2 windows." (interactive) (split-n 2))
 (defun split-3 () "Split frame in 3 windows." (interactive) (split-n 3))
+(defun split-4 () "Split frame in 4 windows." (interactive) (split-n 4))
+
+(defun split-window-and-balance ()
+  "Split window and balance."
+  (interactive)
+  (split-window-right)
+  (balance-windows))
+
+(defun delete-window-and-balance ()
+  "Delete window and balance."
+  (interactive)
+  (delete-window)
+  (balance-windows))
 
 (defun auto-window-layout ()
   "Automatically layout frame in 2 or 3 windows depending on size."

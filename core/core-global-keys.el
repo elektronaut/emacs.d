@@ -2,6 +2,8 @@
 ;;; Commentary:
 ;;; Code:
 
+(require 'core-defuns)
+
 (use-package god-mode
   :bind (("s-g" . god-local-mode)))
 
@@ -12,6 +14,9 @@
 (global-set-key (kbd "C-+") 'text-scale-increase)
 (global-set-key (kbd "C--") 'text-scale-decrease)
 (global-set-key (kbd "C-x \\") 'align-regexp)
+
+(global-set-key (kbd "C-x 3") 'split-window-and-balance)
+(global-set-key (kbd "C-x 0") 'delete-window-and-balance)
 
 ;; Window switching. (C-x o goes to the next window)
 (global-set-key (kbd "C-x O") (lambda ()
