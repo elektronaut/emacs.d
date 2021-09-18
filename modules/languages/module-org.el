@@ -8,6 +8,7 @@
 ;;; Code:
 
 (require 'core-hydra)
+(require 'core-projectile)
 (require 'core-secrets)
 (require 'org)
 (require 'org-agenda)
@@ -104,17 +105,34 @@
               ("WAITING" :foreground "#51afef" :weight bold)
               ("MAYBE"   :foreground "#51afef" :weight bold))))
 
+(setq my-org-capture-default-target
+      "~/Dropbox/org/inbox.org")
+
+(defvar my-org-capture-inbox-target
+  my-org-capture-default-target
+  "Filename for `org-capture'.")
+
 (setq org-capture-templates
-      '(("t" "Task" entry (file+olp "~/Dropbox/org/inbox.org" "Tasks")
+      '(("t" "Task" entry (file+olp my-org-capture-inbox-target "Tasks")
 	 "* TODO %?\n%U\n%i" :prepend t)
-        ("n" "Note" entry (file+olp "~/Dropbox/org/inbox.org" "Notes")
+        ("T" "Task (with link)" entry (file+olp my-org-capture-inbox-target "Tasks")
+	 "* TODO %?\n%U\n%a\n%i" :prepend t)
+        ("n" "Note" entry (file+olp my-org-capture-inbox-target "Notes")
 	 "* %? %U\n%i" :prepend t)
-        ("s" "Source note" entry (file+olp "~/Dropbox/org/inbox.org" "Notes")
+        ("s" "Source note" entry (file+olp my-org-capture-inbox-target "Notes")
 	 "* %? %U\n#+BEGIN_SRC\n%i\n#+END_SRC\nFrom: %a" :prepend t)
         ("j" "Journal entry" entry (file+datetree "~/Dropbox/org/journal.org")
-	 "* %?\n%i")
-        ("p" "Project" entry (file+olp "~/Dropbox/org/inbox.org" "Projects")
-	 "* %? :project:\n** Tasks [0/0]\n" :prepend t)))
+	 "* %?\n%i")))
+
+(defun my-org-capture ()
+  "Set `my-org-capture-inbox-target' and call `org-capture'."
+  (interactive)
+  (setq my-org-capture-inbox-target
+        (if (and (projectile-project-p)
+                 (file-exists-p (projectile-org-file)))
+            (projectile-org-file)
+          my-org-capture-default-target))
+  (call-interactively #'org-capture))
 
 (setq org-tag-alist (quote ((:startgroup)
                             ("@errand"  . ?e)

@@ -36,12 +36,21 @@
 
   (projectile-global-mode t)
 
+  (defun projectile-org-file ()
+    "`org-mode' file for project."
+    (if (projectile-project-p)
+        (concat (if (string-match-p "Dev/anyone" (projectile-project-p))
+                    "~/Dropbox/org/anyone/"
+                  "~/Dropbox/org/")
+                (projectile-project-name)
+                ".org")))
+
   (defun projectile-open-org ()
     "Open `org-mode' file for project."
     (interactive)
-    (find-file (concat "~/Dropbox/org/anyone/"
-                       (projectile-project-name)
-                       ".org")))
+    (if (projectile-project-p)
+        (find-file (projectile-org-file))))
+
   (defun advice-projectile-use-rg (vcs)
     "Generate list of files using ripgrep."
     "rg --null --files")
