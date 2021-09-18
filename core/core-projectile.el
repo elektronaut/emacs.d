@@ -22,11 +22,14 @@
         projectile-current-project-on-switch 'move-to-end
         projectile-completion-system 'ivy
         projectile-sort-order 'recentf
+        projectile-indexing-method 'hybrid
         projectile-known-projects-file (expand-file-name "projectile-bookmarks.eld" savefile-dir)
         projectile-cache-file (expand-file-name  "projectile.cache" savefile-dir)
         projectile-switch-project-action 'projectile-dired)
   :config
-  (add-to-list 'projectile-globally-ignored-directories "import/site")
+  (dolist (item '("import/site"
+                  "app/assets/builds"))
+    (add-to-list 'projectile-globally-ignored-directories item))
 
   (defadvice projectile-project-root (around ignore-remote first activate)
     (unless (file-remote-p default-directory) ad-do-it))
@@ -39,6 +42,10 @@
     (find-file (concat "~/Dropbox/org/anyone/"
                        (projectile-project-name)
                        ".org")))
+  (defun advice-projectile-use-rg (vcs)
+    "Generate list of files using ripgrep."
+    "rg --null --files")
+  (advice-add 'projectile-get-ext-command :override #'advice-projectile-use-rg)
 
   (defun projectile-switch-persp-project (&optional arg)
     (interactive "P")
