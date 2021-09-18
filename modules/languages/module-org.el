@@ -37,7 +37,7 @@
 (global-set-key "\C-cl" 'org-store-link)
 (global-set-key "\C-ca" 'org-agenda)
 (global-set-key "\C-cb" 'org-iswitchb)
-(global-set-key "\C-cc" 'org-capture)
+(global-set-key "\C-cc" 'my-org-capture)
 
 (setq org-directory "~/Dropbox/org"
       org-agenda-compact-blocks nil
@@ -49,6 +49,7 @@
       org-agenda-span 14
       org-archive-location "%s-archive::datetree/"
       org-cycle-separator-lines 2
+      org-cycle-open-archived-trees t
       org-default-notes-file "~/Dropbox/org/inbox.org"
       org-ellipsis nil
       org-global-properties (quote (("Effort_ALL" .
@@ -88,9 +89,9 @@
           (stuck "" ((org-agenda-overriding-header "Stuck projects")))
           (todo "NEXT" ((org-agenda-overriding-header "Next actions")))
           (todo "WAITING" ((org-agenda-overriding-header "Waiting")))
+          (todo "DELEGATED" ((org-agenda-overriding-header "Delegated")))
           (todo "TODO" ((org-agenda-overriding-header "Actionable tasks")))
-          (todo "MAYBE" ((org-agenda-overriding-header "Someday/maybe")))
-          (todo "DELEGATED" ((org-agenda-overriding-header "Delegated")))))))
+          (todo "MAYBE" ((org-agenda-overriding-header "Someday/maybe")))))))
 
 (setq org-stuck-projects
       '("+project/-DONE-MAYBE-DELEGATED-CANCELLED" ("NEXT" "WAITING") nil ""))
@@ -99,11 +100,11 @@
       '((sequence "NEXT(n)" "TODO(t)" "WAITING" "MAYBE" "|"
                   "DONE(d)" "DELEGATED" "CANCELLED")))
 
-(setq org-todo-keyword-faces
-      (quote (("NEXT"    :foreground "#98be65" :weight bold)
-              ("TODO"    :foreground "#98be65" :weight bold)
-              ("WAITING" :foreground "#51afef" :weight bold)
-              ("MAYBE"   :foreground "#51afef" :weight bold))))
+(let ((waiting (face-attribute 'font-lock-constant-face :foreground))
+      (maybe (face-attribute 'font-lock-variable-name-face :foreground)))
+  (setq org-todo-keyword-faces
+        `(("WAITING" :foreground ,waiting :weight bold)
+          ("MAYBE"   :foreground ,maybe :weight bold))))
 
 (setq my-org-capture-default-target
       "~/Dropbox/org/inbox.org")
@@ -241,38 +242,60 @@
 
 (org-link-set-parameters "zpl" :follow #'org-zpl-open)
 
-(defhydra hydra-org (org-mode-map "C-c o" :hint nil)
+(defhydra hydra-org (:hint nil)
     "
-  ^Navigate^       ^Status^       ^Update^       ^Go To^          ^Dired^
-  ^^^^^^^^^^------------------------------------------------------------------------
-  _k_: ↑ previous  _t_: todo      _S_: schedule  _g i_: inbox     _g X_: root
-  _j_: ↓ next      _→_: right     _D_: deadline  _g w_: work      _g W_: projects
-  _c_: archive     _←_: left      _O_: sort      _g p_: personal
-  _d_: delete      _,_: priority  _r_: refile    _g j_: journal
-  "
+  Navigate^^^^                 Status^^^^        Update^^              Insert^^^^                    Go To
+  ^^^^^^^^^^^^-------------------------------------------------------------------------------------------------------------
+      _↑_/_↓_: heading         ^^_n_: NEXT       _a_: toggle archive   _i t_/_i T_: time (inactive)  _g i_: inbox
+    M-_↑_/_↓_: move            ^^_t_: TODO       _A_: move to archive  _i d_/_i D_: date (inactive)  _g a_: anyone
+    M-_←_/_→_: shift           ^^_d_: DONE       _r_: refile           ^^^^                          _g p_: personal
+  S-M-_←_/_→_: shift subtree   ^^_T_: todo       _S_: schedule         ^^^^                          _g j_: journal
+  ^^^^                       _←_/_→_: prev/next  _D_: deadline         ^^^^                          _g O_: org dir
+  ^^^^                         ^^_,_: priority   _O_: sort             ^^^^                          _g A_: anyone projects
+
+ "
+    ;; Navigate
     ("<up>" org-previous-visible-heading)
     ("<down>" org-next-visible-heading)
-    ("k" org-previous-visible-heading)
-    ("j" org-next-visible-heading)
+    ("M-<down>" org-move-subtree-down)
+    ("M-<up>" org-move-subtree-up)
+    ("M-<left>" org-metaleft)
+    ("M-<right>" org-metaright)
+    ("S-M-<left>" org-shiftmetaleft)
+    ("S-M-<right>" org-shiftmetaright)
+    ;; Status
     ("<right>" org-shiftright)
     ("<left>" org-shiftleft)
-    ("c" org-archive-subtree)
-    ("d" org-cut-subtree)
-    ("t" org-todo)
-    ("," org-priority)
-    ("r" org-refile)
+    ("n" (org-todo "NEXT"))
+    ("t" (org-todo "TODO"))
+    ("d" (org-todo "DONE"))
     ("T" org-todo)
+    ("," org-priority)
+    ;; Update
+    ("a" org-toggle-archive-tag)
+    ("A" org-archive-to-archive-sibling)
+    ("r" org-refile)
     ("S" org-schedule)
     ("D" org-deadline)
     ("O" org-sort)
+    ;; Insert
+    ("i d" org-time-stamp)
+    ("i D" org-time-stamp-inactive)
+    ("i t" (org-time-stamp t))
+    ("i T" (org-time-stamp-inactive t))
+    ;; Go to
     ("g i" (find-file org-default-notes-file))
-    ("g w" (find-file "~/Dropbox/org/anyone.org"))
+    ("g a" (find-file "~/Dropbox/org/anyone.org"))
     ("g p" (find-file "~/Dropbox/org/personal.org"))
     ("g j" (find-file "~/Dropbox/org/journal.org"))
-    ("g X" (dired org-directory))
-    ("g W" (dired "~/Dropbox/org/anyone"))
+    ("g O" (dired org-directory))
+    ("g A" (dired "~/Dropbox/org/anyone"))
+    ;; Misc
+    ("k" org-cut-subtree "delete")
     ("<tab>" (org-cycle))
     ("q" nil "quit"))
+
+(define-key org-mode-map (kbd "C-c o") #'hydra-org/body)
 
 (provide 'module-org)
 ;;; module-org ends here
