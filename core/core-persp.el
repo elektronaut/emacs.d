@@ -3,6 +3,7 @@
 ;;; Code:
 
 (require 'dash)
+(require 'core-hydra)
 
 ;; https://github.com/Bad-ptr/persp-mode.el
 (use-package persp-mode
@@ -42,7 +43,37 @@
          (remove "org")
          (remove "none")
          (remove (safe-persp-name (get-current-persp)))
-         (mapc 'persp-kill))))
+         (mapc 'persp-kill)))
+
+  (defhydra hydra-persp (:hint nil)
+    "
+  Perspective: %(safe-persp-name (get-current-persp))
+
+  Navigate^^^^        Manage^^              Buffers
+  ^^^^^^^^----------------------------------------------------------
+  _←_/_→_: prev/next  _c_: copy             _a_: add
+  ^^  _s_: switch     _r_: rename           _k_: remove
+  ^^  _h_: hide       _C_: kill             _K_: kill
+  ^^  _u_: unhide     _O_: kill all others  _b_: switch
+  ^^^^                ^^                    _t_: temporarily display
+  "
+    ("<left>" persp-prev)
+    ("<right>" persp-next)
+    ("s" persp-switch)
+    ("h" persp-hide)
+    ("u" persp-unhide)
+    ("c" persp-copy)
+    ("r" persp-rename)
+    ("C" persp-kill)
+    ("O" persp-kill-other)
+    ("a" persp-add-buffer)
+    ("k" persp-remove-buffer)
+    ("K" persp-kill-buffer)
+    ("b" persp-switch-to-buffer)
+    ("t" persp-temporarily-display-buffer)
+    ("q" nil "quit"))
+
+  (define-key persp-mode-map (kbd "C-x X") #'hydra-persp/body))
 
 
 (provide 'core-persp)

@@ -77,45 +77,45 @@
         (user-error "There are no known projects")))))
 
 
-(defhydra hydra-projectile (:hint nil)
-  "
+  (defhydra hydra-projectile (:hint nil)
+    "
   Projectile: %(projectile-project-name)
 
-  ^Find^             ^Buffer^                ^Search^          ^Projects^
+  Find^^             Buffer^^                Search^^          Projects^^
   ^^^^^^^^^^------------------------------------------------------------------------
   _f_: file          _→_: next               _s_: rg (quick)   _p_: switch perspective
   _r_: recent file   _←_: previous           _S_: rg           _P_: switch
-  _F_: file in dir   _k_: kill                               _A_: add
-  _d_: dir           _b_: switch to buffer                   _x_: remove
-  _D_: root dir      _B_: ibuffer                            _X_: cleanup
-  _O_: org file    _C-s_: save all
+  _F_: file in dir   _k_: kill               ^^                _A_: add
+  _d_: dir           _b_: switch to buffer   ^^                _x_: remove
+  _D_: root dir      _B_: ibuffer            ^^                _X_: cleanup
+  _O_: org file    _C-s_: save all           ^^
+
   "
-  ("f" projectile-find-file)
-  ("r" projectile-recent-f)
-  ("F" projectile-find-file-in-directory)
-  ("d" projectile-find-dir)
-  ("D" projectile-dired)
-  ("O" projectile-open-org)
+    ("f" projectile-find-file)
+    ("r" projectile-recent-f)
+    ("F" projectile-find-file-in-directory)
+    ("d" projectile-find-dir)
+    ("D" projectile-dired)
+    ("O" projectile-open-org)
 
-  ("<right>" projectile-next-project-buffer)
-  ("<left>" projectile-previous-project-buffer)
-  ("k" kill-current-buffer)
-  ("b" projectile-switch-to-buffer)
-  ("B" projectile-ibuffer)
-  ("C-s" projectile-save-project-buffers)
+    ("<right>" projectile-next-project-buffer)
+    ("<left>" projectile-previous-project-buffer)
+    ("k" kill-current-buffer)
+    ("b" projectile-switch-to-buffer)
+    ("B" projectile-ibuffer)
+    ("C-s" projectile-save-project-buffers)
 
-  ("s" counsel-projectile-rg)
-  ("S" rg-project)
+    ("s" counsel-projectile-rg)
+    ("S" rg-project)
 
-  ("p" projectile-switch-persp-project)
-  ("P" projectile-switch-project)
-  ("A" projectile-add-known-project)
-  ("x" projectile-remove-known-project)
-  ("X" projectile-cleanup-known-project)
-  ("q" nil "quit"))
+    ("p" projectile-switch-persp-project)
+    ("P" projectile-switch-project)
+    ("A" projectile-add-known-project)
+    ("x" projectile-remove-known-project)
+    ("X" projectile-cleanup-known-project)
+    ("q" nil "quit"))
 
-(define-key projectile-mode-map (kbd "C-c P") #'hydra-projectile/body)
-
+  (define-key projectile-mode-map (kbd "C-c P") #'hydra-projectile/body))
 
 (provide 'core-projectile)
 ;;; core-projectile ends here
