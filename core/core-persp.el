@@ -26,6 +26,25 @@
   (add-hook 'persp-common-buffer-filter-functions
             #'(lambda (b) (string-prefix-p "*" (buffer-name b))))
 
+  ;; Recent perspectives list
+  (setq-default persp-recent-perspectives '())
+
+  (defun persp-register-recent (name)
+    "Add a perspective to the `persp-register-recent' list."
+    (setq persp-recent-perspectives
+          (->> (cons name persp-recent-perspectives)
+               -distinct
+               (-filter (lambda (name) (member name (persp-names)))))))
+
+  (defun persp-names-recent ()
+    "Return a list of all perspective names, sorted by recent usage."
+    (let* ((all (persp-names))
+           (recent (-filter (lambda (name) (member name all)) persp-recent-perspectives)))
+      (-distinct (append recent all))))
+
+  (add-to-list 'persp-activated-functions
+               (lambda (_) (persp-register-recent (persp-name (get-current-persp)))))
+
   (defun persp-kill-empty ()
     "Kill all perspectives without buffers."
     (interactive)

@@ -60,22 +60,23 @@
   (defun projectile-switch-persp-project (&optional arg)
     (interactive "P")
     (persp-kill-empty)
-    (let ((projects (projectile-relevant-known-projects)))
-      (if projects
+    (let* ((persps (persp-names-recent))
+           (projects (projectile-relevant-known-projects))
+           (targets (append (rest persps) (list (first persps)) projects)))
+      (if targets
           (projectile-completing-read
-           "Switch to project perspective: " projects
-           :action (lambda (project)
-                     (message project)
-                     (if (-contains? projects project)
-                         (let* ((persp-name (projectile-default-project-name project))
-                                (persp-exists (persp-with-name-exists-p persp-name))
-                                (persp (persp-add-new persp-name)))
-                           (persp-frame-switch persp-name)
-                           (unless persp-exists
-                             (projectile-switch-project-by-name project arg)))
-                       (user-error "Unknown project: %s" project))))
-        (user-error "There are no known projects")))))
-
+           "Switch to perspective or project: " targets
+           :action (lambda (target)
+                     (cond ((-contains? persps target) (persp-frame-switch target))
+                           ((-contains? projects target)
+                            (let* ((persp-name (projectile-default-project-name target))
+                                   (persp-exists (persp-with-name-exists-p persp-name))
+                                   (persp (persp-add-new persp-name)))
+                              (persp-frame-switch persp-name)
+                              (unless persp-exists
+                                (projectile-switch-project-by-name target arg))))
+                           (t (user-error "Unknown target: %s" target)))))
+          (user-error "There are no known projects"))))
 
   (defhydra hydra-projectile (:hint nil)
     "
