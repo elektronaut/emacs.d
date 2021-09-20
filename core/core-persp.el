@@ -10,7 +10,8 @@
   :ensure t
   :demand t
   :bind (:map persp-key-map
-              ("O" . persp-kill-other))
+              ("O" . persp-kill-other)
+              ("B" . persp-ibuffer))
   :init
   (setq-default persp-keymap-prefix (kbd "C-x x")
                 persp-add-buffer-on-after-change-major-mode t
@@ -64,6 +65,27 @@
          (remove (safe-persp-name (get-current-persp)))
          (mapc 'persp-kill)))
 
+  ;; ibuffer integration
+  (define-ibuffer-filter persp-buffers
+      "Show Ibuffer with all buffers in the current perspective."
+    (:description "persp-mode"
+                  :reader (persp-prompt nil nil (safe-persp-name (get-frame-persp)) t))
+    (with-current-buffer buf
+      (find buf (safe-persp-buffers (persp-get-by-name qualifier)))))
+
+  (defun persp-ibuffer-by-persp (persp)
+    "Open an IBuffer window showing all buffers in PERSP."
+    (ibuffer nil (format "*%s Buffers*" persp)
+             (list (cons 'persp-buffers persp))))
+
+  (defun persp-ibuffer (prompt-for-persp)
+    (interactive "P")
+    (let ((persp (if prompt-for-persp
+                     (ivy-read "Select perspective:" (persp-names))
+                   (safe-persp-name (get-current-persp)))))
+      (persp-ibuffer-by-persp persp)))
+
+  ;; hydra
   (defhydra hydra-persp (:hint nil)
     "
   Perspective: %(safe-persp-name (get-current-persp))
@@ -75,6 +97,8 @@
   ^^  _h_: hide       _C_: kill             _K_: kill
   ^^  _u_: unhide     _O_: kill all others  _b_: switch
   ^^^^                ^^                    _t_: temporarily display
+  ^^^^                ^^                    _B_: ibuffer
+
   "
     ("<left>" persp-prev)
     ("<right>" persp-next)
@@ -90,6 +114,7 @@
     ("K" persp-kill-buffer)
     ("b" persp-switch-to-buffer)
     ("t" persp-temporarily-display-buffer)
+    ("B" persp-ibuffer :color blue)
     ("q" nil "quit"))
 
   (define-key persp-mode-map (kbd "C-x X") #'hydra-persp/body))
