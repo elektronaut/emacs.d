@@ -20,7 +20,7 @@
       (set-fontset-font t 'unicode "Apple Color Emoji" nil 'prepend))
 
   ;; Enable ligatures
-  (mac-auto-operator-composition-mode)
+  ;;(mac-auto-operator-composition-mode)
 
   ;; Use ls from coreutils. Install coreutils with Homebrew
   ;; to enable.

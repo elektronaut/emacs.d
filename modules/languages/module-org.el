@@ -40,6 +40,7 @@
 (global-set-key "\C-cc" 'my-org-capture)
 
 (setq org-directory "~/Dropbox/org"
+      org-agenda-block-separator 45
       org-agenda-compact-blocks nil
       org-agenda-files '("~/Dropbox/org"
                          "~/Dropbox/org/anyone")
@@ -51,6 +52,7 @@
       org-cycle-separator-lines 2
       org-cycle-open-archived-trees t
       org-default-notes-file "~/Dropbox/org/inbox.org"
+      org-enforce-todo-dependencies nil
       org-ellipsis nil
       org-global-properties (quote (("Effort_ALL" .
                                      "0:15 0:30 0:45 1:00 2:00 3:00 4:00 5:00 6:00 0:00")
@@ -80,10 +82,24 @@
                           '(org-agenda-skip-entry-if 'scheduled 'deadline
                                                      'regexp "\\=.*\\[#A\\]"))
                          (org-agenda-overriding-header "Next actions")))
+          (stuck ""  ((org-agenda-overriding-header "Stuck projects")))))
+        ("p" "Projects"
+         ((stuck ""  ((org-agenda-overriding-header "Stuck projects")))
           (tags "project/-DONE-MAYBE-DELEGATED-CANCELLED-WAITING"
                 ((org-agenda-overriding-header "Active projects")))
-          (todo "WAITING"  ((org-agenda-overriding-header "Waiting")))
-          (stuck ""  ((org-agenda-overriding-header "Stuck projects")))))
+          (tags "project/+WAITING"
+                ((org-agenda-overriding-header "Upcoming projects")))
+          (tags "project/+MAYBE"
+                ((org-agenda-overriding-header "Potential projects")))))
+        ("w" "Waiting"
+         ((todo "WAITING" ((org-agenda-overriding-header "Waiting")))
+          (todo "DELEGATED" ((org-agenda-overriding-header "Delegated")))
+          (todo "MAYBE" ((org-agenda-overriding-header "Someday/maybe")))))
+        ("e" "Effort"
+         ((todo "NEXT|TODO"
+                ((org-agenda-overriding-header "Tasks")
+                 (org-agenda-sorting-strategy '(todo-state-up priority-down effort-up))
+                 (org-agenda-prefix-format "  %5e %-10c ")))))
         ("o" "Overview"
          ((agenda "" ((org-agenda-span 14)))
           (stuck "" ((org-agenda-overriding-header "Stuck projects")))

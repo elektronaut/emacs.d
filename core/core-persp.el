@@ -4,6 +4,7 @@
 
 (require 'dash)
 (require 'core-hydra)
+(require 'ibuf-ext)
 
 ;; https://github.com/Bad-ptr/persp-mode.el
 (use-package persp-mode
