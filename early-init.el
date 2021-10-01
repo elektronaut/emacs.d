@@ -1,3 +1,5 @@
+;;; early-init.el --- early bird  -*- no-byte-compile: t -*-
+
 ;; Defer GC for now
 (setq gc-cons-threshold most-positive-fixnum)
 

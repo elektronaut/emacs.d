@@ -51,6 +51,14 @@
       use-package-compute-statistics nil
       use-package-verbose nil)
 
+(use-package auto-compile
+  :init
+  (setq auto-compile-display-buffer nil)
+  (setq auto-compile-mode-line-counter t)
+  :config
+  (auto-compile-on-load-mode)
+  (auto-compile-on-save-mode))
+
 ;; Add Homebrew to the load path
 (let ((default-directory "/usr/local/share/emacs/site-lisp/"))
   (normal-top-level-add-subdirs-to-load-path))
