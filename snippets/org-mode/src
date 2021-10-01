@@ -1,0 +1,10 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: src
+# key: src
+# binding: direct-keybinding
+# --
+
+#+NAME: $1
+#+BEGIN_SRC ${2:emacs-lisp}
+$0
+#+END_SRC

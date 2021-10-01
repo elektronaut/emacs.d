@@ -12,6 +12,7 @@
 (require 'core-secrets)
 (require 'org)
 (require 'org-agenda)
+(require 'ob-ruby)
 
 (defun skip-non-stuck-projects ()
   "Skip trees that are not stuck projects."
@@ -249,14 +250,15 @@
 
 (add-hook 'org-agenda-finalize-hook #'org-agenda-delete-empty-blocks)
 
-;; Open zpl: links
-(defun org-zpl-open (path)
-  "Open PATH in Zeplin."
-  (start-process-shell-command
-   "open-org-zpl-process" nil
-   (concat "/usr/bin/open " (shell-quote-argument (concat "zpl:" path)))))
+(defun external-link-opener (protocol)
+  "Return a function that will open PROTOCOL URLs."
+  `(lambda (path)
+     (start-process-shell-command
+      "open-org-process" nil
+      (concat "/usr/bin/open " (shell-quote-argument (concat ,protocol ":" path))))))
 
-(org-link-set-parameters "zpl" :follow #'org-zpl-open)
+(dolist (protocol '("zpl" "readdle-spark"))
+  (org-link-set-parameters protocol :follow (external-link-opener protocol)))
 
 (defhydra hydra-org (:hint nil)
     "
