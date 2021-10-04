@@ -18,7 +18,7 @@
                 persp-add-buffer-on-after-change-major-mode t
                 persp-autokill-buffer-on-remove 'kill-weak
                 persp-autokill-persp-when-removed-last-buffer 'kill
-                persp-kill-foreign-buffer-behaviour-choices 'kill
+                persp-kill-foreign-buffer-behaviour 'kill
                 persp-remove-buffers-from-nil-persp-behaviour nil)
   :config
   ;;(persp-mode 1)
