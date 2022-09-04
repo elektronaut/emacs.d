@@ -10,7 +10,8 @@
 (use-package crux
   :bind (("M-j"     . crux-top-join-line)
          ("C-c o"   . crux-open-with)
-         ("C-a"     . crux-move-beginning-of-line)
+         ;; ("C-a"     . crux-move-beginning-of-line)
+         ;; ("<home>"  . crux-move-beginning-of-line)
          ("M-o"     . crux-smart-open-line)
          ("C-c n"   . crux-cleanup-buffer-or-region)
          ("C-M-z"   . crux-indent-defun)
@@ -31,6 +32,7 @@
          ("s-k"     . crux-kill-whole-line))
   :config
   (global-set-key [remap kill-whole-line] 'crux-kill-whole-line)
+  (global-set-key [remap move-beginning-of-line] 'crux-move-beginning-of-line)
   (global-set-key [(shift return)] 'crux-smart-open-line)
   (global-set-key [(control shift return)] 'crux-smart-open-line-above)
   (crux-with-region-or-line kill-region))

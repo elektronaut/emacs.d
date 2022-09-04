@@ -93,7 +93,7 @@
 
   "
     ("f" projectile-find-file)
-    ("r" projectile-recent-f)
+    ("r" projectile-recentf)
     ("F" projectile-find-file-in-directory)
     ("d" projectile-find-dir)
     ("D" projectile-dired)
@@ -113,7 +113,7 @@
     ("P" projectile-switch-project)
     ("A" projectile-add-known-project)
     ("x" projectile-remove-known-project)
-    ("X" projectile-cleanup-known-project)
+    ("X" projectile-cleanup-known-projects)
     ("q" nil "quit"))
 
   (define-key projectile-mode-map (kbd "C-c P") #'hydra-projectile/body))

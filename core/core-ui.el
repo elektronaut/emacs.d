@@ -130,5 +130,29 @@
   :config
   (which-key-mode +1))
 
+(defhydra hydra-window (:hint nil)
+  "
+  Window
+
+  Navigate^^^^
+  ^^^^^^^^----------------------------------------------------------
+  _↑_/_↓_/_←_/_→_: navigate
+  ^^^^^^      _2_: split vertical
+  ^^^^^^      _3_: split horizontal
+  ^^^^^^      _x_: delete
+
+  "
+  ("<left>" windmove-left)
+  ("<right>" windmove-right)
+  ("<up>" windmove-up)
+  ("<down>" windmove-down)
+  ("2" split-window-below)
+  ("3" split-window-and-balance)
+  ("x" delete-window-and-balance)
+  ("+" balance-windows)
+  ("a" ace-window)
+  ("s" ace-swap-window)
+  ("q" nil "quit"))
+
 (provide 'core-ui)
 ;;; core-ui.el ends here

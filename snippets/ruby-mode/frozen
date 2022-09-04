@@ -1,0 +1,6 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: frozen
+# key: frozen
+# binding: direct-keybinding
+# --
+# frozen_string_literal: true

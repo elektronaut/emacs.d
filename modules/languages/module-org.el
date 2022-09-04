@@ -177,6 +177,16 @@
   (define-key org-mode-map (kbd "C-c o") #'hydra-org/body)
   (define-key org-mode-map (kbd "C-c :") #'org-time-stamp-inactive)
 
+  ;; Calendar navigation
+  (define-key org-read-date-minibuffer-local-map (kbd "M-<left>")
+    (lambda () (interactive) (org-eval-in-calendar '(calendar-backward-day 1))))
+  (define-key org-read-date-minibuffer-local-map (kbd "M-<right>")
+    (lambda () (interactive) (org-eval-in-calendar '(calendar-forward-day 1))))
+  (define-key org-read-date-minibuffer-local-map (kbd "M-<up>")
+    (lambda () (interactive) (org-eval-in-calendar '(calendar-backward-week 1))))
+  (define-key org-read-date-minibuffer-local-map (kbd "M-<down>")
+    (lambda () (interactive) (org-eval-in-calendar '(calendar-forward-week 1))))
+
   ;; Add replacements for the some of keybindings we just removed. It
   ;; looks like Org already binds C-up and C-down separately from M-{
   ;; and M-}, so we can't use those. Users will just have to make do

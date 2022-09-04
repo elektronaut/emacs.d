@@ -79,6 +79,13 @@
     (ibuffer nil (format "*%s Buffers*" persp)
              (list (cons 'persp-buffers persp))))
 
+  (defun persp-kill-current ()
+    "Kill current perspective without prompt."
+    (interactive)
+    (let ((persp (safe-persp-name (get-current-persp))))
+      (persp-prev)
+      (persp-kill persp)))
+
   (defun persp-ibuffer (prompt-for-persp)
     (interactive "P")
     (let ((persp (if prompt-for-persp
@@ -108,7 +115,7 @@
     ("u" persp-unhide)
     ("c" persp-copy)
     ("r" persp-rename)
-    ("C" persp-kill)
+    ("C" persp-kill-current)
     ("O" persp-kill-other)
     ("a" persp-add-buffer)
     ("k" persp-remove-buffer)
