@@ -21,7 +21,7 @@
   :init
   (setq projectile-keymap-prefix (kbd "C-c p")
         projectile-current-project-on-switch 'move-to-end
-        projectile-completion-system 'ivy
+        projectile-completion-system 'default
         projectile-sort-order 'recentf
         projectile-indexing-method 'hybrid
         projectile-known-projects-file (expand-file-name "projectile-bookmarks.eld" savefile-dir)
@@ -102,11 +102,11 @@
     ("<right>" projectile-next-project-buffer)
     ("<left>" projectile-previous-project-buffer)
     ("k" kill-current-buffer)
-    ("b" projectile-switch-to-buffer)
+    ("b" consult-project-buffer)
     ("B" projectile-ibuffer)
     ("C-s" projectile-save-project-buffers)
 
-    ("s" counsel-projectile-rg)
+    ("s" consult-ripgrep)
     ("S" rg-project)
 
     ("p" projectile-switch-persp-project)

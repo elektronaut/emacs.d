@@ -56,9 +56,9 @@
 (defun tramp-ssh-read-host ()
   "SSH host name prompt."
   (setq-default tramp-ssh-host-cache (tramp-ssh-host-candidates))
-  (ivy-read "(username@)host: " #'tramp-ssh-host-function
-            :dynamic-collection t
-            :history 'tramp-ssh-history))
+  (completing-read "(username@)host: " #'tramp-ssh-host-function
+                   :dynamic-collection t
+                   :history 'tramp-ssh-history))
 
 (defun tramp-ssh ()
   "Open a tramp session."

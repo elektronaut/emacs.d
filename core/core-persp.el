@@ -89,7 +89,7 @@
   (defun persp-ibuffer (prompt-for-persp)
     (interactive "P")
     (let ((persp (if prompt-for-persp
-                     (ivy-read "Select perspective:" (persp-names))
+                     (completing-read "Select perspective:" (persp-names))
                    (safe-persp-name (get-current-persp)))))
       (persp-ibuffer-by-persp persp)))
 

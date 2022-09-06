@@ -108,6 +108,14 @@
         uniquify-after-kill-buffer-p t
         uniquify-ignore-buffers-re "^\\*"))
 
+(use-package smex
+  :init
+  (setq smex-save-file (expand-file-name "smex-items" savefile-dir))
+  :config
+  (smex-initialize))
+
+(require 'thingatpt)
+
 ;; Navigate windows with shift+arrow keys
 (use-package windmove
   :defer t
