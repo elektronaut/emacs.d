@@ -49,6 +49,7 @@
   :bind (:map projectile-mode-map
               ("C-c p p" . projectile-switch-persp)
               ;; ("C-c p P" . projectile-switch-project)
+              ("C-c p C-c" . projectile-bin-dev)
               ("C-c p O" . projectile-open-org))
   :init
   (setq projectile-keymap-prefix (kbd "C-c p")
@@ -68,6 +69,19 @@
     (unless (file-remote-p default-directory) ad-do-it))
 
   (projectile-global-mode t)
+
+  (defun projectile-bin-dev ()
+    "Run bin/dev in a compilation buffer."
+    (interactive)
+    (when-let* ((project (projectile-project-p))
+                (path (concat project "bin/dev"))
+                (buffer-name (concat "*bin/dev " project "*"))
+                (default-directory project))
+      (if (file-exists-p path)
+          (compilation-start path
+                             'compilation-mode
+                             (lambda (arg) buffer-name))
+        (error "%s does not exist!" path))))
 
   (defun projectile-org-file ()
     "`org-mode' file for project."
