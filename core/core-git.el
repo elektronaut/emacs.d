@@ -16,7 +16,7 @@
 (use-package magit
   :defer 30
   :bind (("C-x g"   . magit-status)
-         ("C-x M-g" . magit-dispatch-popup)
+         ("C-x M-g" . magit-dispatch)
          ("s-m m"   . magit-status)
          ("s-m l"   . magit-log)
          ("s-m f"   . magit-log-buffer-file)

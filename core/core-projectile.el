@@ -7,16 +7,48 @@
 
 ;;; Code:
 
+(require 'core-completion)
 (require 'core-hydra)
 (require 'core-persp)
 (require 'dash)
+
+(defvar projectile-switch-persp--persp-history nil)
+
+(defface projectile-switch-persp-perspective-face
+  '((t :inherit font-lock-constant-face))
+  "Face used to highlight projects in `projectile-switch-persp'."
+  :group 'projectile-switch-persp)
+
+(defvar projectile-switch-persp--source-persp
+  (list :name     "Perspectives"
+        :narrow   '(?p . "Perspective")
+        :category 'projectile-switch-persp-perspective
+        :face     'projectile-switch-persp-perspective-face
+        :history  'projectile-switch-persp--persp-history
+        :annotate (lambda (persp) (format "Perspective"))
+        :action   (lambda (persp) (persp-frame-switch persp))
+        :items    #'persp-names-recent))
+
+(defvar projectile-switch-persp--source-project
+  (list :name     "Known Projects"
+        :narrow   '(?r . "Project")
+        :category 'consult-projectile-project
+        :face     'consult-projectile-projects
+        :history  'consult-projectile--project-history
+        :annotate (lambda (dir)
+                    (when consult-projectile-display-info
+                      (format "Project: %s [%s]"
+                              (projectile-project-name dir)
+                              (projectile-project-vcs dir))))
+        :action   (lambda (dir) (projectile-switch-persp-project dir))
+        :items    #'projectile-relevant-known-projects))
 
 (use-package projectile
   :after (persp-mode)
   :demand t
   :bind (:map projectile-mode-map
-              ("C-c p p" . projectile-switch-persp-project)
-              ("C-c p P" . projectile-switch-project)
+              ("C-c p p" . projectile-switch-persp)
+              ;; ("C-c p P" . projectile-switch-project)
               ("C-c p O" . projectile-open-org))
   :init
   (setq projectile-keymap-prefix (kbd "C-c p")
@@ -57,26 +89,28 @@
     "rg --null --files")
   (advice-add 'projectile-get-ext-command :override #'advice-projectile-use-rg)
 
-  (defun projectile-switch-persp-project (&optional arg)
-    (interactive "P")
-    (persp-kill-empty)
-    (let* ((persps (persp-names-recent))
-           (projects (projectile-relevant-known-projects))
-           (targets (append (rest persps) (list (first persps)) projects)))
-      (if targets
-          (projectile-completing-read
-           "Switch to perspective or project: " targets
-           :action (lambda (target)
-                     (cond ((-contains? persps target) (persp-frame-switch target))
-                           ((-contains? projects target)
-                            (let* ((persp-name (projectile-default-project-name target))
-                                   (persp-exists (persp-with-name-exists-p persp-name))
-                                   (persp (persp-add-new persp-name)))
-                              (persp-frame-switch persp-name)
-                              (unless persp-exists
-                                (projectile-switch-project-by-name target arg))))
-                           (t (user-error "Unknown target: %s" target)))))
-          (user-error "There are no known projects"))))
+
+  ;; Perspective switcher
+
+  (defun projectile-switch-persp-project (dir)
+    "Switch to perspective for projectile project."
+    (let* ((persp-name (projectile-default-project-name dir))
+           (persp-exists (persp-with-name-exists-p persp-name))
+           (persp (persp-add-new persp-name)))
+      (persp-frame-switch persp-name)
+      (unless persp-exists
+        (projectile-switch-project-by-name dir))))
+
+  (defun projectile-switch-persp (&optional sources)
+    "Switch to project perspective."
+    (interactive)
+    (when-let (buffer (consult--multi (or sources
+                                          '(projectile-switch-persp--source-persp
+                                            projectile-switch-persp--source-project))
+                                      :prompt "Switch to: "
+                                      :history 'projectile-switch-persp--persp-history
+                                      :sort nil))))
+
 
   (defhydra hydra-projectile (:hint nil)
     "
@@ -92,10 +126,10 @@
   _O_: org file    _C-s_: save all           ^^
 
   "
-    ("f" projectile-find-file)
-    ("r" projectile-recentf)
+    ("f" consult-projectile-find-file)
+    ("r" consult-projectile-recentf)
     ("F" projectile-find-file-in-directory)
-    ("d" projectile-find-dir)
+    ("d" consult-projectile-find-dir)
     ("D" projectile-dired)
     ("O" projectile-open-org)
 

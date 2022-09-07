@@ -11,11 +11,15 @@
 
 (use-package doom-themes
   :config
-  ;;(load-theme 'doom-horizon t)
+  ;;(load-theme 'doom-tomorrow-night t)
+
+  (load-theme 'doom-horizon t)
+  ;;(load-theme 'doom-ayu-dark t)
+  ;;(load-theme 'doom-monokai-pro t)
   ;;(load-theme 'doom-monokai-machine t)
   ;;(load-theme 'doom-one t)
   ;;(load-theme 'doom-vibrant t)
-  (load-theme 'doom-tomorrow-night t)
+  ;;(load-theme 'doom-gruvbox t)
   (doom-themes-org-config))
 
 ;;(load-theme 'atom-one-dark)

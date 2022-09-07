@@ -2,6 +2,8 @@
 ;;; Commentary:
 ;;; Code:
 
+(require 'core-persp)
+
 (defun random-hex-token (length)
   "Generate a random hexadecimal token of LENGTH using OpenSSL."
   (interactive "sLength (Default 16): ")
@@ -48,7 +50,7 @@
   (balance-windows))
 
 (defun comment-or-uncomment-region-or-line ()
-  "Comments or uncomments the region or the current line if there's no active region."
+  "Comments or uncomments the region or the current line."
   (interactive)
   (let (beg end)
     (if (region-active-p)
