@@ -130,7 +130,7 @@
   (use-package consult-dir)
   (use-package consult-dash)
   (use-package consult-flycheck)
-  (use-package consult-lsp)
+  ;;(use-package consult-lsp)
   (use-package consult-ls-git)
   (use-package consult-projectile
     :init
