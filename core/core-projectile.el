@@ -87,8 +87,8 @@
     "`org-mode' file for project."
     (if (projectile-project-p)
         (concat (if (string-match-p "Dev/anyone" (projectile-project-p))
-                    "~/Dropbox/org/anyone/"
-                  "~/Dropbox/org/")
+                    "~/Library/CloudStorage/Dropbox/org/anyone/"
+                  "~/Library/CloudStorage/Dropbox/org/")
                 (projectile-project-name)
                 ".org")))
 

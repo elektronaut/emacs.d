@@ -40,11 +40,11 @@
 (global-set-key "\C-cb" 'org-iswitchb)
 (global-set-key "\C-cc" 'my-org-capture)
 
-(setq org-directory "~/Dropbox/org"
+(setq org-directory "~/Library/CloudStorage/Dropbox/org"
       org-agenda-block-separator 45
       org-agenda-compact-blocks nil
-      org-agenda-files '("~/Dropbox/org"
-                         "~/Dropbox/org/anyone")
+      org-agenda-files '("~/Library/CloudStorage/Dropbox/org"
+                         "~/Library/CloudStorage/Dropbox/org/anyone")
       org-agenda-persistent-filter t
       org-agenda-skip-deadline-if-done t
       org-agenda-skip-scheduled-if-done t
@@ -52,7 +52,7 @@
       org-archive-location "%s-archive::datetree/"
       org-cycle-separator-lines 2
       org-cycle-open-archived-trees t
-      org-default-notes-file "~/Dropbox/org/inbox.org"
+      org-default-notes-file "~/Library/CloudStorage/Dropbox/org/inbox.org"
       org-enforce-todo-dependencies nil
       org-ellipsis nil
       org-global-properties (quote (("Effort_ALL" .
@@ -60,7 +60,7 @@
                                     ("STYLE_ALL" . "habit")))
       org-hide-leading-stars nil
       org-log-done t
-      org-mobile-directory "~/Dropbox/Apps/MobileOrg"
+      org-mobile-directory "~/Library/CloudStorage/Dropbox/Apps/MobileOrg"
       org-mobile-inbox-for-pull (concat org-directory "/from-mobile.org")
       org-outline-path-complete-in-steps nil
       org-tags-exclude-from-inheritance '("project")
@@ -124,7 +124,7 @@
           ("MAYBE"   :foreground ,maybe :weight bold))))
 
 (setq my-org-capture-default-target
-      "~/Dropbox/org/inbox.org")
+      "~/Library/CloudStorage/Dropbox/org/inbox.org")
 
 (defvar my-org-capture-inbox-target
   my-org-capture-default-target
@@ -139,7 +139,7 @@
 	 "* %? %U\n%i" :prepend t)
         ("s" "Source note" entry (file+olp my-org-capture-inbox-target "Notes")
 	 "* %? %U\n#+BEGIN_SRC\n%i\n#+END_SRC\nFrom: %a" :prepend t)
-        ("j" "Journal entry" entry (file+datetree "~/Dropbox/org/journal.org")
+        ("j" "Journal entry" entry (file+datetree "~/Library/CloudStorage/Dropbox/org/journal.org")
 	 "* %?\n%i")))
 
 (defun my-org-capture ()
@@ -209,7 +209,7 @@
 
 ;; (use-package org-journal
 ;;   :init
-;;   (setq org-journal-dir "~/Dropbox/org/journal"))
+;;   (setq org-journal-dir "~/Library/CloudStorage/Dropbox/org/journal"))
 
 ;; (use-package org-gcal
 ;;   :ensure t
@@ -217,7 +217,7 @@
 ;;   (setq org-gcal-dir (expand-file-name "org-gcal/" savefile-dir)
 ;;         org-gcal-client-id (config-secret 'gcal-client-id)
 ;; 	org-gcal-client-secret (config-secret 'gcal-client-secret)
-;; 	org-gcal-file-alist '(("inge@anyone.no" .  "~/Dropbox/org/gcal-anyone.org")))
+;; 	org-gcal-file-alist '(("inge@anyone.no" .  "~/Library/CloudStorage/Dropbox/org/gcal-anyone.org")))
 ;;   (setq org-gcal-token-file (expand-file-name ".org-gcal-token" org-gcal-dir))
 ;;   :init
 ;;   (add-hook 'org-agenda-mode-hook (lambda () (org-gcal-sync) ))
@@ -313,11 +313,11 @@
     ("i T" (org-time-stamp-inactive t))
     ;; Go to
     ("g i" (find-file org-default-notes-file))
-    ("g a" (find-file "~/Dropbox/org/anyone.org"))
-    ("g p" (find-file "~/Dropbox/org/personal.org"))
-    ("g j" (find-file "~/Dropbox/org/journal.org"))
+    ("g a" (find-file "~/Library/CloudStorage/Dropbox/org/anyone.org"))
+    ("g p" (find-file "~/Library/CloudStorage/Dropbox/org/personal.org"))
+    ("g j" (find-file "~/Library/CloudStorage/Dropbox/org/journal.org"))
     ("g O" (dired org-directory))
-    ("g A" (dired "~/Dropbox/org/anyone"))
+    ("g A" (dired "~/Library/CloudStorage/Dropbox/org/anyone"))
     ;; Misc
     ("k" org-cut-subtree "delete")
     ("<tab>" (org-cycle))
