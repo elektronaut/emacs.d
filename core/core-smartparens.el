@@ -26,7 +26,9 @@
               ("C-S-<left>" . sp-forward-barf-sexp)
               ("C-S-<right>" . sp-forward-slurp-sexp)
               ("C-M-S-<left>" . sp-backward-slurp-sexp)
-              ("C-M-S-<right>" . sp-backward-barf-sexp))
+              ("C-M-S-<right>" . sp-backward-barf-sexp)
+
+              ("C-c R" . sp-rewrap-sexp))
   :init
   (setq-default ;; sp-base-key-bindings 'paredit
    sp-autoskip-closing-pair 'always
