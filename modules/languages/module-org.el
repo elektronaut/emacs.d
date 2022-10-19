@@ -72,7 +72,8 @@
       org-src-fontify-natively t
       org-startup-folded "overview"
       org-startup-indented t
-      org-id-link-to-org-use-id t)
+      org-id-link-to-org-use-id t
+      org-return-follows-link t)
 
 (setq org-agenda-custom-commands
       '(("n" "Next actions"
