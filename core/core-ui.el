@@ -138,22 +138,35 @@
   :config
   (which-key-mode +1))
 
+
+(defun swap-window-direction (dir)
+  "Move selected window in DIR."
+  (let ((target-window (window-in-direction dir)))
+    (if target-window
+        (window-swap-states (selected-window) target-window)
+      (message "Cannot move window"))))
+
 (defhydra hydra-window (:hint nil)
   "
   Window
 
   Navigate^^^^
   ^^^^^^^^----------------------------------------------------------
-  _↑_/_↓_/_←_/_→_: navigate
-  ^^^^^^      _2_: split vertical
-  ^^^^^^      _3_: split horizontal
-  ^^^^^^      _x_: delete
+    _↑_/_↓_/_←_/_→_: navigate
+  S-_↑_/_↓_/_←_/_→_: move window
+  ^^^^^^        _2_: split vertical
+  ^^^^^^        _3_: split horizontal
+  ^^^^^^        _x_: delete
 
   "
   ("<left>" windmove-left)
   ("<right>" windmove-right)
   ("<up>" windmove-up)
   ("<down>" windmove-down)
+  ("<S-left>" (swap-window-direction 'left))
+  ("<S-right>" (swap-window-direction 'right))
+  ("<S-up>" (swap-window-direction 'up))
+  ("<S-down>" (swap-window-direction 'down))
   ("2" split-window-below)
   ("3" split-window-and-balance)
   ("x" delete-window-and-balance)
@@ -161,6 +174,8 @@
   ("a" ace-window)
   ("s" ace-swap-window)
   ("q" nil "quit"))
+
+(define-key global-map (kbd "C-x w") #'hydra-window/body)
 
 (provide 'core-ui)
 ;;; core-ui.el ends here
