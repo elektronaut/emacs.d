@@ -132,6 +132,9 @@ and file 'filename' will be opened and cursor set on line 'linenumber'"
   :config
   (viking-global-mode))
 
+(use-package visual-fill-column
+  :ensure t)
+
 (use-package zop-to-char
   :bind (("M-z" . zop-up-to-char)
          ("M-Z" . zop-to-char)))

@@ -9,7 +9,7 @@
 
 (use-package crux
   :bind (("M-j"     . crux-top-join-line)
-         ("C-c o"   . crux-open-with)
+         ("C-c O"   . crux-open-with)
          ;; ("C-a"     . crux-move-beginning-of-line)
          ;; ("<home>"  . crux-move-beginning-of-line)
          ("M-o"     . crux-smart-open-line)

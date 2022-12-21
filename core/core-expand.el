@@ -32,7 +32,7 @@
     :ensure company-web
     :init
     (add-to-list 'company-backends 'company-web-html))
-  (company-tng-mode)
+  ;(company-tng-mode)
   (global-company-mode 1))
 
 (use-package hippie-expand

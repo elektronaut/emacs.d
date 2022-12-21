@@ -49,7 +49,8 @@
                       base-font-size)))
     (dolist (face '(default variable-pitch))
       (set-face-attribute face nil
-                          :family "JetBrains Mono"
+                          ;;:family "JetBrains Mono"
+                          :family "Fira Code"
                           :height font-size)))
   ;(setq-default line-spacing 4)
   (setq-default line-spacing 3))
@@ -58,6 +59,7 @@
                     :slant 'italic)
 
 (nyx-set-font-size)
+
 (add-hook 'window-configuration-change-hook 'nyx-set-font-size)
 (add-hook 'nyx-frame-monitor-hook 'nyx-set-font-size)
 

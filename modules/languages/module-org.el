@@ -131,6 +131,10 @@
   my-org-capture-default-target
   "Filename for `org-capture'.")
 
+(defvar my-org-capture-email-target
+  my-org-capture-default-target
+  "Filename for `org-capture'.")
+
 (setq org-capture-templates
       '(("t" "Task" entry (file+olp my-org-capture-inbox-target "Tasks")
 	 "* TODO %?\n%U\n%i" :prepend t)
@@ -141,7 +145,13 @@
         ("s" "Source note" entry (file+olp my-org-capture-inbox-target "Notes")
 	 "* %? %U\n#+BEGIN_SRC\n%i\n#+END_SRC\nFrom: %a" :prepend t)
         ("j" "Journal entry" entry (file+datetree "~/Library/CloudStorage/Dropbox/org/journal.org")
-	 "* %?\n%i")))
+	 "* %?\n%i")
+        ("m" "Email workflow")
+        ("mf" "Follow up" entry (file+olp my-org-capture-email-target "Email")
+         "* NEXT Follow up with %:fromname on %a\n\n%i"
+         :prepend t :immediate-finish t)
+        ("mr" "Read later" entry (file+olp my-org-capture-email-target "Email")
+         "* NEXT Read %a\n\n%i" :prepend t :immediate-finish t)))
 
 (defun my-org-capture ()
   "Set `my-org-capture-inbox-target' and call `org-capture'."
@@ -207,6 +217,13 @@
   (add-hook 'org-mode-hook (lambda () (org-autolist-mode))))
 
 (use-package ox-clip)
+
+(use-package org-mime
+  :ensure t
+  :config
+  (setq org-mime-export-options '(:section-numbers nil
+                                  :with-author nil
+                                  :with-toc nil)))
 
 ;; (use-package org-journal
 ;;   :init
@@ -324,7 +341,8 @@
     ("<tab>" (org-cycle))
     ("q" nil "quit"))
 
-(define-key org-mode-map (kbd "C-c o") #'hydra-org/body)
+(define-key org-mode-map (kbd "C-c O") #'hydra-org/body)
+(define-key org-mode-map (kbd "C-c o") nil)
 
 (provide 'module-org)
-;;; module-org ends here
+;;; module-org.el ends here

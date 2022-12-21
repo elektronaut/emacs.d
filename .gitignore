@@ -13,6 +13,7 @@ custom.el
 elpa
 network-security.data
 games
+org-roam.db
 /persp-confs
 projectile-bookmarks.eld
 projects

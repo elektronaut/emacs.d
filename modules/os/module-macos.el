@@ -7,6 +7,7 @@
   (add-to-list 'default-frame-alist '(ns-appearance . dark))
 
   (setq-default default-input-method "MacOSX"
+                system-time-locale "no_NO"
                 mac-option-modifier nil
                 mac-right-option-modifier nil
                 mac-control-modifier 'control
