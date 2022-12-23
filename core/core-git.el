@@ -7,11 +7,11 @@
 
 (use-package git-timemachine)
 
-(use-package gitconfig-mode
-  :mode "\\.gitconfig")
-
-(use-package gitignore-mode
-  :mode "\\.gitignore")
+(use-package git-modes
+  :defer t
+  :init
+  (add-to-list 'auto-mode-alist
+	       (cons "/.dockerignore\\'" 'gitignore-mode)))
 
 (use-package magit
   :defer 30

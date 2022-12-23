@@ -14,4 +14,4 @@
                 calendar-time-display-form '(24-hours ":" minutes)))
 
 (provide 'core-calendar)
-;;; core-calendar ends here
+;;; core-calendar.el ends here
