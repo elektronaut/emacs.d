@@ -37,8 +37,13 @@
 ;; Packages and paths
 ;;-----------------------------------------------------------------------------
 
+(defvar homebrew-path
+  "/opt/homebrew"
+  "Homebrew root.")
+
 (require 'gnutls)
-(add-to-list 'gnutls-trustfiles "/usr/local/etc/openssl/cert.pem")
+(add-to-list 'gnutls-trustfiles
+             (concat homebrew-path "/etc/openssl/cert.pem"))
 
 ;; Enable packages
 (require 'package)
@@ -60,7 +65,7 @@
   (auto-compile-on-save-mode))
 
 ;; Add Homebrew to the load path
-(let ((default-directory "/usr/local/share/emacs/site-lisp/"))
+(let ((default-directory (concat homebrew-path "/share/emacs/site-lisp/")))
   (normal-top-level-add-subdirs-to-load-path))
 
 ;; Set and create savefile dir

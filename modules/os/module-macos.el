@@ -25,7 +25,8 @@
 
   ;; Use ls from coreutils. Install coreutils with Homebrew
   ;; to enable.
-  (setq insert-directory-program "/usr/local/bin/gls"))
+  (setq insert-directory-program
+        (concat homebrew-path "/bin/gls")))
 
 (provide 'module-macos)
 ;;; module-macos.el ends here

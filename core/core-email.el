@@ -68,7 +68,7 @@
         mu4e-attachment-dir "~/Downloads")
 
   ;; Fetching
-  (setq mu4e-get-mail-command "/usr/local/bin/mbsync -a"
+  (setq mu4e-get-mail-command (concat homebrew-path "/bin/mbsync -a")
         mu4e-update-interval (* 60 10)
         mu4e-hide-index-messages t)
 
