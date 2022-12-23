@@ -79,19 +79,7 @@
   :init
   (setq exec-path-from-shell-check-startup-files nil)
   :config
-  (exec-path-from-shell-initialize)
-
-  ;; gccemacs setup
-  (when (and (fboundp 'native-comp-available-p)
-             (native-comp-available-p))
-    (add-to-list 'exec-path (expand-file-name "/usr/local/opt/gccemacs/bin"))
-    (setenv "LIBRARY_PATH" (concat (getenv "LIBRARY_PATH")
-                                   (when (getenv "LIBRARY_PATH")
-                                     ":")
-                                   (car (file-expand-wildcards
-                                         (expand-file-name "/usr/local/opt/gcc/lib/gcc/*")))))
-    ;; Only set after LIBRARY_PATH can find gcc libraries.
-    (setq comp-deferred-compilation t)))
+  (exec-path-from-shell-initialize))
 
 
 ;;-----------------------------------------------------------------------------
