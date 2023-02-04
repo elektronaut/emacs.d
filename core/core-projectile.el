@@ -83,14 +83,23 @@
                              (lambda (arg) buffer-name))
         (error "%s does not exist!" path))))
 
+  ;; (defun projectile-org-file ()
+  ;;   "`org-mode' file for project."
+  ;;   (if (projectile-project-p)
+  ;;       (concat (if (string-match-p "Dev/anyone" (projectile-project-p))
+  ;;                   "~/Library/CloudStorage/Dropbox/org/anyone/"
+  ;;                 "~/Library/CloudStorage/Dropbox/org/")
+  ;;               (projectile-project-name)
+  ;;               ".org")))
+
   (defun projectile-org-file ()
     "`org-mode' file for project."
     (if (projectile-project-p)
-        (concat (if (string-match-p "Dev/anyone" (projectile-project-p))
-                    "~/Library/CloudStorage/Dropbox/org/anyone/"
-                  "~/Library/CloudStorage/Dropbox/org/")
-                (projectile-project-name)
-                ".org")))
+        (let* ((basename (concat (projectile-project-name) ".org"))
+               (files (seq-filter (lambda (f) (string-match-p basename f))
+                                  (org-agenda-files))))
+          (or (car files)
+              (concat org-directory "/" basename)))))
 
   (defun projectile-open-org ()
     "Open `org-mode' file for project."

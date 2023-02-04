@@ -41,14 +41,6 @@
 (global-set-key "\C-cc" 'my-org-capture)
 
 (setq org-directory "~/Library/CloudStorage/Dropbox/org"
-      org-agenda-block-separator 45
-      org-agenda-compact-blocks nil
-      org-agenda-files '("~/Library/CloudStorage/Dropbox/org"
-                         "~/Library/CloudStorage/Dropbox/org/anyone")
-      org-agenda-persistent-filter t
-      org-agenda-skip-deadline-if-done t
-      org-agenda-skip-scheduled-if-done t
-      org-agenda-span 14
       org-archive-location "%s-archive::datetree/"
       org-cycle-separator-lines 2
       org-cycle-open-archived-trees t
@@ -74,6 +66,14 @@
       org-startup-indented t
       org-id-link-to-org-use-id t
       org-return-follows-link t)
+
+(setq org-agenda-block-separator 8212
+      org-agenda-compact-blocks nil
+      org-agenda-files (directory-files-recursively org-directory "\\.org$")
+      org-agenda-persistent-filter t
+      org-agenda-skip-deadline-if-done t
+      org-agenda-skip-scheduled-if-done t
+      org-agenda-span 14)
 
 (setq org-agenda-custom-commands
       '(("n" "Next actions"
@@ -296,8 +296,8 @@
     M-_↑_/_↓_: move            ^^_t_: TODO       _A_: move to archive  _i d_/_i D_: date (inactive)  _g a_: anyone
     M-_←_/_→_: shift           ^^_d_: DONE       _r_: refile           ^^^^                          _g p_: personal
   S-M-_←_/_→_: shift subtree   ^^_T_: todo       _S_: schedule         ^^^^                          _g j_: journal
-  ^^^^                       _←_/_→_: prev/next  _D_: deadline         ^^^^                          _g O_: org dir
-  ^^^^                         ^^_,_: priority   _O_: sort             ^^^^                          _g A_: anyone projects
+  ^^^^                       _←_/_→_: prev/next  _D_: deadline         ^^^^                          _g A_: areas
+  ^^^^                         ^^_,_: priority   _O_: sort             ^^^^                          _g C_: clients
 
  "
     ;; Navigate
@@ -331,11 +331,12 @@
     ("i T" (org-time-stamp-inactive t))
     ;; Go to
     ("g i" (find-file org-default-notes-file))
-    ("g a" (find-file "~/Library/CloudStorage/Dropbox/org/anyone.org"))
+    ("g a" (find-file "~/Library/CloudStorage/Dropbox/org/areas/anyone.org"))
     ("g p" (find-file "~/Library/CloudStorage/Dropbox/org/personal.org"))
     ("g j" (find-file "~/Library/CloudStorage/Dropbox/org/journal.org"))
     ("g O" (dired org-directory))
-    ("g A" (dired "~/Library/CloudStorage/Dropbox/org/anyone"))
+    ("g A" (dired "~/Library/CloudStorage/Dropbox/org/areas"))
+    ("g C" (dired "~/Library/CloudStorage/Dropbox/org/clients"))
     ;; Misc
     ("k" org-cut-subtree "delete")
     ("<tab>" (org-cycle))
