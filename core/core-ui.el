@@ -2,6 +2,10 @@
 ;;; Commentary:
 ;;; Code:
 
+(require 'core-hydra)
+
+(defvar savefile-dir)
+
 ;; Disable desktop save mode
 (desktop-save-mode 0)
 
@@ -31,7 +35,7 @@
 (when (fboundp 'tool-bar-mode) (tool-bar-mode -1))
 
 ;; Window split direction
-(setq split-width-threshold 120)
+(setq split-width-threshold 130)
 (setq split-height-threshold nil)
 
 ;; Input config
@@ -92,8 +96,6 @@
 
 (use-package discover-my-major
   :bind (("C-c m" . discover-my-major)))
-
-(use-package nlinum)
 
 (use-package re-builder
   :ensure nil

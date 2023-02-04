@@ -13,8 +13,12 @@
 (use-package css-mode
   :mode "\\.css\\'"
   :config
-  (setq css-indent-offset 2)
-  (add-hook 'css-mode-hook 'module-css-defaults))
+  (setq css-indent-offset 2
+        css-fontify-colors nil)
+  (add-hook 'css-mode-hook 'module-css-defaults)
+  (add-to-list 'auto-mode-alist '("\\.css\\'" . scss-mode))
+  (add-to-list 'auto-mode-alist '("\\.postcss\\'" . scss-mode))
+  (add-to-list 'auto-mode-alist '("\\.pcss\\'" . scss-mode)))
 
 (use-package less-css-mode
   :mode "\\.less\\'")

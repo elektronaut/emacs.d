@@ -9,11 +9,16 @@
   (mapcar #'disable-theme custom-enabled-themes))
 (advice-add 'load-theme :before #'load-theme--disable-old-theme)
 
+(setq-default custom-theme-directory "~/.emacs.d/themes/")
+
 (use-package doom-themes
   :config
   ;;(load-theme 'doom-tomorrow-night t)
 
-  (load-theme 'doom-horizon t)
+  (load-theme 'doom-ventura t)
+
+  ;;(load-theme 'doom-dracula t)
+  ;;(load-theme 'doom-horizon t)
   ;;(load-theme 'doom-ayu-dark t)
   ;;(load-theme 'doom-monokai-pro t)
   ;;(load-theme 'doom-monokai-machine t)
@@ -53,6 +58,12 @@
   "Restore theme overrides after loading theme."
   (core-configure-theme-overrides))
 (advice-add 'load-theme :after #'load-theme--restore-theme-overrides)
+
+(defun reload-theme ()
+  "Reload custom theme."
+  (interactive)
+  (load-theme (car custom-enabled-themes) t))
+
 
 ;; Minibuffer background
 ;; (add-hook 'minibuffer-setup-hook

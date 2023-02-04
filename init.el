@@ -74,12 +74,15 @@
 (unless (file-exists-p savefile-dir)
   (make-directory savefile-dir))
 
-(use-package exec-path-from-shell
-  :commands (exec-path-from-shell-copy-env)
-  :init
-  (setq exec-path-from-shell-check-startup-files nil)
-  :config
-  (exec-path-from-shell-initialize))
+(setq insert-directory-program "gls" dired-use-ls-dired t)
+(setq dired-listing-switches "-al --group-directories-first")
+
+;;(use-package exec-path-from-shell
+;;  :commands (exec-path-from-shell-copy-env)
+;;  :init
+;;  (setq exec-path-from-shell-check-startup-files nil)
+;;  :config
+;;  (exec-path-from-shell-initialize))
 
 
 ;;-----------------------------------------------------------------------------

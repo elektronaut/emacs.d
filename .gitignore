@@ -10,6 +10,7 @@
 /themes
 /var/pcache
 custom.el
+eln-cache
 elpa
 network-security.data
 games

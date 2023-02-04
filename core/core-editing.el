@@ -105,6 +105,19 @@ and file 'filename' will be opened and cursor set on line 'linenumber'"
   :init
   (setq mc/list-file (expand-file-name "mc-lists.el" savefile-dir)))
 
+(use-package rainbow-mode
+  :config
+  (defun rainbow-turn-off-words ()
+    "Turn off word colours in rainbow-mode."
+    (interactive)
+    (font-lock-remove-keywords
+     nil
+     `(,@rainbow-x-colors-font-lock-keywords
+       ,@rainbow-latex-rgb-colors-font-lock-keywords
+       ,@rainbow-r-colors-font-lock-keywords
+       ,@rainbow-html-colors-font-lock-keywords
+       ,@rainbow-html-rgb-colors-font-lock-keywords))))
+
 (use-package smartrep)
 (use-package operate-on-number
   :config

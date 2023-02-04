@@ -8,6 +8,7 @@
 ;;; Code:
 
 (use-package crux
+  :defer 10
   :bind (("M-j"     . crux-top-join-line)
          ("C-c O"   . crux-open-with)
          ;; ("C-a"     . crux-move-beginning-of-line)

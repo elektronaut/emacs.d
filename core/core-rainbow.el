@@ -8,7 +8,6 @@
 ;;; Code:
 
 (use-package rainbow-delimiters)
-(use-package rainbow-mode)
 
 (provide 'core-rainbow)
 ;;; core-rainbow ends here

@@ -34,12 +34,16 @@
   ;; UI
   (setq mu4e-main-hide-personal-addresses t
         mu4e-completing-read-function 'completing-read
+        mu4e-split-view 'horizontal
         mu4e-headers-visible-lines 15
         mu4e-headers-fields '((:human-date . 12)
                               (:flags . 6)
                               (:mailing-list . 10)
                               (:from . 22)
                               (:subject)))
+
+  ;; Message view
+  (setq shr-color-visible-luminance-min 80)
 
   ;; Markers
   (setq mu4e-use-fancy-chars t
@@ -134,7 +138,7 @@
                      (smtpmail-smtp-user        . "inge@anyone.no")
                      (smtpmail-smtp-server      . "smtp.gmail.com")
                      (mu4e-sent-messages-behavior . delete)
-                     (my-org-capture-email-target . "~/Library/CloudStorage/Dropbox/org/anyone.org")
+                     (my-org-capture-email-target . "~/Library/CloudStorage/Dropbox/org/inbox.org")
                      (mu4e-refile-folder . "/anyone/[Gmail]/All Mail")
                      (mu4e-drafts-folder . "/anyone/[Gmail]/Drafts")
                      (mu4e-sent-folder   . "/anyone/[Gmail]/Sent Mail")
@@ -159,7 +163,7 @@
                      (smtpmail-smtp-user        . "inge@elektronaut.no")
                      (smtpmail-smtp-server      . "smtp.gmail.com")
                      (mu4e-sent-messages-behavior . delete)
-                     (my-org-capture-email-target . "~/Library/CloudStorage/Dropbox/org/personal.org")
+                     (my-org-capture-email-target . "~/Library/CloudStorage/Dropbox/org/inbox.org")
                      (mu4e-refile-folder . "/elektronaut/[Gmail]/All Mail")
                      (mu4e-drafts-folder . "/elektronaut/[Gmail]/Drafts")
                      (mu4e-sent-folder   . "/elektronaut/[Gmail]/Sent Mail")
@@ -181,7 +185,7 @@
                      (mu4e-compose-signature    . nil)
                      (smtpmail-smtp-user        . "ingej")
                      (smtpmail-smtp-server      . "smtp.mail.me.com")
-                     (my-org-capture-email-target . "~/Library/CloudStorage/Dropbox/org/personal.org")
+                     (my-org-capture-email-target . "~/Library/CloudStorage/Dropbox/org/inbox.org")
                      (mu4e-refile-folder . "/icloud/Archive")
                      (mu4e-drafts-folder . "/icloud/Drafts")
                      (mu4e-sent-folder   . "/icloud/Sent Messages")

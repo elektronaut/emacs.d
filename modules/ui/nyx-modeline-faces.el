@@ -35,7 +35,7 @@
         (foreground       (face-attribute 'default :foreground))
         (faded            (face-attribute 'font-lock-comment-face :foreground))
         (context          (face-attribute 'font-lock-keyword-face :foreground))
-        (modified         (face-attribute 'warning :foreground))
+        (modified         (face-attribute 'font-lock-string-face :foreground))
         (warning          (face-attribute 'error :foreground))
         (ok               (face-attribute 'success :foreground)))
 

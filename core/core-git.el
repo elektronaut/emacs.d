@@ -16,18 +16,12 @@
 (use-package magit
   :defer 30
   :bind (("C-x g"   . magit-status)
-         ("C-x M-g" . magit-dispatch)
-         ("s-m m"   . magit-status)
-         ("s-m l"   . magit-log)
-         ("s-m f"   . magit-log-buffer-file)
-         ("s-m b"   . magit-blame))
+         ("C-x M-g" . magit-dispatch))
   :init
   (setq-default
    magit-use-overlays nil
    magit-repository-directories '(("~/Dev/anyone/apps" . 1)
                                   ("~/Dev/gems" . 1))))
-
-
 
 (use-package forge
   :after magit)

@@ -22,7 +22,7 @@
   (add-hook 'js2-mode-hook 'my-js2-mode-hook))
 
 (use-package rjsx-mode
-  :mode "\\.jsx\\'")
+  :mode "\\.jsx\\'" "\\.tsx\\'")
 
 (provide 'module-js)
 ;;; module-js ends here
