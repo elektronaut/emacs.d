@@ -44,6 +44,17 @@
                                         (kill-line 0)
                                         (indent-according-to-mode)))
 
+(global-set-key (kbd "<home>") 'move-beginning-of-line)
+(global-set-key (kbd "<end>") 'move-end-of-line)
+
+;; More mac-like movement keys
+(global-set-key (kbd "M-<up>") 'beginning-of-buffer)
+(global-set-key (kbd "M-<down>") 'end-of-buffer)
+(global-set-key (kbd "M-<left>") 'move-beginning-of-line)
+(global-set-key (kbd "M-<right>") 'move-end-of-line)
+(global-set-key (kbd "A-<left>") 'left-word)
+(global-set-key (kbd "A-<right>") 'right-word)
+
 ;; Activate occur easily inside isearch
 (define-key isearch-mode-map (kbd "C-o") 'isearch-occur)
 

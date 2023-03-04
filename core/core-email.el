@@ -230,7 +230,7 @@
          `(,(without-spam "mime:image/*") "Messages with images" ?p)
          `(,(maildir-or '("/anyone/[Gmail]/Drafts"
                           "/elektronaut/[Gmail]/Drafts"
-                          "/icloud/Drafts")) "Drafts" ?d)
+                          "/icloud/Drafts")) "Drafts" ?D)
          `(,(maildir-or '("/anyone/[Gmail]/Sent Mail"
                           "/elektronaut/[Gmail]/Sent Mail"
                           "/icloud/Sent Messages")) "Sent messages" ?s)

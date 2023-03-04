@@ -12,6 +12,10 @@
 (require 'core-persp)
 (require 'dash)
 
+(defvar consult-projectile-display-info)
+(defvar org-directory)
+(defvar savefile-dir)
+
 (defvar projectile-switch-persp--persp-history nil)
 
 (defface projectile-switch-persp-perspective-face
@@ -68,7 +72,7 @@
   (defadvice projectile-project-root (around ignore-remote first activate)
     (unless (file-remote-p default-directory) ad-do-it))
 
-  (projectile-global-mode t)
+  (projectile-mode t)
 
   (defun projectile-bin-dev ()
     "Run bin/dev in a compilation buffer."

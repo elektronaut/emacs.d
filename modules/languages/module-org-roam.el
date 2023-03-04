@@ -31,6 +31,14 @@
   (require 'org-roam-dailies)
   (org-roam-setup))
 
+(use-package consult-org-roam
+  :ensure t
+  :after org-roam
+  :init
+  (require 'consult-org-roam)
+  :custom
+  (consult-org-roam-grep-func #'consult-ripgrep))
+
 
 (provide 'module-org-roam)
 ;;; module-org-roam.el ends here
