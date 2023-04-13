@@ -7,6 +7,11 @@
 
 ;;; Code:
 
+(require 'core-treesitter)
+
+(use-package typescript-mode
+  :mode "\\.ts\\'" "\\.tsx\\'")
+
 (use-package js2-mode
   :mode "\\.js\\'" "\\.pac\\'"
   :init
@@ -21,8 +26,8 @@
     (js2-imenu-extras-mode +1))
   (add-hook 'js2-mode-hook 'my-js2-mode-hook))
 
-(use-package rjsx-mode
-  :mode "\\.jsx\\'" "\\.tsx\\'")
+;; (use-package rjsx-mode
+;;   :mode "\\.jsx\\'" "\\.tsx\\'")
 
 (provide 'module-js)
 ;;; module-js ends here
