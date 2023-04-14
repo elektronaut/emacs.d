@@ -18,12 +18,14 @@
   (run-hooks 'module-lisp-interactive-hook))
 
 (use-package clojure-mode
+  :ensure t
   :mode "\\.clj\\'"
   :config
   (use-package flycheck-clojure)
   (add-hook 'clojure-mode-hook 'module-clojure-defaults))
 
 (use-package cider
+  :ensure t
   :defer t
   :config
   (setq nrepl-log-messages t)

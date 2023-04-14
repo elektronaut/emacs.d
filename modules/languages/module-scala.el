@@ -8,6 +8,7 @@
 ;;; Code:
 
 (use-package scala-mode
+  :ensure t
   :mode "\\.scala\\'"
   :config
   (add-hook 'scala-mode-hook 'subword-mode)

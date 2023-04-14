@@ -5,6 +5,7 @@
 (require 'core-defuns)
 
 (use-package god-mode
+  :ensure t
   :bind (("s-g" . god-local-mode)))
 
 (global-unset-key (kbd "M-<down-mouse-1>"))

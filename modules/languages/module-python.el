@@ -10,6 +10,7 @@
 (require 'electric)
 
 (use-package python-mode
+  :ensure t
   :defer t
   :mode "\\.py\\'"
   :config
@@ -29,15 +30,21 @@
                   #'python-imenu-create-flat-index))
     (add-hook 'post-self-insert-hook
               #'electric-layout-post-self-insert-function nil 'local))
-  (add-hook 'python-mode-hook 'module-python-defaults)
-  (use-package anaconda-mode
-    :config
-    (use-package company-anaconda
-      :config
-      (add-to-list 'company-backends 'company-anaconda)
-      (add-hook 'python-mode-hook 'anaconda-mode))))
+  (add-hook 'python-mode-hook 'module-python-defaults))
+
+(use-package anaconda-mode
+  :ensure t
+  :after (python-mode))
+
+(use-package company-anaconda
+  :ensure t
+  :after (anaconda-mode)
+  :config
+  (add-to-list 'company-backends 'company-anaconda)
+  (add-hook 'python-mode-hook 'anaconda-mode))
 
 (use-package cython-mode
+  :ensure t
   :mode "\\.pyd\\'" "\\.pyi\\'" "\\.pyx\\'")
 
 (provide 'module-python)

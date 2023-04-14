@@ -14,6 +14,7 @@
         "/Applications/MIT-Scheme.app/Contents/Resources")
 
 (use-package geiser
+  :ensure t
   :defer 10
   :init
   (setq geiser-mode-start-repl-p t

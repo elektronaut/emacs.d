@@ -14,6 +14,7 @@
 (add-to-list 'auto-mode-alist '("Cask\\'" . emacs-lisp-mode))
 
 (use-package elisp-slime-nav
+  :ensure t
   :config
   (add-hook 'emacs-lisp-mode-hook 'elisp-slime-nav-mode)
   (add-hook 'ielm-mode-hook 'elisp-slime-nav-mode))

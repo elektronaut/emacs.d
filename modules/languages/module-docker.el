@@ -16,6 +16,7 @@
   :mode "docker-compose.yml")
 
 (use-package dockerfile-mode
+  :ensure t
   :defer t
   :mode "Dockerfile\\'")
 

@@ -10,9 +10,11 @@
 (require 'core-treesitter)
 
 (use-package typescript-mode
+  :ensure t
   :mode "\\.ts\\'" "\\.tsx\\'")
 
 (use-package js2-mode
+  :ensure t
   :mode "\\.js\\'" "\\.pac\\'"
   :init
   (setq-default js-basic-offset 2
@@ -27,6 +29,7 @@
   (add-hook 'js2-mode-hook 'my-js2-mode-hook))
 
 ;; (use-package rjsx-mode
+;;   :ensure t
 ;;   :mode "\\.jsx\\'" "\\.tsx\\'")
 
 (provide 'module-js)

@@ -66,24 +66,29 @@ and file 'filename' will be opened and cursor set on line 'linenumber'"
 ;;-----------------------------------------------------------------------------
 
 ;; (use-package aggressive-indent
+;;   :ensure t
 ;;   :config
 ;;   (global-aggressive-indent-mode 1)
 ;;   (add-to-list 'aggressive-indent-excluded-modes 'html-mode))
 
 (use-package anzu
+  :ensure t
   :bind (("M-%"   . anzu-query-replace)
          ("C-M-%" . anzu-query-replace-regexp))
   :config
   (global-anzu-mode))
 
-(use-package darkroom)
+(use-package darkroom
+  :ensure t)
 
 (use-package easy-kill
+  :ensure t
   :config
   (global-set-key [remap kill-ring-save] 'easy-kill)
   (global-set-key [remap mark-sexp] 'easy-mark))
 
 (use-package expand-region
+  :ensure t
   :bind (("C-=" . er/expand-region)))
 
 (use-package editorconfig
@@ -92,6 +97,7 @@ and file 'filename' will be opened and cursor set on line 'linenumber'"
   (editorconfig-mode 1))
 
 (use-package move-text
+  :ensure t
   :config
   (global-set-key [(control shift up)]  'move-text-up)
   (global-set-key [(control shift down)]  'move-text-down)
@@ -99,6 +105,7 @@ and file 'filename' will be opened and cursor set on line 'linenumber'"
   (global-set-key [(meta shift down)]  'move-text-down))
 
 (use-package multiple-cursors
+  :ensure t
   :bind (("C-S-e"       . mc/edit-lines)
          ("C-S-n"       . mc/mark-next-like-this)
          ("M-<mouse-1>" . mc/add-cursor-on-click))
@@ -106,6 +113,7 @@ and file 'filename' will be opened and cursor set on line 'linenumber'"
   (setq mc/list-file (expand-file-name "mc-lists.el" savefile-dir)))
 
 (use-package rainbow-mode
+  :ensure t
   :config
   (defun rainbow-turn-off-words ()
     "Turn off word colours in rainbow-mode."
@@ -118,8 +126,11 @@ and file 'filename' will be opened and cursor set on line 'linenumber'"
        ,@rainbow-html-colors-font-lock-keywords
        ,@rainbow-html-rgb-colors-font-lock-keywords))))
 
-(use-package smartrep)
+(use-package smartrep
+  :ensure t)
+
 (use-package operate-on-number
+  :ensure t
   :config
   (smartrep-define-key global-map "C-c ."
     '(("+" . apply-operation-to-number-at-point)
@@ -134,7 +145,8 @@ and file 'filename' will be opened and cursor set on line 'linenumber'"
       ("%" . apply-operation-to-number-at-point)
       ("'" . operate-on-number-at-point))))
 
-(use-package string-inflection)
+(use-package string-inflection
+  :ensure t)
 
 (use-package tabify
   :ensure nil
@@ -142,6 +154,7 @@ and file 'filename' will be opened and cursor set on line 'linenumber'"
   (with-region-or-buffer untabify))
 
 (use-package viking-mode
+  :ensure t
   :config
   (viking-global-mode))
 
@@ -149,6 +162,7 @@ and file 'filename' will be opened and cursor set on line 'linenumber'"
   :ensure t)
 
 (use-package zop-to-char
+  :ensure t
   :bind (("M-z" . zop-up-to-char)
          ("M-Z" . zop-to-char)))
 

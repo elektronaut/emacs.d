@@ -8,6 +8,7 @@
 ;;; Code:
 
 (use-package web-mode
+  :ensure t
   :mode "/\\(views\\|html\\|theme\\|templates\\)/.*\\.php\\'"
   "\\.as[cp]x\\'"
   "\\.blade\\.php\\'"

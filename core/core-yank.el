@@ -33,6 +33,7 @@ indent yanked text (with prefix arg don't indent)."
         (yank-advised-indent-function (region-beginning) (region-end)))))
 
 (use-package browse-kill-ring
+  :ensure t
   :bind (("s-y" . browse-kill-ring))
   :config
   (browse-kill-ring-default-keybindings))

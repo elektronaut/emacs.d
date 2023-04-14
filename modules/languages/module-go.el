@@ -8,6 +8,7 @@
 ;;; Code:
 
 (use-package go-mode
+  :ensure t
   :mode "\\.go\\'"
   :bind (:map go-mode-map
          ("C-c a" . go-test-current-project)
@@ -20,13 +21,17 @@
   (define-key 'help-command (kbd "G") 'godoc)
   :config
   (use-package company-go
+    :ensure t
     :config
     (set (make-local-variable 'company-backends) '(company-go)))
   (use-package go-eldoc
+    :ensure t
     :config
     (add-hook 'go-mode-hook 'go-eldoc-setup))
-  (use-package go-projectile)
-  (use-package gotest)
+  (use-package go-projectile
+    :ensure t)
+  (use-package gotest
+    :ensure t)
   (add-hook 'go-mode-hook
             (lambda ()
               ;; Prefer goimports to gofmt if installed

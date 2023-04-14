@@ -8,6 +8,7 @@
 ;;; Code:
 
 (use-package vcl-mode
+  :ensure t
   :mode "\\.vcl\\'")
 
 (provide 'module-vcl)

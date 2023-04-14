@@ -12,6 +12,7 @@
 (setq-default custom-theme-directory "~/.emacs.d/themes/")
 
 (use-package doom-themes
+  :ensure t
   :config
   ;;(load-theme 'doom-tomorrow-night t)
 

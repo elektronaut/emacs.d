@@ -8,6 +8,7 @@
 ;;; Code:
 
 (use-package elm-mode
+  :ensure t
   :mode "\\.elm\\'")
 
 (provide 'module-elm)

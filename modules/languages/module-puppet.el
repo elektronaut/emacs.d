@@ -8,6 +8,7 @@
 ;;; Code:
 
 (use-package puppet-mode
+  :ensure t
   :mode "\\.pp\\'")
 
 (provide 'module-puppet)

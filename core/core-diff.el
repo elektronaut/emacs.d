@@ -13,6 +13,7 @@
   (setq ediff-window-setup-function 'ediff-setup-windows-plain))
 
 (use-package diff-hl
+  :ensure t
   :config
   (global-diff-hl-mode +1)
   (add-hook 'dired-mode-hook 'diff-hl-dired-mode)

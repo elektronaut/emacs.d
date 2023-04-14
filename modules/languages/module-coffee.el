@@ -8,6 +8,7 @@
 ;;; Code:
 
 (use-package coffee-mode
+  :ensure t
   :mode "\\.coffee\\'"
   :init
   (setq-default coffee-tab-width 2)

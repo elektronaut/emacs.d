@@ -52,6 +52,9 @@
 
 ;; Enable use-package
 (require 'use-package)
+(dolist (package '(use-package))
+   (unless (package-installed-p package)
+       (package-install package)))
 (setq use-package-always-ensure t
       use-package-compute-statistics nil
       use-package-verbose nil)

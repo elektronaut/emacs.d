@@ -8,6 +8,7 @@
 ;;; Code:
 
 (use-package treesit-auto
+  :ensure t
   :demand t
   :config
   (setq treesit-auto-install 'prompt)

@@ -10,6 +10,7 @@
 (require 'core-crux)
 
 (use-package smartparens
+  :ensure t
   :bind (:map smartparens-mode-map
               ("C-M-a" . sp-beginning-of-sexp)
               ("C-M-e" . sp-end-of-sexp)

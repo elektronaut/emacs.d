@@ -10,6 +10,7 @@
 (require 'thingatpt)
 
 (use-package vertico
+  :ensure t
   :init
   (vertico-mode)
 
@@ -28,6 +29,7 @@
 
 ;; Optionally use the `orderless' completion style.
 (use-package orderless
+  :ensure t
   :init
   ;; Configure a custom style dispatcher (see the Consult wiki)
   ;; (setq orderless-style-dispatchers '(+orderless-dispatch)
@@ -38,6 +40,7 @@
 
 ;; Example configuration for Consult
 (use-package consult
+  :ensure t
   :commands (consult--multi)
   ;; Replace bindings. Lazily loaded due by `use-package'.
   :bind (("C-s" . consult-line)
@@ -126,16 +129,17 @@
   ;; after lazily loading the package.
   :config
 
-  (use-package consult-company)
-  (use-package consult-dir)
-  (use-package consult-dash)
-  (use-package consult-flycheck)
-  ;;(use-package consult-lsp)
-  (use-package consult-ls-git)
+  (use-package consult-company :ensure t)
+  (use-package consult-dir :ensure t)
+  (use-package consult-dash :ensure t)
+  (use-package consult-flycheck :ensure t)
+  ;;(use-package consult-lsp :ensure t)
+  (use-package consult-ls-git :ensure t)
   (use-package consult-projectile
+    :ensure t
     :init
     (setq consult-projectile-use-projectile-switch-project t))
-  (use-package consult-yasnippet)
+  (use-package consult-yasnippet :ensure t)
 
   (defun consult-line-at-point ()
     "Search for thing at point."
@@ -182,6 +186,7 @@
 
 ;; Enable rich annotations using the Marginalia package
 (use-package marginalia
+  :ensure t
   ;; Either bind `marginalia-cycle' globally or only in the minibuffer
   :bind (;;("M-A" . marginalia-cycle)
          :map minibuffer-local-map

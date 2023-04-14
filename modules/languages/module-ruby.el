@@ -11,6 +11,7 @@
 (add-to-list 'completion-ignored-extensions ".rbc")
 
 (use-package bundler
+  :ensure t
   :defer 10)
 
 (use-package ruby-mode
@@ -46,52 +47,71 @@
         ruby-custom-encoding-magic-comment-template "# encoding: %s"
         ruby-insert-encoding-magic-comment nil
         ruby-deep-indent-paren t)
-  (add-hook 'ruby-mode-hook 'subword-mode)
+  (add-hook 'ruby-mode-hook 'subword-mode))
 
-  (use-package rbenv
-    :config
-    (global-rbenv-mode))
+(use-package rbenv
+  :ensure t
+  :after (ruby-mode)
+  :config
+  (global-rbenv-mode))
 
-  (use-package enh-ruby-mode
-    :config
-    (setq-default enh-ruby-bounce-deep-indent t
-                  enh-ruby-hanging-indent-level 2)
-    (add-hook 'enh-ruby-mode-hook 'subword-mode))
+(use-package enh-ruby-mode
+  :ensure t
+  :after (ruby-mode)
+  :config
+  (setq-default enh-ruby-bounce-deep-indent t
+                enh-ruby-hanging-indent-level 2)
+  (add-hook 'enh-ruby-mode-hook 'subword-mode))
 
-  (use-package inf-ruby
-    :config
-    (add-hook 'enh-ruby-mode-hook 'inf-ruby-minor-mode)
-    (add-hook 'ruby-mode-hook 'inf-ruby-minor-mode))
+(use-package inf-ruby
+  :ensure t
+  :after (enh-ruby-mode)
+  :config
+  (add-hook 'enh-ruby-mode-hook 'inf-ruby-minor-mode)
+  (add-hook 'ruby-mode-hook 'inf-ruby-minor-mode))
 
-  (use-package robe
-    :defer t
-    :config
-    (add-hook 'enh-ruby-mode-hook 'robe-mode)
-    (add-hook 'ruby-mode-hook 'robe-mode))
+(use-package robe
+  :ensure t
+  :after (enh-ruby-mode)
+  :defer t
+  :config
+  (add-hook 'enh-ruby-mode-hook 'robe-mode)
+  (add-hook 'ruby-mode-hook 'robe-mode))
 
-  (use-package rspec-mode
-    :config
-    (rspec-install-snippets))
+(use-package rspec-mode
+  :ensure t
+  :after (ruby-mode)
+  :config
+  (rspec-install-snippets))
 
-  (use-package rubocop
-    :config
-    (add-hook 'enh-ruby-mode-hook #'rubocop-mode)
-    (add-hook 'ruby-mode-hook #'rubocop-mode))
+(use-package rubocop
+  :ensure t
+  :after (enh-ruby-mode)
+  :config
+  (add-hook 'enh-ruby-mode-hook #'rubocop-mode)
+  (add-hook 'ruby-mode-hook #'rubocop-mode))
 
-  (use-package ruby-tools
-    :config
-    (add-hook 'enh-ruby-mode-hook 'ruby-tools-mode)
-    (add-hook 'ruby-mode-hook 'ruby-tools-mode))
+(use-package ruby-tools
+  :ensure t
+  :after (enh-ruby-mode)
+  :config
+  (add-hook 'enh-ruby-mode-hook 'ruby-tools-mode)
+  (add-hook 'ruby-mode-hook 'ruby-tools-mode))
 
-  (use-package yari
-    :init
-    (define-key 'help-command (kbd "R") 'yari))
+(use-package yari
+  :ensure t
+  :after (ruby-mode)
+  :init
+  (define-key 'help-command (kbd "R") 'yari))
 
-  (use-package projectile-rails
-    :config
-    (add-hook 'projectile-mode-hook 'projectile-rails-on)))
+(use-package projectile-rails
+  :ensure t
+  :after (ruby-mode projectile)
+  :config
+  (add-hook 'projectile-mode-hook 'projectile-rails-on))
 
 (use-package slim-mode
+  :ensure t
   :mode "\\.slim\\'")
 
 (provide 'module-ruby)

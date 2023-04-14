@@ -8,6 +8,7 @@
 ;;; Code:
 
 (use-package yaml-mode
+  :ensure t
   :mode "\\.yaml\\'" "\\.yml\\'"
   :config
   (add-hook 'yaml-mode-hook

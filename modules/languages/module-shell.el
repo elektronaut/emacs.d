@@ -7,7 +7,8 @@
 
 ;;; Code:
 
-(use-package sh-script)
+(use-package sh-script
+  :ensure t)
 
 (add-to-list 'auto-mode-alist '("\\.zsh\\'" . shell-script-mode))
 

@@ -48,6 +48,7 @@
         :items    #'projectile-relevant-known-projects))
 
 (use-package projectile
+  :ensure t
   :after (persp-mode)
   :demand t
   :bind (:map projectile-mode-map

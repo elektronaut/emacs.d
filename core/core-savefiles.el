@@ -12,6 +12,7 @@
         bookmark-save-flag 1))
 
 (use-package savehist
+  :ensure nil
   :config
   (setq savehist-additional-variables
         '(search-ring regexp-search-ring)

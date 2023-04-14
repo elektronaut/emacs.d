@@ -7,7 +7,8 @@
 
 ;;; Code:
 
-(use-package hydra)
+(use-package hydra
+  :ensure t)
 
 (provide 'core-hydra)
 ;;; core-hydra ends here

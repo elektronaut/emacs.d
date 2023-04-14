@@ -213,10 +213,12 @@
   (define-key org-agenda-mode-map (kbd "C-<right>") #'org-agenda-do-date-later))
 
 (use-package org-autolist
+  :ensure t
   :config
   (add-hook 'org-mode-hook (lambda () (org-autolist-mode))))
 
-(use-package ox-clip)
+(use-package ox-clip
+  :ensure t)
 
 (use-package org-mime
   :ensure t
@@ -226,6 +228,7 @@
                                   :with-toc nil)))
 
 ;; (use-package org-journal
+;;   :ensure t
 ;;   :init
 ;;   (setq org-journal-dir "~/Library/CloudStorage/Dropbox/org/journal"))
 

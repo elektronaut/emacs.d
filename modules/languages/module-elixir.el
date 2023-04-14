@@ -8,6 +8,7 @@
 ;;; Code:
 
 (use-package elixir-mode
+  :ensure t
   :mode "\\.ex\\'" "\\.exs\\'" "\\.elixir\\'"
   :config
   (use-package alchemist))

@@ -73,6 +73,7 @@
 ;;-----------------------------------------------------------------------------
 
 (use-package ace-window
+  :ensure t
   :bind (("s-w" . ace-window)))
 
 ;; Highlight cursor when changing windows.
@@ -86,15 +87,18 @@
 
 ;; Delight modes.
 (use-package delight
+  :ensure t
   :config
   (delight '((yas-minor-mode nil yasnippet)
              (abbrev-mode nil abbrev)
              (flyspell-mode nil flyspell)
              (whitespace-mode nil whitespace))))
 
-(use-package diminish)
+(use-package diminish
+  :ensure t)
 
 (use-package discover-my-major
+  :ensure t
   :bind (("C-c m" . discover-my-major)))
 
 (use-package re-builder
@@ -111,6 +115,7 @@
         uniquify-ignore-buffers-re "^\\*"))
 
 (use-package smex
+  :ensure t
   :init
   (setq smex-save-file (expand-file-name "smex-items" savefile-dir))
   :config
@@ -137,6 +142,7 @@
   (which-function-mode 1))
 
 (use-package which-key
+  :ensure t
   :config
   (which-key-mode +1))
 

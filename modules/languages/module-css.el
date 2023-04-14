@@ -11,6 +11,7 @@
   (rainbow-mode +1))
 
 (use-package css-mode
+  :ensure nil
   :mode "\\.css\\'"
   :config
   (setq css-indent-offset 2
@@ -21,9 +22,11 @@
   (add-to-list 'auto-mode-alist '("\\.pcss\\'" . scss-mode)))
 
 (use-package less-css-mode
+  :ensure t
   :mode "\\.less\\'")
 
 (use-package sass-mode
+  :ensure t
   :mode "\\.sass\\'")
 
 ;; scss-mode is now built-in

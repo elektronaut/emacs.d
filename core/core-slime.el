@@ -8,6 +8,7 @@
 ;;; Code:
 
 (use-package slime
+  :ensure nil
   :bind (("C-c C-s" . slime-selector))
   :init
   ;; A list of alternative Common Lisp implementations that can be

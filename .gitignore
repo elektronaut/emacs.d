@@ -23,6 +23,7 @@ savefile/
 tree-sitter/
 secrets.el
 session*
+smex-items
 tramp
 /transient
 url

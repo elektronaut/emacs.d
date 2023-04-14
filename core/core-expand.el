@@ -17,6 +17,7 @@
   (add-hook 'text-mode-hook 'abbrev-mode))
 
 (use-package company
+  :ensure t
   :bind (("<C-tab>" . company-complete))
   :init
   (setq company-idle-delay 0.5
@@ -51,9 +52,11 @@
                                            try-complete-lisp-symbol-partially
                                            try-complete-lisp-symbol)))
 
-(use-package lorem-ipsum)
+(use-package lorem-ipsum
+  :ensure t)
 
 (use-package yasnippet
+  :ensure t
   :defer t
   :init
   (yas-global-mode 1))
