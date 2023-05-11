@@ -1,4 +1,4 @@
-;;; core-whitespace -- YAML
+;;; core-formatting -- Formatting
 ;;; Author: Inge Jørgensen <inge@elektronaut.no>
 
 ;;; Commentary:
@@ -30,5 +30,11 @@
 
 (add-hook 'before-save-hook 'core-whitespace-cleanup)
 
-(provide 'core-whitespace)
-;;; core-whitespace ends here
+(use-package apheleia
+  :ensure t
+  :config
+  (apheleia-global-mode +1))
+
+
+(provide 'core-formatting)
+;;; core-formatting.el ends here
