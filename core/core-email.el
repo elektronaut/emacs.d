@@ -92,7 +92,7 @@
         smtpmail-smtp-service 587)
 
   ;; SMTP queueing
-  (setq smtpmail-queue-mail t
+  (setq smtpmail-queue-mail nil
         smtpmail-queue-dir "~/Mail/queue/cur")
 
   ;; Org capture actions
