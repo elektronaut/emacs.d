@@ -47,6 +47,7 @@
       org-default-notes-file "~/Library/CloudStorage/Dropbox/org/inbox.org"
       org-enforce-todo-dependencies nil
       org-ellipsis nil
+      org-extend-today-until 3
       org-global-properties (quote (("Effort_ALL" .
                                      "0:15 0:30 0:45 1:00 2:00 3:00 4:00 5:00 6:00 0:00")
                                     ("STYLE_ALL" . "habit")))
@@ -190,13 +191,13 @@
 
   ;; Calendar navigation
   (define-key org-read-date-minibuffer-local-map (kbd "M-<left>")
-    (lambda () (interactive) (org-eval-in-calendar '(calendar-backward-day 1))))
+              (lambda () (interactive) (org-eval-in-calendar '(calendar-backward-day 1))))
   (define-key org-read-date-minibuffer-local-map (kbd "M-<right>")
-    (lambda () (interactive) (org-eval-in-calendar '(calendar-forward-day 1))))
+              (lambda () (interactive) (org-eval-in-calendar '(calendar-forward-day 1))))
   (define-key org-read-date-minibuffer-local-map (kbd "M-<up>")
-    (lambda () (interactive) (org-eval-in-calendar '(calendar-backward-week 1))))
+              (lambda () (interactive) (org-eval-in-calendar '(calendar-backward-week 1))))
   (define-key org-read-date-minibuffer-local-map (kbd "M-<down>")
-    (lambda () (interactive) (org-eval-in-calendar '(calendar-forward-week 1))))
+              (lambda () (interactive) (org-eval-in-calendar '(calendar-forward-week 1))))
 
   ;; Add replacements for the some of keybindings we just removed. It
   ;; looks like Org already binds C-up and C-down separately from M-{
@@ -224,8 +225,8 @@
   :ensure t
   :config
   (setq org-mime-export-options '(:section-numbers nil
-                                  :with-author nil
-                                  :with-toc nil)))
+                                                   :with-author nil
+                                                   :with-toc nil)))
 
 ;; (use-package org-journal
 ;;   :ensure t
@@ -292,7 +293,7 @@
   (org-link-set-parameters protocol :follow (external-link-opener protocol)))
 
 (defhydra hydra-org (:hint nil)
-    "
+  "
   Navigate^^^^                 Status^^^^        Update^^              Insert^^^^                    Go To
   ^^^^^^^^^^^^-------------------------------------------------------------------------------------------------------------
       _↑_/_↓_: heading         ^^_n_: NEXT       _a_: toggle archive   _i t_/_i T_: time (inactive)  _g i_: inbox
@@ -303,47 +304,47 @@
   ^^^^                         ^^_,_: priority   _O_: sort             ^^^^                          _g C_: clients
 
  "
-    ;; Navigate
-    ("<up>" org-previous-visible-heading)
-    ("<down>" org-next-visible-heading)
-    ("M-<down>" org-move-subtree-down)
-    ("M-<up>" org-move-subtree-up)
-    ("M-<left>" org-metaleft)
-    ("M-<right>" org-metaright)
-    ("S-M-<left>" org-shiftmetaleft)
-    ("S-M-<right>" org-shiftmetaright)
-    ;; Status
-    ("<right>" org-shiftright)
-    ("<left>" org-shiftleft)
-    ("n" (org-todo "NEXT"))
-    ("t" (org-todo "TODO"))
-    ("d" (org-todo "DONE"))
-    ("T" org-todo)
-    ("," org-priority)
-    ;; Update
-    ("a" org-toggle-archive-tag)
-    ("A" org-archive-to-archive-sibling)
-    ("r" org-refile)
-    ("S" org-schedule)
-    ("D" org-deadline)
-    ("O" org-sort)
-    ;; Insert
-    ("i d" org-time-stamp)
-    ("i D" org-time-stamp-inactive)
-    ("i t" (org-time-stamp t))
-    ("i T" (org-time-stamp-inactive t))
-    ;; Go to
-    ("g i" (find-file org-default-notes-file))
-    ("g a" (find-file "~/Library/CloudStorage/Dropbox/org/areas/anyone.org"))
-    ("g p" (find-file "~/Library/CloudStorage/Dropbox/org/personal.org"))
-    ("g j" (find-file "~/Library/CloudStorage/Dropbox/org/journal.org"))
-    ("g O" (dired org-directory))
-    ("g A" (dired "~/Library/CloudStorage/Dropbox/org/areas"))
-    ("g C" (dired "~/Library/CloudStorage/Dropbox/org/clients"))
-    ;; Misc
-    ("k" org-cut-subtree "delete")
-    ("<tab>" (org-cycle))
-    ("q" nil "quit"))
+  ;; Navigate
+  ("<up>" org-previous-visible-heading)
+  ("<down>" org-next-visible-heading)
+  ("M-<down>" org-move-subtree-down)
+  ("M-<up>" org-move-subtree-up)
+  ("M-<left>" org-metaleft)
+  ("M-<right>" org-metaright)
+  ("S-M-<left>" org-shiftmetaleft)
+  ("S-M-<right>" org-shiftmetaright)
+  ;; Status
+  ("<right>" org-shiftright)
+  ("<left>" org-shiftleft)
+  ("n" (org-todo "NEXT"))
+  ("t" (org-todo "TODO"))
+  ("d" (org-todo "DONE"))
+  ("T" org-todo)
+  ("," org-priority)
+  ;; Update
+  ("a" org-toggle-archive-tag)
+  ("A" org-archive-to-archive-sibling)
+  ("r" org-refile)
+  ("S" org-schedule)
+  ("D" org-deadline)
+  ("O" org-sort)
+  ;; Insert
+  ("i d" org-time-stamp)
+  ("i D" org-time-stamp-inactive)
+  ("i t" (org-time-stamp t))
+  ("i T" (org-time-stamp-inactive t))
+  ;; Go to
+  ("g i" (find-file org-default-notes-file))
+  ("g a" (find-file "~/Library/CloudStorage/Dropbox/org/areas/anyone.org"))
+  ("g p" (find-file "~/Library/CloudStorage/Dropbox/org/personal.org"))
+  ("g j" (find-file "~/Library/CloudStorage/Dropbox/org/journal.org"))
+  ("g O" (dired org-directory))
+  ("g A" (dired "~/Library/CloudStorage/Dropbox/org/areas"))
+  ("g C" (dired "~/Library/CloudStorage/Dropbox/org/clients"))
+  ;; Misc
+  ("k" org-cut-subtree "delete")
+  ("<tab>" (org-cycle))
+  ("q" nil "quit"))
 
 (define-key org-mode-map (kbd "C-c O") #'hydra-org/body)
 (define-key org-mode-map (kbd "C-c o") nil)
