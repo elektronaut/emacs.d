@@ -18,28 +18,28 @@
   :defer t
   :ensure nil
   :mode "Appraisals\\'"
-        "Berksfile\\'"
-        "Capfile\\'"
-        "Gemfile\\'"
-        "Guardfile\\'"
-        "Podfile\\'"
-        "Puppetfile\\'"
-        "Rakefile\\'"
-        "Thorfile\\'"
-        "Vagrantfile\\'"
-        "\\.axlsx\\'"
-        "\\.builder\\'"
-        "\\.cap\\'"
-        "\\.gemspec\\'"
-        "\\.gemspec\\'"
-        "\\.jbuilder\\'"
-        "\\.podspec\\'"
-        "\\.prawn\\'"
-        "\\.rabl\\'"
-        "\\.rake\\'"
-        "\\.rb\\'"
-        "\\.ru\\'"
-        "\\.thor\\'"
+  "Berksfile\\'"
+  "Capfile\\'"
+  "Gemfile\\'"
+  "Guardfile\\'"
+  "Podfile\\'"
+  "Puppetfile\\'"
+  "Rakefile\\'"
+  "Thorfile\\'"
+  "Vagrantfile\\'"
+  "\\.axlsx\\'"
+  "\\.builder\\'"
+  "\\.cap\\'"
+  "\\.gemspec\\'"
+  "\\.gemspec\\'"
+  "\\.jbuilder\\'"
+  "\\.podspec\\'"
+  "\\.prawn\\'"
+  "\\.rabl\\'"
+  "\\.rake\\'"
+  "\\.rb\\'"
+  "\\.ru\\'"
+  "\\.thor\\'"
   :config
   (setq ruby-use-smie t
         ruby-align-chained-calls t
@@ -49,11 +49,11 @@
         ruby-deep-indent-paren t)
   (add-hook 'ruby-mode-hook 'subword-mode))
 
-(use-package rbenv
-  :ensure t
-  :after (ruby-mode)
-  :config
-  (global-rbenv-mode))
+;; (use-package rbenv
+;;   :ensure t
+;;   :after (ruby-mode)
+;;   :config
+;;   (global-rbenv-mode))
 
 (use-package enh-ruby-mode
   :ensure t
