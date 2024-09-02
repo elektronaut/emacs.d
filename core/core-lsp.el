@@ -7,6 +7,16 @@
 
 ;;; Code:
 
+(use-package lsp-mode
+  :ensure t
+  :init
+  (setq lsp-keymap-prefix "C-c l")
+  :hook ((typescript-ts-mode . lsp-deferred)
+         (tsx-ts-mode . lsp-deferred))
+  :config
+  (setq lsp-headerline-breadcrumb-enable nil)
+  :commands lsp)
+
 ;; (use-package lsp-mode
 ;;   :ensure t
 ;;   :init
