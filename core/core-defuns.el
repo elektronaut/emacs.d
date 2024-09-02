@@ -4,6 +4,11 @@
 
 (require 'core-persp)
 
+(defun insert-project-name ()
+  "Insert current project name."
+  (interactive)
+  (insert (projectile-project-name)))
+
 (defun random-hex-token (length)
   "Generate a random hexadecimal token of LENGTH using OpenSSL."
   (interactive "sLength (Default 16): ")
@@ -46,7 +51,7 @@
   (interactive)
   (if (> (frame-width) (* 3 84))
       (split-n 3)
-      (split-n 2))
+    (split-n 2))
   (balance-windows))
 
 (defun comment-or-uncomment-region-or-line ()
