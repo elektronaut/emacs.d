@@ -13,29 +13,14 @@
   (setq lsp-keymap-prefix "C-c l")
   :hook ((typescript-ts-mode . lsp-deferred)
          (tsx-ts-mode . lsp-deferred))
+  :commands lsp
   :config
   (setq lsp-headerline-breadcrumb-enable nil)
-  :commands lsp)
 
-;; (use-package lsp-mode
-;;   :ensure t
-;;   :init
-;;   ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
-;;   (setq lsp-keymap-prefix "C-c l")
-;;   :hook ((js2-mode . lsp)
-;;          (css-mode . lsp)
-;;          (scss-mode . lsp)
-;;          (python-mode . lsp)
-;;          ;;(ruby-mode . lsp)
-;;          ;; if you want which-key integration
-;;          (lsp-mode . lsp-enable-which-key-integration))
-;;   :config
-;;   (setq lsp-headerline-breadcrumb-enable nil)
-;;   :commands lsp)
-
-;; (use-package lsp-ui
-;;   :ensure t
-;;   :commands lsp-ui-mode)
+  (dolist (dir '("[/\\\\]\\tmp"
+                 "[/\\\\]\\coverage"
+                 "[/\\\\]\\db/dis"))
+    (push dir lsp-file-watch-ignored-directories)))
 
 (provide 'core-lsp)
 ;;; core-lsp.el ends here
