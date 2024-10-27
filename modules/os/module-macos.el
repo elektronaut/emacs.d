@@ -20,6 +20,10 @@
   ;; Enable ligatures
   ;;(mac-auto-operator-composition-mode)
 
+  (use-package exec-path-from-shell
+    :config
+    (exec-path-from-shell-initialize))
+
   ;; Use ls from coreutils. Install coreutils with Homebrew
   ;; to enable.
   (setq insert-directory-program

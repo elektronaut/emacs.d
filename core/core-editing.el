@@ -9,6 +9,8 @@
       backup-directory-alist `((".*" . ,temporary-file-directory))
       auto-save-file-name-transforms `((".*" ,temporary-file-directory t)))
 
+(setq delete-by-moving-to-trash t)
+
 ;; Whitespace
 (delete-selection-mode t)
 (global-auto-revert-mode t)

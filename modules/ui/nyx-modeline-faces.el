@@ -53,7 +53,7 @@
     (set-face-attribute 'mode-line-read-only-face nil
                         :inherit 'mode-line-face
                         :foreground context
-                        :box '(:line-width 2 :color context))
+                        :box `(:line-width 2 :color ,context))
     (set-face-attribute 'mode-line-modified-face nil
                         :inherit 'mode-line-face
                         :foreground warning

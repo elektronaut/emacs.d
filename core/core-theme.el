@@ -14,18 +14,26 @@
 (use-package doom-themes
   :ensure t
   :config
-  ;;(load-theme 'doom-tomorrow-night t)
-
   (load-theme 'doom-ventura t)
 
-  ;;(load-theme 'doom-dracula t)
-  ;;(load-theme 'doom-horizon t)
-  ;;(load-theme 'doom-ayu-dark t)
-  ;;(load-theme 'doom-monokai-pro t)
-  ;;(load-theme 'doom-monokai-machine t)
-  ;;(load-theme 'doom-one t)
-  ;;(load-theme 'doom-vibrant t)
-  ;;(load-theme 'doom-gruvbox t)
+  ;; (load-theme 'doom-1337 t)
+  ;; (load-theme 'doom-feather-dark t)
+  ;; (load-theme 'doom-gruvbox t)
+  ;; (load-theme 'doom-henna t)
+  ;; (load-theme 'doom-horizon t)
+  ;; (load-theme 'doom-material-dark t)
+  ;; (load-theme 'doom-molokai t)
+  ;; (load-theme 'doom-monokai-spectrum t)
+  ;; (load-theme 'doom-oceanic-next t)
+  ;; (load-theme 'doom-one t)
+  ;; (load-theme 'doom-snazzy t)
+  ;; (load-theme 'doom-sourcerer t)
+  ;; (load-theme 'doom-spacegrey t)
+  ;; (load-theme 'doom-tokyo-night t)
+  ;; (load-theme 'doom-tomorrow-night t)
+  ;; (load-theme 'doom-vibrant t)
+  ;; (load-theme 'doom-wilmersdorf t)
+
   (doom-themes-org-config))
 
 ;;(load-theme 'atom-one-dark)
