@@ -4,9 +4,7 @@
 # binding: direct-keybinding
 # define
 # --
-import React from "react";
-
-interface Props {
+type Props = {
 }
 
 export default function ${1:`(file-name-nondirectory (file-name-sans-extension (buffer-name)))`}(props: Props) {
