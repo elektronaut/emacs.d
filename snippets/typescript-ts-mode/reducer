@@ -1,0 +1,10 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# key: reducer
+# name: React reducer function
+# --
+function ${1:reducer}(state: ${2:State}, Action: ${3:Action}) {
+  switch(action.type) {
+    case "$4":
+      return state;
+  }
+}

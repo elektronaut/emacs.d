@@ -1,0 +1,5 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# key: dispatch
+# name: React dispatch
+# --
+dispatch({ type: "${1:type}", payload: ${2:{}} });
