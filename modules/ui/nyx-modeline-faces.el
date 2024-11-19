@@ -49,7 +49,7 @@
                         :box `(:line-width 6 :color ,background-faded :style nil))
     (set-face-attribute 'mode-line-highlight nil
                         :inherit 'mode-line-face
-                        :foreground warning :background nil)
+                        :foreground warning :background 'unspecified)
     (set-face-attribute 'mode-line-read-only-face nil
                         :inherit 'mode-line-face
                         :foreground context
@@ -57,7 +57,7 @@
     (set-face-attribute 'mode-line-modified-face nil
                         :inherit 'mode-line-face
                         :foreground warning
-                        :box '(:line-width 2 :color warning))
+                        :box `(:line-width 2 :color ,warning))
     (set-face-attribute 'mode-line-remote-host-face nil
                         :inherit 'mode-line-face
                         :foreground context

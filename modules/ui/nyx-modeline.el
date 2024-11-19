@@ -15,6 +15,7 @@
 
 ;; Selected window
 
+(defvar nyx-modeline-active nil)
 (defvar nyx-modeline-selected-window nil)
 
 (defun nyx-modeline-set-selected-window (&rest _)
@@ -92,7 +93,7 @@
      (if buffer-file-name (nyx-modeline-short-buffer-name) "%b")
      'face (cond ((buffer-modified-p)
                   'mode-line-filename-modified-face)
-                 (active
+                 (nyx-modeline-active
                   (if buffer-read-only
                       'mode-line-filename-readonly-face
                     'mode-line-filename-face))))))
@@ -102,17 +103,17 @@
    (if (or buffer-file-name
            (eq major-mode 'dired-mode))
        (nyx-modeline-shorten-directory nyx-modeline--project-relative-buffer-path max-length) "")
-   'face (if active 'mode-line-folder-face)))
+   'face (if nyx-modeline-active 'mode-line-folder-face)))
 
 (defun nyx-modeline-macro-recording ()
   "Display current macro being recorded."
-  (if (and active defining-kbd-macro)
+  (if (and nyx-modeline-active defining-kbd-macro)
       (propertize "[rec] " 'face 'mode-line-highlight)))
 
 (defun nyx-modeline-major-mode ()
   "The major mode, including process, environment and text-scale info."
   (concat (propertize (format-mode-line mode-name)
-                      'face (if active 'mode-line-mode-face))
+                      'face (if nyx-modeline-active 'mode-line-mode-face))
           (if (stringp mode-line-process) mode-line-process)
           ;;(if doom-ml--env-version (concat " " doom-ml--env-version))
           (and (featurep 'face-remap)
@@ -122,7 +123,7 @@
 (defun nyx-modeline-position ()
   (concat (propertize
            " %l:%c "
-           'face (if (and active (>= (current-column) 81))
+           'face (if (and nyx-modeline-active (>= (current-column) 81))
                      'mode-line-80col-face
                    'mode-line-position-face)) "%p"))
 
@@ -148,9 +149,9 @@
   "Projectile name."
   (when nyx-modeline--projectile
     (concat (propertize nyx-modeline--projectile
-                        'face (if active 'mode-line-project-face))
+                        'face (if nyx-modeline-active 'mode-line-project-face))
             (propertize "/"
-                        'face (if active 'mode-line-folder-face)))))
+                        'face (if nyx-modeline-active 'mode-line-folder-face)))))
 
 (add-hook 'find-file-hook #'nyx-modeline-update-projectile)
 (add-hook 'projectile-after-switch-project-hook #'nyx-modeline-update-projectile)
@@ -176,7 +177,7 @@
   "Displays the current perspective name if it differs from the current projectile project."
   (when nyx-modeline--persp-name
     (propertize (concat "[" nyx-modeline--persp-name "] ")
-                'face (if active 'mode-line-persp-face))))
+                'face (if nyx-modeline-active 'mode-line-persp-face))))
 
 (add-hook 'find-file-hook #'nyx-modeline-update-persp-name)
 (add-hook 'persp-activated-functions #'nyx-modeline-update-persp-name)
@@ -205,7 +206,7 @@
 (defun nyx-modeline-remote-host ()
   (when nyx-modeline--remote-host
     (propertize nyx-modeline--remote-host
-                'face (if active 'mode-line-remote-host-face))))
+                'face (if nyx-modeline-active 'mode-line-remote-host-face))))
 
 (defun nyx-modeline-remote-host2 ()
   "Displays the remote user and hostname if the current buffer is remote."
@@ -216,7 +217,7 @@
         (propertize (if user
                         (concat user "@" short-host ":")
                       (concat short-host ":"))
-                    'face (if active 'mode-line-remote-host-face)))))
+                    'face (if nyx-modeline-active 'mode-line-remote-host-face)))))
 
 ;;
 ;; vc
@@ -230,15 +231,15 @@
                   (cond ((memq state '(edited added))
                          'mode-line-vcs-info-face)
                         ((memq state '(removed needs-merge needs-update
-                                       conflict removed unregistered))
+                                               conflict removed unregistered))
                          'mode-line-vcs-warning-face)
                         ('t 'mode-line-vcs-face)))))
-      (if active (propertize backend 'face face) backend))))
+      (if nyx-modeline-active (propertize backend 'face face) backend))))
 
 ;; Mode line
 (defun nyx-modeline-format (&optional id)
   `(:eval
-    (let* ((active (eq (selected-window) nyx-modeline-selected-window))
+    (let* ((nyx-modeline-active (eq (selected-window) nyx-modeline-selected-window))
            (width (window-total-width (selected-window)))
            (path-width (max (- width
                                (length (nyx-modeline-macro-recording))

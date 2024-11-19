@@ -31,18 +31,15 @@
 
 (with-region-or-buffer indent-region)
 
-(defadvice set-buffer-major-mode (after set-major-mode activate compile)
+(define-advice set-buffer-major-mode (:after (buffer) set-major-mode)
   "Set buffer major mode according to `auto-mode-alist'."
   (let* ((name (buffer-name buffer))
          (mode (assoc-default name auto-mode-alist 'string-match)))
     (when (and mode (consp mode))
       (setq mode (car mode)))
-    (with-current-buffer buffer (if mode (funcall mode)))))
-
-(defadvice exchange-point-and-mark (before deactivate-mark activate compile)
-  "When called with no active region, do not activate mark."
-  (interactive
-   (list (not (region-active-p)))))
+    (with-current-buffer buffer
+      (when mode
+        (funcall mode)))))
 
 (defadvice server-visit-files (before parse-numbers-in-lines (files proc &optional nowait) activate)
   "Open file with emacsclient with cursors positioned on requested line.
