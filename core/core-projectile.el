@@ -10,6 +10,7 @@
 (require 'core-completion)
 (require 'core-hydra)
 (require 'core-persp)
+(require 'core-projectile-org)
 (require 'dash)
 
 (defvar consult-projectile-display-info)
@@ -70,8 +71,11 @@
                   "app/assets/builds"))
     (add-to-list 'projectile-globally-ignored-directories item))
 
-  (defadvice projectile-project-root (around ignore-remote first activate)
-    (unless (file-remote-p default-directory) ad-do-it))
+  (define-advice projectile-project-root (:around (orig-fun &rest args) ignore-remote)
+    "Ignore `projectile-project-root` if in a remote directory."
+    (if (file-remote-p default-directory)
+        nil
+      (apply orig-fun args)))
 
   (projectile-mode t)
 
@@ -88,35 +92,10 @@
                              (lambda (arg) buffer-name))
         (error "%s does not exist!" path))))
 
-  ;; (defun projectile-org-file ()
-  ;;   "`org-mode' file for project."
-  ;;   (if (projectile-project-p)
-  ;;       (concat (if (string-match-p "Dev/anyone" (projectile-project-p))
-  ;;                   "~/Library/CloudStorage/Dropbox/org/anyone/"
-  ;;                 "~/Library/CloudStorage/Dropbox/org/")
-  ;;               (projectile-project-name)
-  ;;               ".org")))
-
-  (defun projectile-org-file ()
-    "`org-mode' file for project."
-    (if (projectile-project-p)
-        (let* ((basename (concat (projectile-project-name) ".org"))
-               (files (seq-filter (lambda (f) (string-match-p basename f))
-                                  (org-agenda-files))))
-          (or (car files)
-              (concat org-directory "/" basename)))))
-
-  (defun projectile-open-org ()
-    "Open `org-mode' file for project."
-    (interactive)
-    (if (projectile-project-p)
-        (find-file (projectile-org-file))))
-
   (defun advice-projectile-use-rg (vcs)
     "Generate list of files using ripgrep."
     "rg --null --files")
   (advice-add 'projectile-get-ext-command :override #'advice-projectile-use-rg)
-
 
   ;; Perspective switcher
 
