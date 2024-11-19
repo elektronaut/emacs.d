@@ -68,6 +68,10 @@
       org-id-link-to-org-use-id t
       org-return-follows-link t)
 
+(setq org-startup-truncated nil
+      visual-line-fringe-indicators '(left-curly-arrow right-curly-arrow))
+(add-hook 'org-mode-hook #'visual-line-mode)
+
 (setq org-agenda-block-separator 8212
       org-agenda-compact-blocks nil
       org-agenda-files (directory-files-recursively org-directory "\\.org$")
@@ -173,6 +177,7 @@
                             ("meeting"  . ?m)
                             ("maybe"    . ?M)
                             ("note"     . ?n)
+                            ("review"   . ?r)
                             ("tasks"    . ?t)
                             ("flagged"  . ??))))
 
