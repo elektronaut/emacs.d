@@ -1,16 +1,12 @@
-;;; nyx-modeline.el -- Mode line
-;;; Author: Inge Jørgensen <inge@elektronaut.no>
+;;; nyx-modeline.el --- Mode line -*- lexical-binding: t; -*-
 
 ;;; Commentary:
-
-;;  Based on doom-themes by Henrik Lissner <henrik@lissner.net>
-;;  https://github.com/hlissner/.emacs.d
-
-;;; Licence: MIT
+;;    Based on doom-themes by Henrik Lissner <henrik@lissner.net>
+;;    https://github.com/hlissner/.emacs.d
 
 ;;; Code:
 
-(require 'core-projectile)
+(require 'nyx-projectile)
 (require 'nyx-modeline-faces)
 
 ;; Selected window

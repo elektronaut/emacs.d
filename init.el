@@ -1,4 +1,4 @@
-;;; init.el --- Emacs config entry
+;;; init.el --- Emacs config entry -*- lexical-binding: t; -*-
 ;;
 ;;; Commentary:
 ;;; License: MIT
@@ -13,7 +13,7 @@
 ;; Startup
 ;;-----------------------------------------------------------------------------
 
-; Defer garbage collection for now. gcmh-mode takes care of this later.
+;; Defer garbage collection for now. gcmh-mode takes care of this later.
 (setq gc-cons-threshold most-positive-fixnum)
 
 (add-hook 'emacs-startup-hook
@@ -37,14 +37,6 @@
 ;; Packages and paths
 ;;-----------------------------------------------------------------------------
 
-(defvar homebrew-path
-  "/opt/homebrew"
-  "Homebrew root.")
-
-(require 'gnutls)
-(add-to-list 'gnutls-trustfiles
-             (concat homebrew-path "/etc/openssl/cert.pem"))
-
 ;; Enable packages
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
@@ -52,13 +44,11 @@
 
 ;; Enable use-package
 (require 'use-package)
-(dolist (package '(use-package))
-   (unless (package-installed-p package)
-       (package-install package)))
 (setq use-package-always-ensure t
-      use-package-compute-statistics nil
+      use-package-compute-statistics t
       use-package-verbose nil)
 
+;; Enable auto-compile
 (use-package auto-compile
   :init
   (setq auto-compile-display-buffer nil)
@@ -67,43 +57,30 @@
   (auto-compile-on-load-mode)
   (auto-compile-on-save-mode))
 
-;; Add Homebrew to the load path
-(let ((default-directory (concat homebrew-path "/share/emacs/site-lisp/")))
-  (normal-top-level-add-subdirs-to-load-path))
-
-;; Set and create savefile dir
-(defvar savefile-dir (expand-file-name "savefile" user-emacs-directory)
-  "This folder stores all the automatically generated save/history-files.")
-(unless (file-exists-p savefile-dir)
-  (make-directory savefile-dir))
-
-(setq insert-directory-program "gls" dired-use-ls-dired t)
-(setq dired-listing-switches "-al --group-directories-first")
-
-;;(use-package exec-path-from-shell
-;;  :commands (exec-path-from-shell-copy-env)
-;;  :init
-;;  (setq exec-path-from-shell-check-startup-files nil)
-;;  :config
-;;  (exec-path-from-shell-initialize))
-
 
 ;;-----------------------------------------------------------------------------
 ;; Load configuration
 ;;-----------------------------------------------------------------------------
 
-(defun init-dir (dir)
-  "Add DIR to load path and require all files within."
-  (let ((fullpath (expand-file-name dir user-emacs-directory)))
-    (add-to-list 'load-path fullpath)
-    (mapc (lambda (name)
-            (require (intern (file-name-sans-extension name))))
-          (directory-files fullpath nil "\\.elc?$"))))
+(defun init-dirs (dirs)
+  "Add DIRS to load path, then require all files within."
+  (let ((paths (mapcar (lambda (dir) (expand-file-name dir user-emacs-directory)) dirs)))
+    (mapc (lambda (path) (add-to-list 'load-path path)) paths)
+    (mapc (lambda (path)
+            (mapc (lambda (file)
+                    (require (intern (file-name-sans-extension file))))
+                  (directory-files path nil "\\.elc?$"))) paths)))
 
-(init-dir "core")
-(init-dir "modules/languages")
-(init-dir "modules/os")
-(init-dir "modules/ui")
+(defun init-all-dirs (dirname)
+  "Run init-dirs on all subdirs in DIRNAME."
+  (let* ((dir (expand-file-name dirname user-emacs-directory))
+         (subdirs (cl-remove-if-not #'file-directory-p (directory-files dir t "^[^.]")))
+         (relative-dirs (mapcar
+                         (lambda (d) (concat dirname "/" (file-name-nondirectory d)))
+                         subdirs)))
+    (init-dirs relative-dirs)))
+
+(init-all-dirs "modules")
 
 ;; Load custom settings
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))

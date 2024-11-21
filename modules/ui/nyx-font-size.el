@@ -27,6 +27,9 @@
     (default . 120))
   "Font size mapping for monitors.")
 
+(global-set-key (kbd "C-+") 'text-scale-increase)
+(global-set-key (kbd "C--") 'text-scale-decrease)
+
 (defun nyx-detect-frame-monitor-change ()
   "Detects when frame change monitor."
   (let ((monitor-name  (cdr (assq 'name (frame-monitor-attributes)))))
@@ -52,7 +55,7 @@
                           ;;:family "JetBrains Mono"
                           :family "Fira Code"
                           :height font-size)))
-  ;(setq-default line-spacing 4)
+                                        ;(setq-default line-spacing 4)
   (setq-default line-spacing 3))
 
 (set-face-attribute 'font-lock-comment-face nil
@@ -67,8 +70,6 @@
 (defun nyx-minibuffer-line-spacing ()
   (setq-local line-spacing 4))
 (add-hook 'minibuffer-setup-hook #'nyx-minibuffer-line-spacing)
-
-
 
 
 (provide 'nyx-font-size)

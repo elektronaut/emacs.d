@@ -3,5 +3,5 @@
 # key: project
 # binding: direct-keybinding
 # --
-** ${1:Project name}                                                 :project:
-*** Tasks [0%]
+${1:Project name}                                                 :project:
+`(make-string (+ 1 (org-current-level)) ?*)` Tasks [0%]

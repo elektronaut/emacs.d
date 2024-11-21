@@ -3,5 +3,5 @@
 # key: ukemøte
 # binding: direct-keybinding
 # --
-** Ukemøte <`(format-time-string "%Y-%m-%d %a")`>                                        :meeting:
-*** $1
+Ukemøte <`(format-time-string "%Y-%m-%d %a")`>                                        :meeting:
+`(make-string (+ 1 (org-current-level)) ?*)` $1

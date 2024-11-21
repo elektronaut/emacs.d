@@ -3,9 +3,11 @@
 # key: provide
 # binding: direct-keybinding
 # --
-;;; ${1:`(file-name-nondirectory (file-name-sans-extension (buffer-file-name)))`}.el --- ${2:Description}
+;;; ${1:`(file-name-nondirectory (file-name-sans-extension (buffer-file-name)))`}.el --- ${2:Description} -*- lexical-binding: t; -*-
 ;;; Commentary:
 ;;; Code:
+
+$3
 
 (provide '$1)
 ;;; $1.el ends here

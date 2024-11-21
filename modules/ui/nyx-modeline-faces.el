@@ -1,12 +1,9 @@
-;;; nyx-modeline-faces.el -- Mode line faces
-;;; Author: Inge Jørgensen <inge@elektronaut.no>
-
-;;; Licence: MIT
-
+;;; nyx-modeline-faces.el --- Mode line faces -*- lexical-binding: t; -*-
+;;; Commentary:
 ;;; Code:
 
-(require 'core-theme)
-(require 'core-ui)
+(require 'nyx-theme)
+(require 'nyx-ui)
 
 (make-face 'mode-line-read-only-face)
 (make-face 'mode-line-modified-face)
@@ -117,7 +114,6 @@
   "Restore modeline faces after loading theme."
   (nyx-configure-modeline-faces))
 (advice-add 'load-theme :after #'load-theme--restore-modeline-faces)
-
 
 (provide 'nyx-modeline-faces)
 ;;; nyx-modeline-faces.el ends here

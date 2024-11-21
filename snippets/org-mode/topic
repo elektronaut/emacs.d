@@ -1,0 +1,9 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: topic
+# key: topic
+# --
+${1:Topic}
+:PROPERTIES:
+:GPTEL_TOPIC: ${1:$(string-inflection-kebab-case-function (replace-regexp-in-string " " "-" yas-text))}
+:END:
+`(make-string (+ 1 (org-current-level)) ?*)` $2
