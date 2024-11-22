@@ -6,7 +6,6 @@
 
 ;;; Code:
 
-(require 'nyx-projectile)
 (require 'nyx-modeline-faces)
 
 ;; Selected window
@@ -29,29 +28,19 @@
 
 ;; Helpers
 
-(defvar-local nyx-modeline--project-relative-buffer-path nil)
-
 (defun nyx-modeline-short-buffer-name ()
   "Return only the file name if `buffer-name' is a path."
   (if buffer-file-name
       (car (last (split-string (buffer-name) "/")))
     (buffer-name)))
 
-(defun nyx-modeline-update-project-relative-buffer-path (&rest _)
-  "Update the cacher project relative buffer path."
-  (setq nyx-modeline--project-relative-buffer-path
-        (if (and (not (file-remote-p default-directory))
-                 (projectile-project-p))
-            (replace-regexp-in-string "^.\/" ""
-                                      (car (projectile-make-relative-to-root (list default-directory))))
-          (abbreviate-file-name default-directory))))
-
 (defun nyx-modeline-project-relative-buffer-path ()
-  nyx-modeline--project-relative-buffer-path)
-
-(add-hook 'find-file-hook #'nyx-modeline-update-project-relative-buffer-path)
-(add-hook 'projectile-after-switch-project-hook #'nyx-modeline-update-project-relative-buffer-path)
-(advice-add #'select-window :after #'nyx-modeline-update-project-relative-buffer-path)
+  "Path of current buffer relative to project root."
+  (if (and (not (file-remote-p default-directory))
+           (project-current))
+      (replace-regexp-in-string "^.\/" ""
+                                (file-relative-name default-directory (project-root (project-current))))
+    (abbreviate-file-name default-directory)))
 
 (defun nyx-modeline-shorten-directory (dir max-length)
   "Show up to `MAX-LENGTH' characters of a directory name `DIR'."
@@ -98,7 +87,7 @@
   (propertize
    (if (or buffer-file-name
            (eq major-mode 'dired-mode))
-       (nyx-modeline-shorten-directory nyx-modeline--project-relative-buffer-path max-length) "")
+       (nyx-modeline-shorten-directory (nyx-modeline-project-relative-buffer-path) max-length) "")
    'face (if nyx-modeline-active 'mode-line-folder-face)))
 
 (defun nyx-modeline-macro-recording ()
@@ -124,34 +113,22 @@
                    'mode-line-position-face)) "%p"))
 
 ;;
-;; projectile
+;; Project
 ;;
 
-(defvar-local nyx-modeline--projectile nil)
-
-(defun nyx-modeline-projectile-p ()
-  "Should we display the projectile modeline?"
+(defun nyx-modeline-project-p ()
+  "Should we display the project modeline?"
   (if (and (not (file-remote-p default-directory))
-           (projectile-project-p)) t))
+           (project-current)) t))
 
-(defun nyx-modeline-update-projectile (&rest _)
-  "Update projectile name."
-  (setq nyx-modeline--projectile
-        (when (and (nyx-modeline-projectile-p)
-                   (or buffer-file-name (eq major-mode 'dired-mode)))
-          (projectile-project-name))))
-
-(defun nyx-modeline-projectile ()
-  "Projectile name."
-  (when nyx-modeline--projectile
-    (concat (propertize nyx-modeline--projectile
-                        'face (if nyx-modeline-active 'mode-line-project-face))
-            (propertize "/"
-                        'face (if nyx-modeline-active 'mode-line-folder-face)))))
-
-(add-hook 'find-file-hook #'nyx-modeline-update-projectile)
-(add-hook 'projectile-after-switch-project-hook #'nyx-modeline-update-projectile)
-(advice-add #'select-window :after #'nyx-modeline-update-projectile)
+(defun nyx-modeline-project ()
+  "Project name."
+  (let ((name (when (and (nyx-modeline-project-p)
+                         (or buffer-file-name (eq major-mode 'dired-mode)))
+                (project-name (project-current)))))
+    (when name
+      (concat (propertize name 'face (if nyx-modeline-active 'mode-line-project-face))
+              (propertize "/" 'face (if nyx-modeline-active 'mode-line-folder-face))))))
 
 ;;
 ;; Perspective
@@ -165,12 +142,12 @@
         (if persp-mode
             (let* ((persp (get-frame-persp (selected-frame)))
                    (persp-name (safe-persp-name persp)))
-              (unless (and (nyx-modeline-projectile-p)
-                           (equal persp-name (projectile-project-name)))
+              (unless (and (nyx-modeline-project-p)
+                           (equal persp-name (project-name (project-current))))
                 persp-name)))))
 
 (defun nyx-modeline-persp-name ()
-  "Displays the current perspective name if it differs from the current projectile project."
+  "Displays the current perspective name if it differs from the current project."
   (when nyx-modeline--persp-name
     (propertize (concat "[" nyx-modeline--persp-name "] ")
                 'face (if nyx-modeline-active 'mode-line-persp-face))))
@@ -181,7 +158,7 @@
 (advice-add #'select-window :after #'nyx-modeline-update-persp-name)
 
 ;;
-;; Perspective
+;; Remote host
 ;;
 
 (defvar-local nyx-modeline--remote-host nil)
@@ -241,7 +218,7 @@
                                (length (nyx-modeline-macro-recording))
                                (length (nyx-modeline-persp-name))
                                (length (nyx-modeline-remote-host))
-                               (length (nyx-modeline-projectile))
+                               (length (nyx-modeline-project))
                                (length (nyx-modeline-buffer-name))
                                (length (nyx-modeline-buffer-encoding-abbrev))
                                (length (nyx-modeline-vc))
@@ -254,7 +231,7 @@
                  (nyx-modeline-macro-recording)
                  (nyx-modeline-persp-name)
                  (nyx-modeline-remote-host)
-                 (nyx-modeline-projectile)
+                 (nyx-modeline-project)
                  (nyx-modeline-buffer-path path-width)
                  (nyx-modeline-buffer-name)))
            (rhs (list

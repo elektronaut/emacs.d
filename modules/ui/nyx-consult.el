@@ -4,11 +4,9 @@
 
 (require 'thingatpt)
 (require 'xref)
-(require 'nyx-projectile)
 
 (use-package consult
   :ensure t
-  :after (projectile)
   :commands (consult--multi)
   ;; Replace bindings. Lazily loaded due by `use-package'.
   :bind (("C-s" . consult-line)
@@ -23,7 +21,6 @@
          ("C-x 4 b" . consult-buffer-other-window) ;; orig. switch-to-buffer-other-window
          ("C-x 5 b" . consult-buffer-other-frame)  ;; orig. switch-to-buffer-other-frame
          ("C-x r b" . consult-bookmark)            ;; orig. bookmark-jump
-         ("C-x p b" . consult-project-buffer)      ;; orig. project-switch-to-buffer
          ;; Custom M-# bindings for fast register access
          ("M-#" . consult-register-load)
          ("M-'" . consult-register-store)          ;; orig. abbrev-prefix-mark (unrelated)
@@ -56,12 +53,6 @@
          ("M-s u" . consult-focus-lines)
          ;; Isearch integration
          ("M-s e" . consult-isearch-history)
-         :map projectile-mode-map
-         ("C-c p b" . consult-project-buffer)
-         ("C-c p P" . consult-projectile-switch-project)
-         ("C-c p s s" . consult-ripgrep)
-         ("C-c p d" . consult-projectile-find-dir)
-         ("C-c p f" . consult-projectile-find-file)
          :map isearch-mode-map
          ("M-e" . consult-isearch-history)         ;; orig. isearch-edit-string
          ("M-s e" . consult-isearch-history)       ;; orig. isearch-edit-string
@@ -125,19 +116,6 @@
   ;; Optionally make narrowing help available in the minibuffer.
   ;; You may want to use `embark-prefix-help-command' or which-key instead.
   ;; (define-key consult-narrow-map (vconcat consult-narrow-key "?") #'consult-narrow-help)
-
-  ;; By default `consult-project-function' uses `project-root' from project.el.
-  ;; Optionally configure a different project root function.
-  ;; There are multiple reasonable alternatives to chose from.
-  ;;;; 1. project.el (the default)
-  ;; (setq consult-project-function #'consult--default-project--function)
-  ;;;; 2. projectile.el (projectile-project-root)
-  ;; (autoload 'projectile-project-root "projectile")
-  ;; (setq consult-project-function (lambda (_) (projectile-project-root)))
-  ;;;; 3. vc.el (vc-root-dir)
-  ;; (setq consult-project-function (lambda (_) (vc-root-dir)))
-  ;;;; 4. locate-dominating-file
-  ;; (setq consult-project-function (lambda (_) (locate-dominating-file "." ".git")))
   )
 
 (use-package consult-company
@@ -163,12 +141,6 @@
 (use-package consult-ls-git
   :ensure t
   :after (consult))
-
-(use-package consult-projectile
-  :ensure t
-  :after (consult projectile)
-  :init
-  (setq consult-projectile-use-projectile-switch-project t))
 
 (use-package consult-yasnippet
   :ensure t

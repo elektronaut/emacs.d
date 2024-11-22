@@ -9,7 +9,7 @@
 
 (define-abbrev-table 'awk-mode-abbrev-table
   '(
-   ))
+    ))
 
 (define-abbrev-table 'bibtex-mode-abbrev-table '())
 
@@ -23,11 +23,11 @@
 
 (define-abbrev-table 'c++-mode-abbrev-table
   '(
-   ))
+    ))
 
 (define-abbrev-table 'c-mode-abbrev-table
   '(
-   ))
+    ))
 
 (define-abbrev-table 'calc-trail-mode-abbrev-table '())
 
@@ -107,7 +107,7 @@
 
 (define-abbrev-table 'enh-ruby-mode-abbrev-table
   '(
-   ))
+    ))
 
 (define-abbrev-table 'epa-info-mode-abbrev-table '())
 
@@ -140,7 +140,7 @@
 (define-abbrev-table 'global-abbrev-table
   '(
     ("elektornaut" "elektronaut" nil 3)
-   ))
+    ))
 
 (define-abbrev-table 'gnus-group-mode-abbrev-table '())
 
@@ -174,7 +174,7 @@
 
 (define-abbrev-table 'java-mode-abbrev-table
   '(
-   ))
+    ))
 
 (define-abbrev-table 'js-jsx-mode-abbrev-table '())
 
@@ -246,7 +246,7 @@
 
 (define-abbrev-table 'objc-mode-abbrev-table
   '(
-   ))
+    ))
 
 (define-abbrev-table 'occur-edit-mode-abbrev-table '())
 
@@ -264,17 +264,11 @@
 
 (define-abbrev-table 'pike-mode-abbrev-table
   '(
-   ))
+    ))
 
 (define-abbrev-table 'process-menu-mode-abbrev-table '())
 
 (define-abbrev-table 'prog-mode-abbrev-table '())
-
-(define-abbrev-table 'projectile-rails-compilation-mode-abbrev-table '())
-
-(define-abbrev-table 'projectile-rails-generate-mode-abbrev-table '())
-
-(define-abbrev-table 'projectile-rails-server-mode-abbrev-table '())
 
 (define-abbrev-table 'puppet-mode-abbrev-table '())
 

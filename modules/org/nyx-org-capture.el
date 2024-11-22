@@ -4,8 +4,7 @@
 
 (require 'org)
 (require 'org-capture)
-(require 'nyx-projectile)
-(require 'nyx-projectile-org)
+(require 'nyx-project-org)
 (require 'nyx-org-mode)
 
 (global-set-key "\C-cc" 'nyx-org-capture)
@@ -43,9 +42,9 @@
   "Set `nyx-org-capture-inbox-target' and call `org-capture'."
   (interactive)
   (setq nyx-org-capture-inbox-target
-        (if (and (projectile-project-p)
-                 (file-exists-p (projectile-org-file)))
-            (projectile-org-file)
+        (if (and (project-current)
+                 (file-exists-p (project-org-file)))
+            (project-org-file)
           nyx-org-capture-default-target))
   (call-interactively #'org-capture))
 

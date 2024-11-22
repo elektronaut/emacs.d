@@ -43,9 +43,8 @@
 (setq-default frame-title-format
               '(""
                 (:eval
-                 (if (and (bound-and-true-p projectile-mode)
-                          (projectile-project-p))
-                     (format "%s" (projectile-project-name))
+                 (if (project-current)
+                     (format "%s" (project-name (project-current)))
                    (if (buffer-file-name)
                        (abbreviate-file-name (buffer-file-name))
                      "%b")

@@ -72,12 +72,6 @@
   :init
   (define-key 'help-command (kbd "R") 'yari))
 
-;; Rails-specific features for Projectile project manager
-(use-package projectile-rails
-  :ensure t
-  :after (projectile)
-  :hook ((projectile-mode . projectile-rails-on)))
-
 ;; Major mode for editing HAML templates
 (use-package haml-mode
   :ensure t
