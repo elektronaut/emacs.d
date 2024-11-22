@@ -2,8 +2,6 @@
 ;;; Commentary:
 ;;; Code:
 
-(require 'nyx-savefiles)
-
 (use-package projectile
   :ensure t
   :demand t
@@ -20,8 +18,6 @@
         projectile-completion-system 'default
         projectile-sort-order 'recentf
         projectile-indexing-method 'hybrid
-        projectile-known-projects-file (expand-file-name "projectile-bookmarks.eld" savefile-dir)
-        projectile-cache-file (expand-file-name  "projectile.cache" savefile-dir)
         projectile-switch-project-action 'projectile-dired)
   :config
   (dolist (item '("import/site"

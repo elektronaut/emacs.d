@@ -13,9 +13,6 @@
 ;; Startup
 ;;-----------------------------------------------------------------------------
 
-;; Defer garbage collection for now. gcmh-mode takes care of this later.
-(setq gc-cons-threshold most-positive-fixnum)
-
 (add-hook 'emacs-startup-hook
           (lambda ()
             (message "Emacs started in %s with %d garbage collections."
@@ -26,11 +23,6 @@
 
 (setq load-prefer-newer t
       large-file-warning-threshold 100000000)
-
-;; Automatically start server
-(require 'server)
-(setq server-port 12345)
-(unless (server-running-p) (server-start))
 
 
 ;;-----------------------------------------------------------------------------
@@ -48,6 +40,10 @@
       use-package-compute-statistics t
       use-package-verbose nil)
 
+;; Keep .emacs.d clean
+(use-package no-littering
+  :ensure t)
+
 ;; Enable auto-compile
 (use-package auto-compile
   :init
@@ -56,6 +52,16 @@
   :config
   (auto-compile-on-load-mode)
   (auto-compile-on-save-mode))
+
+
+;;-----------------------------------------------------------------------------
+;; Server
+;;-----------------------------------------------------------------------------
+
+;; Automatically start server
+(require 'server)
+(setq server-port 12345)
+(unless (server-running-p) (server-start))
 
 
 ;;-----------------------------------------------------------------------------
@@ -83,7 +89,7 @@
 (init-all-dirs "modules")
 
 ;; Load custom settings
-(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
+(setq custom-file (no-littering-expand-etc-file-name "custom.el"))
 (load custom-file)
 
 ;;; init.el ends here

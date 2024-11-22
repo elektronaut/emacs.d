@@ -2,13 +2,12 @@
 ;;; Commentary:
 ;;; Code:
 
-(require 'nyx-savefiles)
+(require 'no-littering)
 (require 'nyx-org-agenda)
 (require 'nyx-projectile)
 
 (defcustom projectile-org-files-file
-  (expand-file-name "projectile-org-files.eld"
-                    savefile-dir)
+  (no-littering-expand-etc-file-name "project-org-files.el")
   "Name and location of the Projectile's known org projects file."
   :group 'projectile-org
   :type 'string)

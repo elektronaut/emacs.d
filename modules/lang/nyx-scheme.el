@@ -2,7 +2,6 @@
 ;;; Commentary:
 ;;; Code:
 
-(require 'nyx-savefiles)
 (require 'nyx-lisp)
 
 ;; MIT Scheme path
@@ -16,9 +15,7 @@
   :ensure t
   :defer t
   :custom
-  (geiser-mode-start-repl-p t)
-  (geiser-repl-history-filename (expand-file-name
-                                 "geiser-history" savefile-dir)))
+  (geiser-mode-start-repl-p t))
 
 (add-hook 'scheme-mode-hook (lambda () (run-hooks 'nyx-lisp-hook)))
 

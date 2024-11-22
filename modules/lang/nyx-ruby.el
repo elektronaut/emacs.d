@@ -2,6 +2,8 @@
 ;;; Commentary:
 ;;; Code:
 
+(require 'no-littering)
+
 ;; Ignore Rubinius bytecode
 (add-to-list 'completion-ignored-extensions ".rbc")
 
@@ -30,6 +32,10 @@
   :ensure t
   :hook ((ruby-mode    . inf-ruby-minor-mode)
          (ruby-ts-mode . inf-ruby-minor-mode)))
+
+(use-package rake
+  :ensure t
+  :custom ((rake-cache-file (no-littering-expand-var-file-name "rake.cache"))))
 
 ;; Code navigation and documentation
 (use-package robe

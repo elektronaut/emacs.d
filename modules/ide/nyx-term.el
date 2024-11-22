@@ -2,13 +2,10 @@
 ;;; Commentary:
 ;;; Code:
 
-(require 'nyx-savefiles)
-
 (use-package eshell
   :ensure nil
   :defer t
-  :bind (("C-x m" . eshell))
-  :custom (eshell-directory-name (expand-file-name "eshell" savefile-dir)))
+  :bind (("C-x m" . eshell)))
 
 (use-package multi-term
   :ensure t
