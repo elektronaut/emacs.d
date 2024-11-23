@@ -2,6 +2,7 @@
 ;;; Commentary:
 ;;; Code:
 
+(require 'nyx-persp)
 (require 'nyx-project)
 (require 'nyx-project-org)
 (require 'nyx-project-persp)
@@ -10,7 +11,13 @@
 (transient-define-prefix nyx-project-transient ()
   "project.el transient"
   :transient-suffix 'transient--do-stay
-  [["Projects"
+  [["Perspective"
+    ("<M-left>" "Previous" persp-prev)
+    ("<M-right>" "Next" persp-next)
+    ("C" "Kill" persp-kill-current)
+    ("c" "Copy" persp-copy)
+    ("r" "Rename" persp-rename)]
+   ["Projects"
     ("p" "Switch" project-persp-switch)
     ("P" "Switch (in this perspective)" project-switch-project)
     ("a" "Add and switch" project-persp-find-and-switch)
