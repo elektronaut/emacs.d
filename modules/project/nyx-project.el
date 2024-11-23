@@ -61,7 +61,8 @@ If the current buffer does not belong to a project, call `previous-buffer'."
                      ("r" . project-query-replace-regexp)
                      ("s s" . consult-ripgrep)
                      ("s S" . rg-project)
-                     ("C-x s" . project-save-some-buffers)))
+                     ("C-x s" . project-save-some-buffers))
+  :custom ((project-vc-extra-root-markers '(".project" ".projectile"))))
 
 (provide 'nyx-project)
 ;;; nyx-project.el ends here

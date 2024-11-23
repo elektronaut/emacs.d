@@ -21,10 +21,11 @@
   :ensure nil
   :after (dired)
   :hook ((dired-mode . dired-omit-mode))
+  :custom ((dired-omit-verbose nil))
   :config
   (setq dired-omit-files
         (concat dired-omit-files
-                "\\|^.bundle$\\|^.git$\\|^.DS_Store$\\|^.projectile$"))
+                "\\|^.bundle$\\|^.git$\\|^.DS_Store$\\|^.project$\\|^.projectile$"))
   (add-hook 'dired-mode-hook #'dired-omit-mode))
 
 (provide 'nyx-dired)

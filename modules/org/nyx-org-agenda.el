@@ -10,11 +10,12 @@
 
 (setq org-agenda-block-separator 8212
       org-agenda-compact-blocks nil
-      org-agenda-files (cl-remove-if-not
-                        #'file-directory-p
-                        (directory-files-recursively
-                         org-directory ".*" t
-                         (lambda (dir) (not (string-match-p "/data$" dir)))))
+      org-agenda-files (append (list org-directory)
+                               (cl-remove-if-not
+                                #'file-directory-p
+                                (directory-files-recursively
+                                 org-directory ".*" t
+                                 (lambda (dir) (not (string-match-p "/data$" dir))))))
       org-agenda-persistent-filter t
       org-agenda-skip-deadline-if-done t
       org-agenda-skip-scheduled-if-done t
