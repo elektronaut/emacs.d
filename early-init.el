@@ -1,7 +1,7 @@
 ;;; early-init.el --- early bird  -*- no-byte-compile: t -*-
 
 ;; Defer GC for now
-;;(setq gc-cons-threshold most-positive-fixnum)
+(setq gc-cons-threshold most-positive-fixnum)
 
 ;; Prevent the glimpse of un-styled Emacs by disabling these UI elements early.
 (push '(menu-bar-lines . 0) default-frame-alist)

@@ -92,4 +92,6 @@
 (setq custom-file (no-littering-expand-etc-file-name "custom.el"))
 (load custom-file)
 
+(setq gc-cons-threshold (* 16 1024 1024)) ;; 16mb
+
 ;;; init.el ends here
