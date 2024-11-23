@@ -2,8 +2,6 @@
 ;;; Commentary:
 ;;; Code:
 
-(require 'nyx-hydra)
-
 ;; Window split direction
 (setq split-width-threshold 130
       split-height-threshold nil)
@@ -75,36 +73,29 @@
   :config
   (winner-mode +1))
 
-(defhydra hydra-window (:hint nil)
-  "
-  Window
+(transient-define-prefix nyx-window-transient ()
+  "window transient"
+  :transient-suffix 'transient--do-stay
+  [["Navigate"
+    ("<left>" "Left" windmove-left)
+    ("<right>" "Right" windmove-right)
+    ("<up>" "Up" windmove-up)
+    ("<down>" "Down" windmove-down)]
+   ["Move"
+    ("<S-left>" "Left" (lambda () (interactive) (swap-window-direction 'left)))
+    ("<S-right>" "Right" (lambda () (interactive) (swap-window-direction 'right)))
+    ("<S-up>" "Up" (lambda () (interactive) (swap-window-direction 'up)))
+    ("<S-down>" "Down" (lambda () (interactive) (swap-window-direction 'down)))]]
+  ["Split"
+   ("2" "Split vertical" split-window-below)
+   ("3" "Split horizontal" split-window-and-balance)
+   ("x" "Delete" delete-window-and-balance)
+   ("+" "Balance" balance-windows)]
+  ["Utils"
+   ("a" "ace-window" ace-window)
+   ("s" "ace-swap-window" ace-swap-window)])
 
-  Navigate^^^^
-  ^^^^^^^^----------------------------------------------------------
-    _↑_/_↓_/_←_/_→_: navigate
-  S-_↑_/_↓_/_←_/_→_: move window
-  ^^^^^^        _2_: split vertical
-  ^^^^^^        _3_: split horizontal
-  ^^^^^^        _x_: delete
-
-  "
-  ("<left>" windmove-left)
-  ("<right>" windmove-right)
-  ("<up>" windmove-up)
-  ("<down>" windmove-down)
-  ("<S-left>" (swap-window-direction 'left))
-  ("<S-right>" (swap-window-direction 'right))
-  ("<S-up>" (swap-window-direction 'up))
-  ("<S-down>" (swap-window-direction 'down))
-  ("2" split-window-below)
-  ("3" split-window-and-balance)
-  ("x" delete-window-and-balance)
-  ("+" balance-windows)
-  ("a" ace-window)
-  ("s" ace-swap-window)
-  ("q" nil "quit"))
-
-(define-key global-map (kbd "C-x w") #'hydra-window/body)
+(define-key global-map (kbd "C-x w") #'nyx-window-transient)
 
 (provide 'nyx-window)
 ;;; nyx-window.el ends here

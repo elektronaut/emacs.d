@@ -84,7 +84,6 @@
   (define-key org-agenda-mode-map (kbd "S-<down>") nil)
   (define-key org-agenda-mode-map (kbd "S-<left>") nil)
   (define-key org-agenda-mode-map (kbd "S-<right>") nil)
-  (define-key org-mode-map (kbd "C-c o") #'hydra-org/body)
   (define-key org-mode-map (kbd "C-c :") #'org-time-stamp-inactive)
 
   ;; Calendar navigation

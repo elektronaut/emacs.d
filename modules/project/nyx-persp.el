@@ -8,7 +8,6 @@
 
 (require 'dash)
 (require 'ibuf-ext)
-(require 'nyx-hydra)
 
 (use-package persp-mode
   :ensure t
