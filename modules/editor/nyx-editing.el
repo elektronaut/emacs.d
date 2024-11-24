@@ -4,7 +4,7 @@
 
 ;; Align the current region using an ad-hoc rule read from the
 ;; minibuffer.
-(global-set-key (kbd "C-x \\") 'align-regexp)
+(keymap-global-set "C-x \\" 'align-regexp)
 
 ;; Enable disabled commands
 (put 'narrow-to-region 'disabled nil)
@@ -22,11 +22,10 @@
 ;; Enables moving lines or regions up and down
 (use-package move-text
   :ensure t
-  :config
-  (global-set-key [(control shift up)]  'move-text-up)
-  (global-set-key [(control shift down)]  'move-text-down)
-  (global-set-key [(meta shift up)]  'move-text-up)
-  (global-set-key [(meta shift down)]  'move-text-down))
+  :bind (("C-S-<up>"   . move-text-up)
+         ("C-S-<down>" . move-text-down)
+         ("M-S-<up>"   . move-text-up)
+         ("M-S-<down>" . move-text-down)))
 
 ;; Enables applying arithmetic operations on numbers in buffer
 (use-package operate-on-number

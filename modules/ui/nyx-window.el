@@ -6,14 +6,12 @@
 (setq split-width-threshold 130
       split-height-threshold nil)
 
-(global-set-key (kbd "C-x 3") 'split-window-and-balance)
-(global-set-key (kbd "C-x 0") 'delete-window-and-balance)
-(global-set-key (kbd "C-x C-+") 'auto-window-layout)
+(keymap-global-set "C-x 3" 'split-window-and-balance)
+(keymap-global-set "C-x 0" 'delete-window-and-balance)
+(keymap-global-set "C-x C-+" 'auto-window-layout)
 
 ;; Window switching. (C-x o goes to the next window)
-(global-set-key (kbd "C-x O") (lambda ()
-                                (interactive)
-                                (other-window -1)))
+(keymap-global-set "C-x O" (lambda () (interactive) (other-window -1)))
 
 (defun swap-window-direction (dir)
   "Move selected window in DIR."
@@ -95,7 +93,7 @@
    ("a" "ace-window" ace-window)
    ("s" "ace-swap-window" ace-swap-window)])
 
-(define-key global-map (kbd "C-x w") #'nyx-window-transient)
+(keymap-set global-map "C-x w" 'nyx-window-transient)
 
 (provide 'nyx-window)
 ;;; nyx-window.el ends here

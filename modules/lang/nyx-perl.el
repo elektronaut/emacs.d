@@ -4,7 +4,7 @@
 
 ;; (defalias 'perl-mode 'cperl-mode)
 
-(define-key 'help-command "P" 'cperl-perldoc)
+(keymap-global-set "C-h P" 'cperl-perldoc)
 
 (use-package cperl-mode
   :ensure t

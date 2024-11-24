@@ -59,7 +59,12 @@
     (dolist (face '(org-agenda-date
                     org-agenda-date-today
                     org-agenda-date-weekend))
-      (set-face-attribute face nil :weight 'bold :height height))))
+      (set-face-attribute face nil :weight 'bold :height height)))
+  (let ((waiting (face-attribute 'font-lock-constant-face :foreground))
+        (maybe (face-attribute 'font-lock-variable-name-face :foreground)))
+    (setq org-todo-keyword-faces
+          `(("WAITING" :foreground ,waiting :weight bold)
+            ("MAYBE"   :foreground ,maybe :weight bold)))))
 
 (nyx-configure-theme-overrides)
 

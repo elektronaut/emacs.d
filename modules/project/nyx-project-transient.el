@@ -39,7 +39,7 @@
     ("s" "rg (minibuffer)" consult-ripgrep)
     ("S" "rg (wgrep)" rg-project :transient transient--do-quit-one)]])
 
-(global-set-key (kbd "C-c P") 'nyx-project-transient)
+(keymap-global-set "C-c P" 'nyx-project-transient)
 
 (provide 'nyx-project-transient)
 ;;; nyx-project-transient.el ends here

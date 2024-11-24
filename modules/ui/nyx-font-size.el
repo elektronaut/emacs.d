@@ -27,8 +27,8 @@
     (default . 120))
   "Font size mapping for monitors.")
 
-(global-set-key (kbd "C-+") 'text-scale-increase)
-(global-set-key (kbd "C--") 'text-scale-decrease)
+(keymap-global-set "C-+" 'text-scale-increase)
+(keymap-global-set "C--" 'text-scale-decrease)
 
 (defun nyx-detect-frame-monitor-change ()
   "Detects when frame change monitor."

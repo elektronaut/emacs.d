@@ -115,7 +115,7 @@
 
   ;; Optionally make narrowing help available in the minibuffer.
   ;; You may want to use `embark-prefix-help-command' or which-key instead.
-  ;; (define-key consult-narrow-map (vconcat consult-narrow-key "?") #'consult-narrow-help)
+  ;; (keymap-set consult-narrow-map "< ?" 'consult-narrow-help)
   )
 
 (use-package consult-company

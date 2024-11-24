@@ -10,7 +10,7 @@
 (add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
 (add-to-list 'auto-mode-alist '("\\.org-archive\\'" . org-mode))
 
-(global-set-key "\C-cl" 'org-store-link)
+(keymap-global-set "C-c l" 'org-store-link)
 
 (setq org-directory "~/Library/CloudStorage/Dropbox/org"
       org-archive-location "%s-archive::datetree/"
@@ -55,12 +55,6 @@
       '((sequence "NEXT(n)" "TODO(t)" "WAITING" "MAYBE" "|"
                   "DONE(d)" "DELEGATED" "CANCELLED")))
 
-(let ((waiting (face-attribute 'font-lock-constant-face :foreground))
-      (maybe (face-attribute 'font-lock-variable-name-face :foreground)))
-  (setq org-todo-keyword-faces
-        `(("WAITING" :foreground ,waiting :weight bold)
-          ("MAYBE"   :foreground ,maybe :weight bold))))
-
 (setq org-tag-alist (quote ((:startgroup)
                             ("@errand"  . ?e)
                             ("@office"  . ?o)
@@ -76,24 +70,24 @@
 
 (with-eval-after-load 'org
   ;; Prevent Org from overriding the bindings for windmove.
-  (define-key org-mode-map (kbd "S-<left>") nil)
-  (define-key org-mode-map (kbd "S-<right>") nil)
-  (define-key org-mode-map (kbd "S-<up>") nil)
-  (define-key org-mode-map (kbd "S-<down>") nil)
-  (define-key org-agenda-mode-map (kbd "S-<up>") nil)
-  (define-key org-agenda-mode-map (kbd "S-<down>") nil)
-  (define-key org-agenda-mode-map (kbd "S-<left>") nil)
-  (define-key org-agenda-mode-map (kbd "S-<right>") nil)
-  (define-key org-mode-map (kbd "C-c :") #'org-time-stamp-inactive)
+  (keymap-unset org-mode-map "S-<left>")
+  (keymap-unset org-mode-map "S-<right>")
+  (keymap-unset org-mode-map "S-<up>")
+  (keymap-unset org-mode-map "S-<down>")
+  (keymap-unset org-agenda-mode-map "S-<up>")
+  (keymap-unset org-agenda-mode-map "S-<down>")
+  (keymap-unset org-agenda-mode-map "S-<left>")
+  (keymap-unset org-agenda-mode-map "S-<right>")
+  (keymap-set org-mode-map "C-c :" 'org-time-stamp-inactive)
 
   ;; Calendar navigation
-  (define-key org-read-date-minibuffer-local-map (kbd "M-<left>")
+  (keymap-set org-read-date-minibuffer-local-map "M-<left>"
               (lambda () (interactive) (org-eval-in-calendar '(calendar-backward-day 1))))
-  (define-key org-read-date-minibuffer-local-map (kbd "M-<right>")
+  (keymap-set org-read-date-minibuffer-local-map "M-<right>"
               (lambda () (interactive) (org-eval-in-calendar '(calendar-forward-day 1))))
-  (define-key org-read-date-minibuffer-local-map (kbd "M-<up>")
+  (keymap-set org-read-date-minibuffer-local-map "M-<up>"
               (lambda () (interactive) (org-eval-in-calendar '(calendar-backward-week 1))))
-  (define-key org-read-date-minibuffer-local-map (kbd "M-<down>")
+  (keymap-set org-read-date-minibuffer-local-map "M-<down>"
               (lambda () (interactive) (org-eval-in-calendar '(calendar-forward-week 1))))
 
   ;; Add replacements for the some of keybindings we just removed. It
@@ -105,10 +99,10 @@
   ;; C-down because M-{ and M-} are bound to the same commands. But I
   ;; think it's best to take the same approach as before, for
   ;; consistency.
-  (define-key org-mode-map (kbd "C-<left>") #'org-shiftleft)
-  (define-key org-mode-map (kbd "C-<right>") #'org-shiftright)
-  (define-key org-agenda-mode-map (kbd "C-<left>") #'org-agenda-do-date-earlier)
-  (define-key org-agenda-mode-map (kbd "C-<right>") #'org-agenda-do-date-later))
+  (keymap-set org-mode-map "C-<left>" 'org-shiftleft)
+  (keymap-set org-mode-map "C-<right>" 'org-shiftright)
+  (keymap-set org-agenda-mode-map "C-<left>" 'org-agenda-do-date-earlier)
+  (keymap-set org-agenda-mode-map "C-<right>" 'org-agenda-do-date-later))
 
 (defun nyx-external-link-opener (protocol)
   "Return a function that will open PROTOCOL URLs."

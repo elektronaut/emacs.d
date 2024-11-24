@@ -7,7 +7,7 @@
 (require 'nyx-project-org)
 (require 'nyx-org-mode)
 
-(global-set-key "\C-cc" 'nyx-org-capture)
+(keymap-global-set "C-c c" 'nyx-org-capture)
 
 (defvar nyx-org-capture-default-target
   (concat org-directory "/inbox.org"))

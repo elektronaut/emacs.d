@@ -2,16 +2,16 @@
 ;;; Commentary:
 ;;; Code:
 
-(global-set-key (kbd "<home>") 'move-beginning-of-line)
-(global-set-key (kbd "<end>") 'move-end-of-line)
+(keymap-global-set "<home>" 'move-beginning-of-line)
+(keymap-global-set "<end>" 'move-end-of-line)
 
 ;; More mac-like movement keys
-(global-set-key (kbd "M-<up>") 'beginning-of-buffer)
-(global-set-key (kbd "M-<down>") 'end-of-buffer)
-(global-set-key (kbd "M-<left>") 'move-beginning-of-line)
-(global-set-key (kbd "M-<right>") 'move-end-of-line)
-(global-set-key (kbd "A-<left>") 'left-word)
-(global-set-key (kbd "A-<right>") 'right-word)
+(keymap-global-set "M-<up>" 'beginning-of-buffer)
+(keymap-global-set "M-<down>" 'end-of-buffer)
+(keymap-global-set "M-<left>" 'move-beginning-of-line)
+(keymap-global-set "M-<right>" 'move-end-of-line)
+(keymap-global-set "A-<left>" 'left-word)
+(keymap-global-set "A-<right>" 'right-word)
 
 ;; Quick navigation by jumping to characters
 (use-package avy

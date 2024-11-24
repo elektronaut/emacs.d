@@ -4,8 +4,8 @@
 
 (require 'nyx-lisp)
 
-(define-key emacs-lisp-mode-map (kbd "C-c C-c") 'eval-defun)
-(define-key emacs-lisp-mode-map (kbd "C-c C-b") 'eval-buffer)
+(keymap-set emacs-lisp-mode-map "C-c C-c" 'eval-defun)
+(keymap-set emacs-lisp-mode-map "C-c C-b" 'eval-buffer)
 (add-to-list 'auto-mode-alist '("Cask\\'" . emacs-lisp-mode))
 
 (use-package elisp-slime-nav

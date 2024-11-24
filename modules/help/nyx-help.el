@@ -2,11 +2,11 @@
 ;;; Commentary:
 ;;; Code:
 
-(define-key 'help-command "A" 'apropos)
-(define-key 'help-command (kbd "C-f") 'find-function)
-(define-key 'help-command (kbd "C-k") 'find-function-on-key)
-(define-key 'help-command (kbd "C-v") 'find-variable)
-(define-key 'help-command (kbd "C-l") 'find-library)
+(keymap-global-set "C-h A" 'apropos)
+(keymap-global-set "C-h C-f" 'find-function)
+(keymap-global-set "C-h C-k" 'find-function-on-key)
+(keymap-global-set "C-h C-v" 'find-variable)
+(keymap-global-set "C-h C-l" 'find-library)
 
 (use-package discover-my-major
   :ensure t

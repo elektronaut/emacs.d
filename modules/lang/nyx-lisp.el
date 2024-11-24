@@ -8,7 +8,7 @@
 (defvar nyx-lisp-interactive-hook nil
   "Hook for interactive Lisp buffers.")
 
-(define-key read-expression-map (kbd "TAB") 'completion-at-point)
+(keymap-set read-expression-map "TAB" 'completion-at-point)
 
 (defun nyx-lisp-defaults ()
   "Set up default configuration for Lisp modes.

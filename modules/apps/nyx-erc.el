@@ -8,36 +8,32 @@
 (defvar erc-notify-timeout 10
   "Number of seconds that must elapse between notifications from the same person.")
 
+(require 'erc)
+(require 'erc-log)
+(require 'erc-notify)
+(require 'erc-spelling)
+(require 'erc-autoaway)
+
 (use-package erc
   :defer t
   :commands (erc start-irc stop-irc erc-track-mode)
-  :init
-  (setq erc-server-coding-system '(utf-8 . utf-8)
-        erc-interpret-mirc-color t
-        erc-kill-buffer-on-part t
-        erc-kill-queries-on-quit t
-        erc-kill-server-buffer-on-quit t
-        erc-save-buffer-on-part t
-        erc-query-display 'buffer
-        erc-log-channels-directory "~/.logs/erc/"
-        erc-auto-discard-away t
-        erc-autoaway-idle-seconds 600
-        erc-autoaway-use-emacs-idle t
-        erc-autojoin-channels-alist '(("#rubyonrails" "#ruby" "#emacs"))
-        erc-track-exclude-types '("JOIN" "NICK" "PART" "QUIT" "MODE"
-                                  "324" "329" "332" "333" "353" "477"))
+  :custom ((erc-server-coding-system '(utf-8 . utf-8))
+           (erc-kill-buffer-on-part t)
+           (erc-kill-queries-on-quit t)
+           (erc-kill-server-buffer-on-quit t)
+           (erc-save-buffer-on-part t)
+           (erc-query-display 'buffer)
+           (erc-auto-discard-away t)
+           (erc-autoaway-idle-seconds 600))
+  :functions (erc-filter-server-buffers)
   :config
-  (require 'erc-log)
-  (require 'erc-notify)
-  (require 'erc-spelling)
-  (require 'erc-autoaway)
-  (erc-track-mode t)
-
   (if (not (file-exists-p erc-log-channels-directory))
       (mkdir erc-log-channels-directory t))
 
+  (erc-track-mode t)
   (erc-truncate-mode +1)
   (erc-spelling-mode 1)
+
   (defun erc-notify-allowed-p (nick &optional delay)
     "Return non-nil if a notification should be made for NICK.
 If DELAY is specified, it will be the minimum time in seconds
@@ -55,10 +51,10 @@ that can occur between two notifications.  The default is
         (push (cons nick cur-time) erc-notify-nick-alist)
         t)))
 
-  (defun filter-server-buffers ()
+  (defun erc-filter-server-buffers ()
     (delq nil
           (mapcar
-           (lambda (x) (and (erc-server-buffer-p x) x))
+           (lambda (x) (and (erc-server-or-unjoined-channel-buffer-p x) x))
            (buffer-list))))
 
   (defun start-irc ()
@@ -70,7 +66,7 @@ that can occur between two notifications.  The default is
   (defun stop-irc ()
     "Disconnects from all irc servers"
     (interactive)
-    (dolist (buffer (filter-server-buffers))
+    (dolist (buffer (erc-filter-server-buffers))
       (message "Server buffer: %s" (buffer-name buffer))
       (with-current-buffer buffer
         (erc-quit-server "Asta la vista")))))

@@ -4,11 +4,13 @@
 
 (require 'smtpmail)
 (require 'shr-color)
+(require 'nyx-macos)
 
 (use-package mu4e
   :ensure nil
   ;;:defer 20
   :commands (mu4e)
+  :functions (mu4e-message maildir-or without-spam)
   :config
 
   (require 'mu4e-org)
@@ -64,8 +66,7 @@
   ;;         (string-suffix-p "Spam" (mu4e-message-field msg :maildir))))
 
   ;; Directories
-  (setq mu4e-maildir (expand-file-name "~/Mail")
-        mu4e-attachment-dir "~/Downloads")
+  (setq mu4e-attachment-dir "~/Downloads")
 
   ;; Fetching
   (setq mu4e-get-mail-command (concat homebrew-path "/bin/mbsync -a")
@@ -94,12 +95,12 @@
   ;; Org capture actions
   (setq mu4e-org-link-query-in-headers-mode nil)
 
-  (defun my/capture-mail-follow-up (msg)
+  (defun my/capture-mail-follow-up (_msg)
     (interactive)
     (call-interactively 'org-store-link)
     (org-capture nil "mf"))
 
-  (defun my/capture-mail-read-later (msg)
+  (defun my/capture-mail-read-later (_msg)
     (interactive)
     (call-interactively 'org-store-link)
     (org-capture nil "mr"))

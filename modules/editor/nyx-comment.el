@@ -11,7 +11,7 @@
       (setq beg (line-beginning-position) end (line-end-position)))
     (comment-or-uncomment-region beg end)))
 
-(global-set-key (kbd "C-M-,") 'comment-or-uncomment-region-or-line)
+(keymap-global-set "C-M-," 'comment-or-uncomment-region-or-line)
 
 (provide 'nyx-comment)
 ;;; nyx-comment.el ends here

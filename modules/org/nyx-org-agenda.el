@@ -6,7 +6,7 @@
 (require 'org-agenda)
 (require 'nyx-org-mode)
 
-(global-set-key "\C-ca" 'org-agenda)
+(keymap-global-set "C-c a" 'org-agenda)
 
 (setq org-agenda-block-separator 8212
       org-agenda-compact-blocks nil

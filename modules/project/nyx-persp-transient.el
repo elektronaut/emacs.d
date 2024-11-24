@@ -26,7 +26,7 @@
     ("t" "Temporarily display" persp-temporarily-display-buffer)
     ("B" "ibuffer" persp-ibuffer :transient transient--do-quit-one)]])
 
-(define-key persp-mode-map (kbd "C-x X") #'nyx-persp-transient)
+(keymap-set persp-mode-map "C-x X" 'nyx-persp-transient)
 
 (provide 'nyx-persp-transient)
 ;;; nyx-persp-transient.el ends here

@@ -70,7 +70,7 @@
   :ensure t
   :after (ruby-mode)
   :init
-  (define-key 'help-command (kbd "R") 'yari))
+  (keymap-global-set "C-h R" 'yari))
 
 ;; Major mode for editing HAML templates
 (use-package haml-mode
