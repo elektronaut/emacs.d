@@ -26,12 +26,13 @@
               ("C-M-S-<right>" . sp-backward-barf-sexp)
 
               ("C-c R" . sp-rewrap-sexp))
+  :hook ((prog-mode . smartparens-mode)
+         (org-mode . smartparens-mode)
+         (minibuffer-setup . conditionally-enable-smartparens-mode))
   :init
   (setq-default ;; sp-base-key-bindings 'paredit
    sp-autoskip-closing-pair 'always
    sp-hybrid-kill-entire-symbol nil)
-  (add-hook 'prog-mode-hook 'smartparens-mode)
-  (add-hook 'org-mode-hook 'smartparens-mode)
   :config
   (require 'smartparens-config)
 
@@ -40,7 +41,6 @@
     (if (eq this-command 'eval-expression)
         (smartparens-mode 1)))
 
-  (add-hook 'minibuffer-setup-hook 'conditionally-enable-smartparens-mode)
 
   ;; (sp-use-paredit-bindings)
   (show-smartparens-global-mode +1)

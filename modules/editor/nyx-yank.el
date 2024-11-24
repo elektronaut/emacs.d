@@ -11,13 +11,6 @@
   :config
   (browse-kill-ring-default-keybindings))
 
-;; Improves built-in kill commands with better text selection
-(use-package easy-kill
-  :ensure t
-  :config
-  (global-set-key [remap kill-ring-save] 'easy-kill)
-  (global-set-key [remap mark-sexp] 'easy-mark))
-
 ;; Indent code when yanked
 (use-package snap-indent
   :hook (prog-mode . snap-indent-mode)
