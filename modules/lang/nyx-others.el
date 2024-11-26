@@ -23,10 +23,9 @@
   :mode "Cask")
 
 (use-package cmake-mode
-  :ensure t
+  :ensure nil
   :mode ("\\.cmake\\'"
-         "CMakeLists\\.txt\\'")
-  :ensure cmake-mode)
+         "CMakeLists\\.txt\\'"))
 
 (use-package csv-mode
   :ensure t

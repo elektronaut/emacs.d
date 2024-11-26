@@ -7,7 +7,7 @@
 (keymap-global-set "C-h P" 'cperl-perldoc)
 
 (use-package cperl-mode
-  :ensure t
+  :ensure nil
   :mode "\\.pl\\'"
   :custom ((cperl-indent-level 4)
            (cperl-continued-statement-offset 8)

@@ -3,7 +3,7 @@
 ;;; Code:
 
 (use-package sh-script
-  :ensure t)
+  :ensure nil)
 
 (add-to-list 'auto-mode-alist '("\\.zsh\\'" . shell-script-mode))
 

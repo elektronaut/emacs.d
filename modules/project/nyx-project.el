@@ -46,7 +46,8 @@ If the current buffer does not belong to a project, call `previous-buffer'."
   (project--repeat-until-project-buffer #'previous-buffer))
 
 (use-package project
-  :ensure t
+  :ensure nil
+  :demand t
   :bind (:prefix-map nyx-project-prefix-map :prefix "C-c p"
                      ("a" . project-persp-find-and-switch)
                      ("p" . project-persp-switch)

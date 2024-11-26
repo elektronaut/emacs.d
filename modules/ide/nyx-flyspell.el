@@ -3,7 +3,7 @@
 ;;; Code:
 
 (use-package flyspell
-  :ensure t
+  :ensure nil
   :demand t
   :custom
   (ispell-program-name "aspell")

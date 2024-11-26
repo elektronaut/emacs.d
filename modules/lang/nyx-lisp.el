@@ -2,6 +2,8 @@
 ;;; Commentary:
 ;;; Code:
 
+(require 'nyx-rainbow-delimiters)
+
 (defvar nyx-lisp-hook nil
   "Hook for Lisp buffers.")
 

@@ -31,6 +31,7 @@
   ;;(mac-auto-operator-composition-mode)
 
   (use-package exec-path-from-shell
+    :ensure t
     ;; Use a non-interactive shell, which is much faster
     :custom ((exec-path-from-shell-arguments nil))
     :config
