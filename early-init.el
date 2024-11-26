@@ -20,6 +20,9 @@
    (convert-standard-filename
     (expand-file-name  "var/eln-cache/" user-emacs-directory))))
 
+;; Disable packages
+(setq package-enable-at-startup nil)
+
 ;; Resizing the Emacs frame can be a terribly expensive part of changing the
 ;; font. By inhibiting this, we easily halve startup times with fonts that are
 ;; larger than the system default.

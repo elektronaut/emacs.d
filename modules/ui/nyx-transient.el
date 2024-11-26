@@ -3,7 +3,8 @@
 ;;; Code:
 
 (use-package transient
-  :ensure t)
+  :ensure (:wait t)
+  :demand t)
 
 (provide 'nyx-transient)
 ;;; nyx-transient.el ends here

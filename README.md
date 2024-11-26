@@ -6,7 +6,7 @@ borrow ideas for your own configuration.
 
 ## Features
 
-- Uses `use-package` for declarative package configuration
+- Uses [elpaca][elpaca] and `use-package` for declarative package configuration
 - Custom modeline, look and feel inspired by [Doom Emacs][doom]
 - Workspace organization with [persp-mode][persp-mode] and [project.el][project.el]
 - Version control with [Magit][magit]
@@ -34,6 +34,7 @@ That's it. Emacs should handle the rest on startup.
 
 I use [Emacs Plus][emacs-plus] on Mac OS using Homebrew.
 
+[elpaca]: https://github.com/progfolio/elpaca
 [emacs-plus]: https://github.com/d12frosted/homebrew-emacs-plus
 [persp-mode]: https://github.com/Bad-ptr/persp-mode.el
 [project.el]: https://www.gnu.org/software/emacs/manual/html_node/emacs/Projects.html

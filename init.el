@@ -29,29 +29,32 @@
 ;; Packages and paths
 ;;-----------------------------------------------------------------------------
 
-;; Enable packages
-(require 'package)
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
-(package-initialize)
+;; Initialize elpaca
+(load (concat user-emacs-directory "nyx-elpaca.el"))
 
-;; Enable use-package
+;; Configure use-package
 (require 'use-package)
-(setq use-package-always-ensure t
-      use-package-compute-statistics t
-      use-package-verbose nil)
+(setq use-package-compute-statistics t)
 
 ;; Keep .emacs.d clean
 (use-package no-littering
-  :ensure t)
+  :ensure (:wait t)
+  :demand t)
 
 ;; Enable auto-compile
 (use-package auto-compile
+  :ensure (:wait t)
   :init
   (setq auto-compile-display-buffer nil)
   (setq auto-compile-mode-line-counter t)
   :config
   (auto-compile-on-load-mode)
   (auto-compile-on-save-mode))
+
+;; Required third-party packages
+(use-package dash
+  :ensure (:wait t)
+  :demand t)
 
 
 ;;-----------------------------------------------------------------------------

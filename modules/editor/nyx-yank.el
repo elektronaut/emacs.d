@@ -13,6 +13,7 @@
 
 ;; Indent code when yanked
 (use-package snap-indent
+  :ensure t
   :hook (prog-mode . snap-indent-mode)
   :custom ((snap-indent-format '(untabify delete-trailing-whitespace))
            (snap-indent-skip-on-prefix-arg t)

@@ -10,7 +10,7 @@
 (require 'ibuf-ext)
 
 (use-package persp-mode
-  :ensure t
+  :ensure (:wait t)
   :demand t
   :bind (:map persp-key-map
               ("O" . persp-kill-other)

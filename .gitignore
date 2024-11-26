@@ -4,5 +4,6 @@
 .flycheck_*
 /etc/custom.el
 elpa
+elpaca
 tree-sitter/
 var

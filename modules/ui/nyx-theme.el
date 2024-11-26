@@ -12,7 +12,8 @@
 (setq-default custom-theme-directory "~/.emacs.d/themes/")
 
 (use-package doom-themes
-  :ensure t
+  :ensure (:wait t)
+  :demand t
   :config
   (load-theme 'doom-ventura t)
 
