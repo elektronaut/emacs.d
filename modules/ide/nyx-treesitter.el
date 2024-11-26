@@ -8,8 +8,8 @@
   :ensure t
   :demand t
   :commands (global-treesit-auto-mode)
+  :custom ((treesit-auto-install 'prompt))
   :config
-  (setq treesit-auto-install 'prompt)
   (global-treesit-auto-mode))
 
 (provide 'nyx-treesitter)

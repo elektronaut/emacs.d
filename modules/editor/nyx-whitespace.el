@@ -8,6 +8,7 @@
               tab-width 8
               tab-always-indent 'complete
               require-final-newline t
+              standard-indent 2
               whitespace-line-column 80
               whitespace-style '(face tabs empty trailing lines-tail))
 

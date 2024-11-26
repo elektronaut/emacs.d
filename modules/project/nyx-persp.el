@@ -22,6 +22,7 @@
            (persp-autokill-persp-when-removed-last-buffer 'kill)
            (persp-kill-foreign-buffer-behaviour 'kill)
            (persp-remove-buffers-from-nil-persp-behaviour nil))
+  :hook ((kill-buffer . persp-clear-on-kill))
   :config
   (add-hook 'window-setup-hook #'(lambda () (persp-mode 1)))
 
@@ -53,6 +54,18 @@
 
   (add-to-list 'persp-activated-functions
                (lambda (_) (persp-register-current-as-recent)))
+
+  (defun persp-clear-on-kill ()
+    "Kill empty perspectives"
+    (let ((cur-buf (current-buffer)))
+      (->> (persp-names)
+           (-map 'persp-get-by-name)
+           -flatten
+           (-filter (lambda (p)
+                      (= 0 (length (-remove (lambda (b) (eq b cur-buf))
+                                            (persp-buffers p))))))
+           (-map 'safe-persp-name)
+           (-map 'persp-kill))))
 
   (defun persp-kill-empty ()
     "Kill all perspectives without buffers."

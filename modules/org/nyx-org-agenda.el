@@ -26,7 +26,7 @@
         (not (done))
         (not (todo "MAYBE" "WAITING"))
         (not (tags "ARCHIVE"))
-        (not (descendants (todo "NEXT"))))
+        (not (descendants (todo "NEXT" "WAITING" "DELEGATED"))))
   "Query for stuck projects.")
 
 (use-package org-ql
@@ -40,8 +40,10 @@
             (org-ql-block '(and (todo) (tags "inbox"))
                           ((org-ql-block-header "Inbox")))
             (org-ql-block '(and (todo "NEXT")
-                                (not (scheduled)) (not (tags "ARCHIVE"))
-                                (not (priority "A")) (not (deadline)))
+                                (not (scheduled))
+                                (not (tags "ARCHIVE" "inbox"))
+                                (not (ancestors (todo "WAITING" "MAYBE")))
+                                (not (priority "A")))
                           ((org-ql-block-header "Next Actions")))
             (org-ql-block nyx-stuck-projects-query
                           ((org-ql-block-header "Stuck Projects")))

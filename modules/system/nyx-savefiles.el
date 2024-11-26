@@ -23,9 +23,9 @@
   (savehist-mode +1))
 
 ;; Remember and restore cursor position in files
-(use-package saveplace
-  :ensure nil
-  :custom ((save-place t)))
+;; (use-package saveplace
+;;   :ensure nil
+;;   :custom ((save-place-mode t)))
 
 ;; Track recently opened files
 (use-package recentf

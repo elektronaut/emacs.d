@@ -6,6 +6,13 @@
 (setq split-width-threshold 130
       split-height-threshold nil)
 
+(customize-set-variable 'display-buffer-base-action
+                        '((display-buffer-reuse-window display-buffer-same-window)
+                          (reusable-frames . t)))
+
+;; Avoid resizing
+(customize-set-variable 'even-window-sizes nil)
+
 (keymap-global-set "C-x 3" 'split-window-and-balance)
 (keymap-global-set "C-x 0" 'delete-window-and-balance)
 (keymap-global-set "C-x C-+" 'auto-window-layout)
@@ -56,7 +63,8 @@
 
 (use-package ace-window
   :ensure t
-  :bind (("s-w" . ace-window)))
+  :custom ((aw-dispatch-always t))
+  :bind (("C-S-o" . ace-window)))
 
 ;; Navigate windows with shift+arrow keys
 (use-package windmove

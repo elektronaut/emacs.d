@@ -34,7 +34,7 @@ With prefix ARG, also delete other windows."
   (switch-to-buffer (or (car (protected-buffer-list)) "*scratch*"))
   (kill-other-buffers))
 
-(keymap-global-set "C-x C-b" 'ibuffer-list-buffers)
+(keymap-global-set "C-x C-b" 'ibuffer)
 (keymap-global-set "C-x K" 'kill-other-buffers)
 
 ;; Built-in; makes buffer names unique when files have the same name

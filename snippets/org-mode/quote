@@ -1,8 +1,8 @@
 # -*- mode: snippet; require-final-newline: nil -*-
-# name: src
-# key: src
+# name: quote
+# key: quote
 # binding: direct-keybinding
 # --
-#+begin_src ${1:emacs-lisp}
+#+begin_quote
 $0
-#+end_src
+#+end_quote
