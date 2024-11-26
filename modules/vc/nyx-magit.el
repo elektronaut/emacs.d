@@ -12,12 +12,11 @@
   :bind (("C-x g"   . magit-status)
          ("C-x M-g" . magit-dispatch))
   :custom ((magit-use-overlays nil)
+           (magit-commit-diff-inhibit-same-window t)
            (magit-repository-directories
             '(("~/Dev/anyone/apps" . 1)
               ("~/Dev/gems" . 1))))
-  :hook ((magit-post-refresh . diff-hl-magit-post-refresh))
-  :config
-  (message "loaded magit"))
+  :hook ((magit-post-refresh . diff-hl-magit-post-refresh)))
 
 ;; Extends magit with GitHub/GitLab integration
 (use-package forge
