@@ -2,20 +2,24 @@
 ;;; Commentary:
 ;;; Code:
 
+(require 'dash)
 (require 'org)
 (require 'org-agenda)
 (require 'nyx-org-mode)
 
 (keymap-global-set "C-c a" 'org-agenda)
 
+(defun nyx-not-data-dir-p (dir)
+  "Return non-nil if DIR is not a data dir."
+  (not (string-match-p "/data$" dir)))
+
 (setq org-agenda-block-separator 8212
       org-agenda-compact-blocks nil
-      org-agenda-files (append (list org-directory)
-                               (cl-remove-if-not
-                                #'file-directory-p
-                                (directory-files-recursively
-                                 org-directory ".*" t
-                                 (lambda (dir) (not (string-match-p "/data$" dir))))))
+      org-agenda-files (->> (directory-files-recursively
+                             org-directory ".*" t 'nyx-not-data-dir-p)
+                            (-filter #'file-directory-p)
+                            (-filter #'nyx-not-data-dir-p)
+                            (append (list org-directory)))
       org-agenda-persistent-filter t
       org-agenda-skip-deadline-if-done t
       org-agenda-skip-scheduled-if-done t
