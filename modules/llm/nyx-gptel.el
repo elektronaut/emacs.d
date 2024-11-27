@@ -11,6 +11,7 @@
 (require 'org)
 
 (use-package gptel
+  :ensure t
   :bind (("C-c g g" . gptel-send)
          ("C-c g G" . gptel-menu)
          ("C-c g b" . gptel)
@@ -20,6 +21,7 @@
          ("C-c g O" . gptel-org-set-properties))
   :commands gptel-end-of-response
   :custom ((gptel-default-mode #'org-mode)
+           (gptel-display-buffer-action '(pop-to-buffer-same-window))
            (gptel-prompt-prefix-alist
             '((markdown-mode . "## ")
               (org-mode      . "")

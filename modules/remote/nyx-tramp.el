@@ -6,6 +6,7 @@
 
 (use-package tramp
   :ensure nil
+  :defer 20
   :init
   (setq-default tramp-use-ssh-controlmaster-options nil
                 tramp-default-method "ssh")

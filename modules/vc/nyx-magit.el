@@ -8,7 +8,7 @@
 (use-package magit
   :ensure t
   :after (diff-hl)
-  :demand t
+  :defer 20
   :bind (("C-x g"   . magit-status)
          ("C-x M-g" . magit-dispatch))
   :custom ((magit-use-overlays nil)

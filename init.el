@@ -30,7 +30,7 @@
 ;;-----------------------------------------------------------------------------
 
 ;; Initialize elpaca
-(load (concat user-emacs-directory "nyx-elpaca.el"))
+(require 'nyx-elpaca (concat user-emacs-directory "nyx-elpaca.el"))
 
 ;; Configure use-package
 (require 'use-package)

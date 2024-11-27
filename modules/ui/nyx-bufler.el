@@ -5,9 +5,7 @@
 (use-package bufler
   :ensure t
   :bind (("C-x b" . bufler-switch-buffer)
-         ("C-x C-b" . bufler))
-  :config
-  (bufler-mode))
+         ("C-x C-b" . bufler)))
 
 (provide 'nyx-bufler)
 ;;; nyx-bufler.el ends here

@@ -4,12 +4,13 @@
 
 (use-package lsp-mode
   :ensure t
-  :custom
-  (lsp-headerline-breadcrumb-enable nil)
-  (lsp-keymap-prefix "C-c l")
+  :custom ((lsp-headerline-breadcrumb-enable nil)
+           (lsp-auto-execute-action nil)
+           (lsp-modeline-code-actions-segment '(count))
+           (lsp-keymap-prefix "C-c l"))
   :hook ((typescript-ts-mode . lsp-deferred)
          (tsx-ts-mode . lsp-deferred))
-  :commands lsp
+  :commands (lsp)
   :config
   (dolist (dir '("[/\\\\]\\tmp"
                  "[/\\\\]\\coverage"
