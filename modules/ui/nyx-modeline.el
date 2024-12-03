@@ -73,6 +73,7 @@
     (symbol-name buffer-file-coding-system)))
 
 (defun nyx-modeline-buffer-name ()
+  "Return the formatted buffer name with appropriate faces."
   (unless (eq major-mode 'dired-mode)
     (propertize
      (if buffer-file-name (nyx-modeline-short-buffer-name) "%b")
@@ -84,6 +85,7 @@
                     'mode-line-filename-face))))))
 
 (defun nyx-modeline-buffer-path (max-length)
+  "Format and return the buffer path truncated to MAX-LENGTH characters."
   (propertize
    (if (or buffer-file-name
            (eq major-mode 'dired-mode))
@@ -106,6 +108,7 @@
                (format " (%+d)" text-scale-mode-amount))))
 
 (defun nyx-modeline-position ()
+  "Return the cursor position with appropriate faces."
   (concat (propertize
            " %l:%c "
            'face (if (and nyx-modeline-active (>= (current-column) 81))
@@ -177,20 +180,10 @@
 (advice-add #'select-window :after #'nyx-modeline-update-remote-host)
 
 (defun nyx-modeline-remote-host ()
+  "Displays the remote user and hostname if the current buffer is remote."
   (when nyx-modeline--remote-host
     (propertize nyx-modeline--remote-host
                 'face (if nyx-modeline-active 'mode-line-remote-host-face))))
-
-(defun nyx-modeline-remote-host2 ()
-  "Displays the remote user and hostname if the current buffer is remote."
-  (if (file-remote-p default-directory)
-      (let* ((user (file-remote-p default-directory 'user))
-             (host (file-remote-p default-directory 'host))
-             (short-host (car (split-string host "\\."))))
-        (propertize (if user
-                        (concat user "@" short-host ":")
-                      (concat short-host ":"))
-                    'face (if nyx-modeline-active 'mode-line-remote-host-face)))))
 
 ;;
 ;; vc
@@ -210,7 +203,8 @@
       (if nyx-modeline-active (propertize backend 'face face) backend))))
 
 ;; Mode line
-(defun nyx-modeline-format (&optional id)
+(defun nyx-modeline-format (&optional _id)
+  "Return mode line format specification."
   `(:eval
     (let* ((nyx-modeline-active (eq (selected-window) nyx-modeline-selected-window))
            (width (window-total-width (selected-window)))

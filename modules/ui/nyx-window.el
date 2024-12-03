@@ -4,7 +4,8 @@
 
 ;; Window split direction
 (setq split-width-threshold 130
-      split-height-threshold nil)
+      split-height-threshold nil
+      switch-to-buffer-obey-display-actions t)
 
 (customize-set-variable 'display-buffer-base-action
                         '((display-buffer-reuse-window display-buffer-same-window)
