@@ -45,6 +45,25 @@ If the current buffer does not belong to a project, call `previous-buffer'."
   (interactive)
   (project--repeat-until-project-buffer #'previous-buffer))
 
+
+(defun project-bin-dev ()
+  "Run bin/dev in a compilation buffer."
+  (interactive)
+  (when-let* ((project (project-current))
+              (root (project-root project))
+              (path (concat root "bin/dev"))
+              (default-directory root))
+    (if (file-exists-p path)
+        (progn
+          (message "Starting bin/dev...")
+          (compilation-start path 'compilation-mode
+                             (lambda (_arg) "*bin/dev*")))
+      (error "%s does not exist!" path))))
+
+;; Hide the bin/dev buffer
+(add-to-list 'display-buffer-alist
+             '("\\*bin/dev\\*" (display-buffer-reuse-window display-buffer-no-window)))
+
 (use-package project
   :ensure nil
   :demand t
@@ -58,6 +77,7 @@ If the current buffer does not belong to a project, call `previous-buffer'."
                      ("d" . project-find-dir)
                      ("D" . project-dired)
                      ("c" . project-compile)
+                     ("C" . project-bin-dev)
                      ("b" . consult-project-buffer)
                      ("r" . project-query-replace-regexp)
                      ("s s" . consult-ripgrep)
