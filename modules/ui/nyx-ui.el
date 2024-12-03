@@ -34,7 +34,8 @@
   (unless (memq this-command
                 '(isearch-abort abort-recursive-edit exit-minibuffer
                                 keyboard-quit mwheel-scroll down up next-line previous-line
-                                backward-char forward-char minibuffer-keyboard-quit))
+                                backward-char forward-char minibuffer-keyboard-quit
+                                nyx-keyboard-quit))
     (ding)))
 (setq-default ring-bell-function 'nyx-bell-function
               visible-bell 'top-bottom)
@@ -49,6 +50,23 @@
                        (abbreviate-file-name (buffer-file-name))
                      "%b")
                    ))))
+
+;; Taken from
+;; https://protesilaos.com/codelog/2024-11-28-basic-emacs-configuration/
+(defun nyx-keyboard-quit ()
+  "Enhanced `keyboard-quit'."
+  (interactive)
+  (cond
+   ((region-active-p)
+    (keyboard-quit))
+   ((derived-mode-p 'completion-list-mode)
+    (delete-completion-window))
+   ((> (minibuffer-depth) 0)
+    (abort-recursive-edit))
+   (t
+    (keyboard-quit))))
+
+(keymap-global-set "C-g" #'nyx-keyboard-quit)
 
 (provide 'nyx-ui)
 ;;; nyx-ui.el ends here
