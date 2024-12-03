@@ -22,9 +22,13 @@
          ("C-c o f" . org-roam-node-find)
          ("C-c o i" . org-roam-node-insert))
   :bind-keymap ("C-c o d" . org-roam-dailies-map)
+  :functions (org-roam-db-autosync-enable)
   :config
   (require 'org-roam-dailies)
-  (org-roam-db-autosync-enable))
+  (org-roam-db-autosync-enable)
+  ;; Open the org-roam buffer below
+  (add-to-list 'display-buffer-alist
+               '("\\*org-roam\\*" display-buffer-below-selected)))
 
 (use-package consult-org-roam
   :ensure t

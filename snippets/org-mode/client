@@ -5,14 +5,5 @@
 # --
 #+FILETAGS: work client ${1:`(file-name-nondirectory (file-name-sans-extension (buffer-name)))`}
 * Tasks [0/0]
-:PROPERTIES:
-:VISIBILITY: children
-:END:
 * Projects
-:PROPERTIES:
-:VISIBILITY: children
-:END:
 * Notes
-:PROPERTIES:
-:VISIBILITY: children
-:END:

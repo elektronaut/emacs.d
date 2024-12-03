@@ -9,16 +9,17 @@
 
 (keymap-global-set "C-c a" 'org-agenda)
 
-(defun nyx-not-data-dir-p (dir)
+(defun nyx-skip-agenda-dir (dir)
   "Return non-nil if DIR is not a data dir."
-  (not (string-match-p "/data$" dir)))
+  (and (not (string-match-p "/archive$" dir))
+       (not (string-match-p "/data$" dir))))
 
 (setq org-agenda-block-separator 8212
       org-agenda-compact-blocks nil
       org-agenda-files (->> (directory-files-recursively
-                             org-directory ".*" t 'nyx-not-data-dir-p)
+                             org-directory ".*" t 'nyx-skip-agenda-dir)
                             (-filter #'file-directory-p)
-                            (-filter #'nyx-not-data-dir-p)
+                            (-filter #'nyx-skip-agenda-dir)
                             (append (list org-directory)))
       org-agenda-persistent-filter t
       org-agenda-skip-deadline-if-done t

@@ -36,10 +36,18 @@
       org-replace-disputed-keys t
       org-reverse-note-order t
       org-src-fontify-natively t
-      org-startup-folded "overview"
+      org-edit-src-content-indentation 0
+      org-startup-folded 'show2levels
       org-startup-indented t
       org-id-link-to-org-use-id t
       org-return-follows-link t)
+
+;; Open file links in same window
+(setq org-link-frame-setup '((vm . vm-visit-folder-other-frame)
+                             (vm-imap . vm-visit-imap-folder-other-frame)
+                             (gnus . org-gnus-no-new-news)
+                             (file . find-file)
+                             (wl . wl-other-frame)))
 
 (setq org-mobile-directory "~/Library/CloudStorage/Dropbox/Apps/MobileOrg"
       org-mobile-inbox-for-pull (concat org-directory "/from-mobile.org"))
