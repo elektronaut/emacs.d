@@ -5,6 +5,7 @@
 (require 'nyx-theme)
 (require 'nyx-ui)
 
+(make-face 'mode-line-dedicated-face)
 (make-face 'mode-line-read-only-face)
 (make-face 'mode-line-modified-face)
 (make-face 'mode-line-folder-face)
@@ -33,6 +34,7 @@
         (faded            (face-attribute 'font-lock-comment-face :foreground))
         (context          (face-attribute 'font-lock-keyword-face :foreground))
         (modified         (face-attribute 'font-lock-string-face :foreground))
+        (muted            (face-attribute 'outline-1 :foreground))
         (warning          (face-attribute 'error :foreground))
         (ok               (face-attribute 'success :foreground)))
 
@@ -47,6 +49,9 @@
     (set-face-attribute 'mode-line-highlight nil
                         :inherit 'mode-line-face
                         :foreground warning :background 'unspecified)
+    (set-face-attribute 'mode-line-dedicated-face nil
+                        :inherit 'mode-line-face
+                        :foreground muted)
     (set-face-attribute 'mode-line-read-only-face nil
                         :inherit 'mode-line-face
                         :foreground context

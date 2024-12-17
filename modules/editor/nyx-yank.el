@@ -16,9 +16,7 @@
   :ensure t
   :hook (prog-mode . snap-indent-mode)
   :custom ((snap-indent-format '(untabify delete-trailing-whitespace))
-           (snap-indent-skip-on-prefix-arg t)
-           ;; Also indent on save
-           (snap-indent-on-save t)))
+           (snap-indent-skip-on-prefix-arg t)))
 
 (provide 'nyx-yank)
 ;;; nyx-yank.el ends here

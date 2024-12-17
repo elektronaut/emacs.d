@@ -4,8 +4,11 @@
 
 ;; Big font mode
 
-(defvar nyx-big-font-adjust 40
+(defvar nyx-big-font-adjust 50
   "Adjusted font size for big-font-mode.")
+
+(defvar nyx-big-font-line-spacing 5
+  "Line spacing for big-font-mode.")
 
 (define-minor-mode big-font-mode
   "Enable big fonts."
@@ -49,14 +52,14 @@
          (base-font-size (cdr (or (assoc monitor-name nyx-monitor-font-sizes)
                                   (assoc 'default nyx-monitor-font-sizes))))
          (font-size (if big-font-mode (+ base-font-size nyx-big-font-adjust)
-                      base-font-size)))
+                      base-font-size))
+         (nyx-line-spacing (if big-font-mode nyx-big-font-line-spacing
+                             3)))
     (dolist (face '(default variable-pitch))
       (set-face-attribute face nil
-                          ;;:family "JetBrains Mono"
                           :family "Fira Code"
-                          :height font-size)))
-                                        ;(setq-default line-spacing 4)
-  (setq-default line-spacing 3))
+                          :height font-size))
+    (setq-default line-spacing nyx-line-spacing)))
 
 (set-face-attribute 'font-lock-comment-face nil
                     :slant 'italic)

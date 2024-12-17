@@ -92,6 +92,11 @@
        (nyx-modeline-shorten-directory (nyx-modeline-project-relative-buffer-path) max-length) "")
    'face (if nyx-modeline-active 'mode-line-folder-face)))
 
+(defun nyx-modeline-dedicated ()
+  "Display a symbol if buffer is dedicated."
+  (if (window-dedicated-p)
+      (propertize "‡ " 'face (if nyx-modeline-active 'mode-line-dedicated-face))))
+
 (defun nyx-modeline-macro-recording ()
   "Display current macro being recorded."
   (if (and nyx-modeline-active defining-kbd-macro)
@@ -209,6 +214,7 @@
     (let* ((nyx-modeline-active (eq (selected-window) nyx-modeline-selected-window))
            (width (window-total-width (selected-window)))
            (path-width (max (- width
+                               (length (nyx-modeline-dedicated))
                                (length (nyx-modeline-macro-recording))
                                (length (nyx-modeline-persp-name))
                                (length (nyx-modeline-remote-host))
@@ -222,6 +228,7 @@
                             4))
            (lhs (list
                  " "
+                 (nyx-modeline-dedicated)
                  (nyx-modeline-macro-recording)
                  (nyx-modeline-persp-name)
                  (nyx-modeline-remote-host)
