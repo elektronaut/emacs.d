@@ -4,11 +4,47 @@
 
 (require 'no-littering)
 
+(defun format-binary (number)
+  "Convert NUMBER to binary string representation."
+  (let ((result ""))
+    (while (> number 0)
+      (setq result (concat (number-to-string (mod number 2)) result)
+            number (/ number 2)))
+    (if (string= result "")
+        "0"
+      result)))
+
+(defun ruby-cycle-number-base ()
+  "Cycle an integer literal between decimal, hex, binary and octal representations."
+  (interactive)
+  (let* ((bounds (if (use-region-p)
+                     (cons (region-beginning) (region-end))
+                   (bounds-of-thing-at-point 'symbol)))
+         (text (buffer-substring-no-properties (car bounds) (cdr bounds)))
+         (num (cond
+               ((string-match "\\`0x\\([0-9a-fA-F]+\\)\\'" text)
+                (string-to-number (match-string 1 text) 16))
+               ((string-match "\\`0b\\([01]+\\)\\'" text)
+                (string-to-number (match-string 1 text) 2))
+               ((string-match "\\`0\\([0-7]+\\)\\'" text)
+                (string-to-number (match-string 1 text) 8))
+               ((string-match "\\`\\([0-9]+\\)\\'" text)
+                (string-to-number text 10))
+               (t (user-error "No number at point"))))
+         (next (cond
+                ((string-prefix-p "0x" text) (concat "0b" (format-binary num)))
+                ((string-prefix-p "0b" text) (format "0%o" num))
+                ((string-prefix-p "0" text) (number-to-string num))
+                (t (format "0x%x" num)))))
+    (delete-region (car bounds) (cdr bounds))
+    (insert next)))
+
 ;; Ignore Rubinius bytecode
 (add-to-list 'completion-ignored-extensions ".rbc")
 
 (use-package ruby-mode
   :ensure nil
+  :bind (("C-c C-t" . ruby-cycle-number-base))
   :mode ("Appraisals\\'" "Berksfile\\'" "Capfile\\'" "Gemfile\\'"
          "Guardfile\\'" "Podfile\\'" "Puppetfile\\'" "Rakefile\\'"
          "Thorfile\\'" "Vagrantfile\\'"

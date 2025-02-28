@@ -2,6 +2,10 @@
 ;;; Commentary:
 ;;; Code:
 
+(use-package eat
+  :ensure t
+  :defer t)
+
 (use-package eshell
   :ensure nil
   :defer t

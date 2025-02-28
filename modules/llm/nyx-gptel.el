@@ -41,8 +41,9 @@
     (gptel-end-of-response)
     (if (derived-mode-p 'org-mode)
         (org-insert-heading-respect-content)))
-  (add-hook 'gptel-post-response-functions
-            'gptel-end-of-response-with-heading))
+  ;; (add-hook 'gptel-post-response-functions
+  ;;           'gptel-end-of-response-with-heading)
+  )
 
 (provide 'nyx-gptel)
 ;;; nyx-gptel.el ends here
