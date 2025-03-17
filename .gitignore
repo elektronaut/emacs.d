@@ -1,5 +1,6 @@
 *.elc
 .DS_Store
+eln-cache
 .cache
 .flycheck_*
 /etc/custom.el
