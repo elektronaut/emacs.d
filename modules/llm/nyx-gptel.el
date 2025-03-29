@@ -28,7 +28,7 @@
               (text-mode     . "## "))))
   :hook (gptel-mode . visual-line-mode)
   :config
-  (setq gptel-model 'claude-3-5-sonnet-20241022
+  (setq gptel-model 'claude-3-7-sonnet-20250219
         gptel-backend (gptel-make-anthropic "Claude"
                         :stream t
                         :key (auth-info-password
