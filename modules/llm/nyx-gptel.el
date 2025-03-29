@@ -18,7 +18,8 @@
          ("C-c g c" . gptel-add)
          ("C-c g f" . gptel-add-file)
          ("C-c g o" . gptel-org-set-topic)
-         ("C-c g O" . gptel-org-set-properties))
+         ("C-c g O" . gptel-org-set-properties)
+         ("C-c g r" . gptel-rewrite))
   :commands gptel-end-of-response
   :custom ((gptel-default-mode #'org-mode)
            (gptel-display-buffer-action '(pop-to-buffer-same-window))
