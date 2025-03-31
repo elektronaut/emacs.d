@@ -6,6 +6,7 @@
 (require 'org-mobile)
 (require 'org-refile)
 (require 'ob-ruby)
+(require 'nyx-consult)
 
 (add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
 (add-to-list 'auto-mode-alist '("\\.org-archive\\'" . org-mode))

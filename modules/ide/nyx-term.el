@@ -19,10 +19,10 @@
   :ensure t
   :defer t)
 
-(use-package multi-vterm
-  :defer t
-  :ensure t
-  :bind (("C-c t" . multi-vterm-dedicated-toggle)))
+;; (use-package multi-vterm
+;;   :defer t
+;;   :ensure t
+;;   :bind (("C-c t" . multi-vterm-dedicated-toggle)))
 
 (provide 'nyx-term)
 ;;; nyx-term.el ends here
