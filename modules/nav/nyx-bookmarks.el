@@ -5,8 +5,7 @@
 ;; Built-in bookmark manager
 (use-package bookmark
   :ensure nil
-  :config
-  (setq bookmark-save-flag 1))
+  :custom ((bookmark-save-flag 1)))
 
 (provide 'nyx-bookmarks)
 ;;; nyx-bookmarks.el ends here

@@ -19,9 +19,8 @@
   :bind (("C-c j" . avy-goto-char)
          ("C-c J" . avy-goto-word-or-subword-1)
          ("s-."   . avy-goto-word-or-subword-1))
-  :init
-  (setq avy-background t
-        avy-style 'at-full))
+  :custom ((avy-background t)
+           (avy-style 'at-full)))
 
 (provide 'nyx-movement)
 ;;; nyx-movement.el ends here

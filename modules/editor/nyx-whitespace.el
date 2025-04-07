@@ -4,13 +4,13 @@
 
 (require 'whitespace)
 
-(setq-default indent-tabs-mode nil
-              tab-width 8
-              tab-always-indent 'complete
-              require-final-newline t
-              standard-indent 2
-              whitespace-line-column 80
-              whitespace-style '(face tabs empty trailing lines-tail))
+(setopt indent-tabs-mode nil
+        tab-width 8
+        tab-always-indent 'complete
+        require-final-newline t
+        standard-indent 2
+        whitespace-line-column 80
+        whitespace-style '(face tabs empty trailing lines-tail))
 
 (delete-selection-mode t)
 (global-auto-revert-mode t)

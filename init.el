@@ -5,8 +5,8 @@
 
 ;;; Code:
 
-(setq-default user-full-name    "Inge Jørgensen"
-              user-mail-address "inge@elektronaut.no")
+(setopt user-full-name    "Inge Jørgensen"
+        user-mail-address "inge@elektronaut.no")
 
 
 ;;-----------------------------------------------------------------------------
@@ -21,8 +21,8 @@
                               (time-subtract after-init-time before-init-time)))
                      gcs-done)))
 
-(setq load-prefer-newer t
-      large-file-warning-threshold 100000000)
+(setopt load-prefer-newer t
+        large-file-warning-threshold 100000000)
 
 
 ;;-----------------------------------------------------------------------------
@@ -34,7 +34,7 @@
 
 ;; Configure use-package
 (require 'use-package)
-(setq use-package-compute-statistics t)
+(setopt use-package-compute-statistics t)
 
 ;; Keep .emacs.d clean
 (use-package no-littering
@@ -44,9 +44,8 @@
 ;; Enable auto-compile
 (use-package auto-compile
   :ensure (:wait t)
-  :init
-  (setq auto-compile-display-buffer nil)
-  (setq auto-compile-mode-line-counter t)
+  :custom ((auto-compile-display-buffer nil)
+           (auto-compile-mode-line-counter t))
   :config
   (auto-compile-on-load-mode)
   (auto-compile-on-save-mode))
@@ -63,7 +62,7 @@
 
 ;; Automatically start server
 (require 'server)
-(setq server-port 12345)
+(setopt server-port "12345")
 (unless (server-running-p) (server-start))
 
 
@@ -92,9 +91,9 @@
 (init-all-dirs "modules")
 
 ;; Load custom settings
-(setq custom-file (no-littering-expand-etc-file-name "custom.el"))
+(setopt custom-file (no-littering-expand-etc-file-name "custom.el"))
 (load custom-file)
 
-(setq gc-cons-threshold (* 16 1024 1024)) ;; 16mb
+(setopt gc-cons-threshold (* 16 1024 1024)) ;; 16mb
 
 ;;; init.el ends here

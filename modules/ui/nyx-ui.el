@@ -3,14 +3,14 @@
 ;;; Code:
 
 ;; Disable startup screen
-(setq inhibit-startup-screen t
-      initial-scratch-message nil)
+(setopt inhibit-startup-screen t
+        initial-scratch-message nil)
 
 ;; Cursor
-(setq-default cursor-type 'bar)
+(setopt cursor-type 'bar)
 
 ;; Disable blink on matching paren
-(setq blink-matching-paren nil)
+(setopt blink-matching-paren nil)
 
 ;; Highlight the current line
 (global-hl-line-mode +1)
@@ -22,9 +22,9 @@
 (when (fboundp 'tool-bar-mode) (tool-bar-mode -1))
 
 ;; Scrolling
-(setq-default scroll-margin 0
-              scroll-conservatively 100000
-              scroll-preserve-screen-position 1)
+(setopt scroll-margin 0
+        scroll-conservatively 100000
+        scroll-preserve-screen-position 1)
 
 (fset 'yes-or-no-p 'y-or-n-p)
 
@@ -37,19 +37,19 @@
                                 backward-char forward-char minibuffer-keyboard-quit
                                 nyx-keyboard-quit))
     (ding)))
-(setq-default ring-bell-function 'nyx-bell-function
-              visible-bell 'top-bottom)
+(setopt ring-bell-function 'nyx-bell-function
+        visible-bell 'top-bottom)
 
 ;; Frame title
-(setq-default frame-title-format
-              '(""
-                (:eval
-                 (if (project-current)
-                     (format "%s" (project-name (project-current)))
-                   (if (buffer-file-name)
-                       (abbreviate-file-name (buffer-file-name))
-                     "%b")
-                   ))))
+(setopt frame-title-format
+        '(""
+          (:eval
+           (if (project-current)
+               (format "%s" (project-name (project-current)))
+             (if (buffer-file-name)
+                 (abbreviate-file-name (buffer-file-name))
+               "%b")
+             ))))
 
 ;; Taken from
 ;; https://protesilaos.com/codelog/2024-11-28-basic-emacs-configuration/

@@ -7,14 +7,11 @@
 (use-package tramp
   :ensure nil
   :defer 20
-  :init
-  (setq-default tramp-use-ssh-controlmaster-options nil
-                tramp-default-method "ssh")
-  :config
-  (setq vc-ignore-dir-regexp
-        (format "\\(%s\\)\\|\\(%s\\)"
-                vc-ignore-dir-regexp
-                tramp-file-name-regexp)))
+  :custom ((tramp-use-ssh-controlmaster-options nil)
+           (tramp-default-method "ssh")
+           (vc-ignore-dir-regexp (format "\\(%s\\)\\|\\(%s\\)"
+                                         vc-ignore-dir-regexp
+                                         tramp-file-name-regexp))))
 
 (defvar tramp-ssh-history '()
   "History for tramp-ssh.")

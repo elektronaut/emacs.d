@@ -5,10 +5,9 @@
 ;; Built-in package for running compilations and viewing their output
 (use-package compile
   :ensure nil
-  :config
-  (setq compilation-ask-about-save nil
-        compilation-always-kill t
-        compilation-scroll-output 'first-error))
+  :custom ((compilation-ask-about-save nil)
+           (compilation-always-kill t)
+           (compilation-scroll-output 'first-error)))
 
 (use-package ansi-color
   :ensure nil

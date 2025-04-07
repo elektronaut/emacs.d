@@ -40,11 +40,10 @@ With prefix ARG, also delete other windows."
 ;; Built-in; makes buffer names unique when files have the same name
 (use-package uniquify
   :ensure nil
-  :init
-  (setq uniquify-buffer-name-style 'forward
-        uniquify-separator "/"
-        uniquify-after-kill-buffer-p t
-        uniquify-ignore-buffers-re "^\\*"))
+  :custom ((uniquify-buffer-name-style 'forward)
+           (uniquify-separator "/")
+           (uniquify-after-kill-buffer-p t)
+           (uniquify-ignore-buffers-re "^\\*")))
 
 (provide 'nyx-buffers)
 ;;; nyx-buffers.el ends here

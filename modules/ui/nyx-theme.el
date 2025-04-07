@@ -9,7 +9,7 @@
   (mapcar #'disable-theme custom-enabled-themes))
 (advice-add 'load-theme :before #'load-theme--disable-old-theme)
 
-(setq-default custom-theme-directory "~/.emacs.d/themes/")
+(setopt custom-theme-directory "~/.emacs.d/themes/")
 
 (use-package doom-themes
   :ensure (:wait t)
@@ -63,9 +63,9 @@
       (set-face-attribute face nil :weight 'bold :height height)))
   (let ((waiting (face-attribute 'font-lock-constant-face :foreground))
         (maybe (face-attribute 'font-lock-variable-name-face :foreground)))
-    (setq org-todo-keyword-faces
-          `(("WAITING" :foreground ,waiting :weight bold)
-            ("MAYBE"   :foreground ,maybe :weight bold)))))
+    (setopt org-todo-keyword-faces
+            `(("WAITING" :foreground ,waiting :weight bold)
+              ("MAYBE"   :foreground ,maybe :weight bold)))))
 
 (nyx-configure-theme-overrides)
 

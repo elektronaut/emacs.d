@@ -23,19 +23,21 @@
   :commands gptel-end-of-response
   :custom ((gptel-default-mode #'org-mode)
            (gptel-display-buffer-action '(pop-to-buffer-same-window))
+           (gptel-model 'claude-3-7-sonnet-20250219)
            (gptel-prompt-prefix-alist
             '((markdown-mode . "## ")
               (org-mode      . "")
               (text-mode     . "## "))))
   :hook (gptel-mode . visual-line-mode)
   :config
-  (setq gptel-model 'claude-3-7-sonnet-20250219
-        gptel-backend (gptel-make-anthropic "Claude"
-                        :stream t
-                        :key (auth-info-password
-                              (car (auth-source-search
-                                    :host "api.anthropic.com"
-                                    :user "apikey")))))
+  (require 'gptel-org)
+  (setopt gptel-backend
+          (gptel-make-anthropic "Claude"
+            :stream t
+            :key (auth-info-password
+                  (car (auth-source-search
+                        :host "api.anthropic.com"
+                        :user "apikey")))))
   (defun gptel-end-of-response-with-heading (&optional _ _ _arg)
     "Go to end of response and insert heading"
     (interactive)

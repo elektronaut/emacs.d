@@ -4,9 +4,9 @@
 
 (use-package undo-tree
   :ensure t
+  :custom ((undo-tree-history-directory-alist `((".*" . ,temporary-file-directory)))
+           (undo-tree-auto-save-history t))
   :config
-  (setq undo-tree-history-directory-alist `((".*" . ,temporary-file-directory)))
-  (setq undo-tree-auto-save-history t)
   (global-undo-tree-mode))
 
 (provide 'nyx-undo-tree)

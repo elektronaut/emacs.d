@@ -4,21 +4,9 @@
 
 (use-package vertico
   :ensure t
+  :custom ((vertico-count 15))
   :init
-  (vertico-mode)
-
-  ;; Different scroll margin
-  ;; (setq vertico-scroll-margin 0)
-
-  ;; Show more candidates
-  (setq vertico-count 15)
-
-  ;; Grow and shrink the Vertico minibuffer
-  ;; (setq vertico-resize t)
-
-  ;; Optionally enable cycling for `vertico-next' and `vertico-previous'.
-  ;; (setq vertico-cycle t)
-  )
+  (vertico-mode))
 
 (provide 'nyx-vertico)
 ;;; nyx-vertico.el ends here

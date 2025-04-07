@@ -48,8 +48,7 @@
 ;; Built-in tool for interactive regexp building
 (use-package re-builder
   :ensure nil
-  :config
-  (setq reb-re-syntax 'string))
+  :custom ((reb-re-syntax 'string)))
 
 ;; Converts between different string naming conventions
 (use-package string-inflection

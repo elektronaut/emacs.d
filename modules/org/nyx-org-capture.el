@@ -9,16 +9,23 @@
 
 (keymap-global-set "C-c c" 'nyx-org-capture)
 
-(defvar nyx-org-capture-default-target
-  (concat org-directory "/inbox.org"))
+(defcustom nyx-org-capture-default-target
+  (concat org-directory "/inbox.org")
+  "Default target for nyx-org-capture."
+  :group 'nyx-org-capture
+  :type 'string)
 
-(defvar nyx-org-capture-inbox-target
+(defcustom nyx-org-capture-inbox-target
   nyx-org-capture-default-target
-  "Filename for `org-capture'.")
+  "Filename for `org-capture'."
+  :group 'nyx-org-capture
+  :type 'string)
 
-(defvar nyx-org-capture-email-target
+(defcustom nyx-org-capture-email-target
   nyx-org-capture-default-target
-  "Filename for `org-capture'.")
+  "Filename for `org-capture'."
+  :group 'nyx-org-capture
+  :type 'string)
 
 (defun nyx-org-capture--weekly-meeting-agenda ()
   "Return agenda items for weekly meeting template, one per line."
@@ -67,11 +74,11 @@
 (defun nyx-org-capture ()
   "Set `nyx-org-capture-inbox-target' and call `org-capture'."
   (interactive)
-  (setq nyx-org-capture-inbox-target
-        (if (and (project-current)
-                 (file-exists-p (project-org-file)))
-            (project-org-file)
-          nyx-org-capture-default-target))
+  (setopt nyx-org-capture-inbox-target
+          (if (and (project-current)
+                   (file-exists-p (project-org-file)))
+              (project-org-file)
+            nyx-org-capture-default-target))
   (call-interactively #'org-capture))
 
 (provide 'nyx-org-capture)

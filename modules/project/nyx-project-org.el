@@ -46,15 +46,15 @@
   (when (file-exists-p project-org-files-file)
     (with-temp-buffer
       (insert-file-contents project-org-files-file)
-      (setq project-org-files (read (current-buffer))))))
+      (setopt project-org-files (read (current-buffer))))))
 
 (defun project-org-set-file (org-file)
   "Set ORG-FILE for the current project."
   (interactive (list (read-file-name "Set org file: " (concat org-directory "/"))))
   (when (project-current)
-    (setq project-org-files
-          (cons (cons (project-name (project-current)) org-file)
-                (assoc-delete-all (project-name (project-current)) project-org-files)))
+    (setopt project-org-files
+            (cons (cons (project-name (project-current)) org-file)
+                  (assoc-delete-all (project-name (project-current)) project-org-files)))
     (project-org-files-save)))
 
 (project-org-files-load)

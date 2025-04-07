@@ -8,18 +8,17 @@
 (desktop-save-mode 0)
 
 ;; Autosave/backups
-(setq auto-save-file-name-transforms `((".*" ,temporary-file-directory t))
-      backup-by-copying t
-      backup-directory-alist `((".*" . ,temporary-file-directory))
-      delete-by-moving-to-trash t)
+(setopt auto-save-file-name-transforms `((".*" ,temporary-file-directory t))
+        backup-by-copying t
+        backup-directory-alist `((".*" . ,temporary-file-directory))
+        delete-by-moving-to-trash t)
 
 ;; Save minibuffer history between sessions
 (use-package savehist
   :ensure nil
+  :custom ((savehist-additional-variables '(search-ring regexp-search-ring))
+           (savehist-autosave-interval 60))
   :config
-  (setq savehist-additional-variables
-        '(search-ring regexp-search-ring)
-        savehist-autosave-interval 60)
   (savehist-mode +1))
 
 ;; Remember and restore cursor position in files
@@ -31,10 +30,11 @@
 (use-package recentf
   :ensure nil
   :functions (recentf-expand-file-name)
+  :custom ((recentf-max-saved-items 500)
+           (recentf-max-menu-items 15)
+           (recentf-auto-cleanup 'never))
   :config
-  (setq recentf-max-saved-items 500
-        recentf-max-menu-items 15
-        recentf-auto-cleanup 'never)
+  
   (add-to-list 'recentf-exclude
                (recentf-expand-file-name no-littering-var-directory))
   (add-to-list 'recentf-exclude

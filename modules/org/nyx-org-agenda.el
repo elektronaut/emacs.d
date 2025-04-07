@@ -14,17 +14,17 @@
   (and (not (string-match-p "/archive$" dir))
        (not (string-match-p "/data$" dir))))
 
-(setq org-agenda-block-separator 8212
-      org-agenda-compact-blocks nil
-      org-agenda-files (->> (directory-files-recursively
-                             org-directory ".*" t 'nyx-skip-agenda-dir)
-                            (-filter #'file-directory-p)
-                            (-filter #'nyx-skip-agenda-dir)
-                            (append (list org-directory)))
-      org-agenda-persistent-filter t
-      org-agenda-skip-deadline-if-done t
-      org-agenda-skip-scheduled-if-done t
-      org-agenda-span 14)
+(setopt org-agenda-block-separator 8212
+        org-agenda-compact-blocks nil
+        org-agenda-files (->> (directory-files-recursively
+                               org-directory ".*" t 'nyx-skip-agenda-dir)
+                              (-filter #'file-directory-p)
+                              (-filter #'nyx-skip-agenda-dir)
+                              (append (list org-directory)))
+        org-agenda-persistent-filter t
+        org-agenda-skip-deadline-if-done t
+        org-agenda-skip-scheduled-if-done t
+        org-agenda-span 14)
 
 (defvar nyx-stuck-projects-query
   '(and (tags "project")

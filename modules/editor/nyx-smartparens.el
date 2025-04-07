@@ -6,6 +6,8 @@
 
 (use-package smartparens
   :ensure t
+  :custom ((sp-autoskip-closing-pair 'always)
+           (sp-hybrid-kill-entire-symbol nil))
   :functions sp-pair sp-local-pair sp-local-tag
   :bind (:map smartparens-mode-map
               ("C-M-a" . sp-beginning-of-sexp)
@@ -30,9 +32,6 @@
          (org-mode . smartparens-mode)
          (minibuffer-setup . conditionally-enable-smartparens-mode))
   :init
-  (setq-default ;; sp-base-key-bindings 'paredit
-   sp-autoskip-closing-pair 'always
-   sp-hybrid-kill-entire-symbol nil)
   :config
   (require 'smartparens-config)
 

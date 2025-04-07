@@ -13,69 +13,69 @@
 
 (keymap-global-set "C-c l" 'org-store-link)
 
-(setq org-directory "~/Library/CloudStorage/Dropbox/org"
-      org-archive-location "%s-archive::datetree/"
+(setopt org-directory "~/Library/CloudStorage/Dropbox/org"
+        org-archive-location "%s-archive::datetree/"
 
-      org-refile-allow-creating-parent-nodes 'confirm
-      org-refile-targets '((org-agenda-files :maxlevel . 3))
-      org-refile-use-outline-path 'file
+        org-refile-allow-creating-parent-nodes 'confirm
+        org-refile-targets '((org-agenda-files :maxlevel . 3))
+        org-refile-use-outline-path 'file
 
-      org-cycle-separator-lines 2
-      org-cycle-open-archived-trees t
-      org-default-notes-file (concat org-directory "/inbox.org")
-      org-enforce-todo-dependencies nil
-      org-ellipsis nil
-      org-extend-today-until 3
-      org-global-properties (quote (("Effort_ALL" .
-                                     "0:15 0:30 0:45 1:00 2:00 3:00 4:00 5:00 6:00 0:00")
-                                    ("STYLE_ALL" . "habit")))
-      org-hide-leading-stars nil
-      org-log-done t
+        org-cycle-separator-lines 2
+        org-cycle-open-archived-trees t
+        org-default-notes-file (concat org-directory "/inbox.org")
+        org-enforce-todo-dependencies nil
+        org-ellipsis nil
+        org-extend-today-until 3
+        org-global-properties (quote (("Effort_ALL" .
+                                       "0:15 0:30 0:45 1:00 2:00 3:00 4:00 5:00 6:00 0:00")
+                                      ("STYLE_ALL" . "habit")))
+        org-hide-leading-stars nil
+        org-log-done 'time
 
-      org-outline-path-complete-in-steps nil
-      org-tags-exclude-from-inheritance '("project")
-      org-replace-disputed-keys t
-      org-reverse-note-order t
-      org-src-fontify-natively t
-      org-edit-src-content-indentation 0
-      org-startup-folded 'show2levels
-      org-startup-indented t
-      org-id-link-to-org-use-id t
-      org-return-follows-link t)
+        org-outline-path-complete-in-steps nil
+        org-tags-exclude-from-inheritance '("project")
+        org-replace-disputed-keys t
+        org-reverse-note-order t
+        org-src-fontify-natively t
+        org-edit-src-content-indentation 0
+        org-startup-folded 'show2levels
+        org-startup-indented t
+        org-id-link-to-org-use-id t
+        org-return-follows-link t)
 
 ;; Open file links in same window
-(setq org-link-frame-setup '((vm . vm-visit-folder-other-frame)
-                             (vm-imap . vm-visit-imap-folder-other-frame)
-                             (gnus . org-gnus-no-new-news)
-                             (file . find-file)
-                             (wl . wl-other-frame)))
+(setopt org-link-frame-setup '((vm . vm-visit-folder-other-frame)
+                               (vm-imap . vm-visit-imap-folder-other-frame)
+                               (gnus . org-gnus-no-new-news)
+                               (file . find-file)
+                               (wl . wl-other-frame)))
 
-(setq org-mobile-directory "~/Library/CloudStorage/Dropbox/Apps/MobileOrg"
-      org-mobile-inbox-for-pull (concat org-directory "/from-mobile.org"))
+(setopt org-mobile-directory "~/Library/CloudStorage/Dropbox/Apps/MobileOrg"
+        org-mobile-inbox-for-pull (concat org-directory "/from-mobile.org"))
 
-(setq org-startup-truncated nil
-      visual-line-fringe-indicators '(left-curly-arrow right-curly-arrow))
+(setopt org-startup-truncated nil
+        visual-line-fringe-indicators '(left-curly-arrow right-curly-arrow))
 (add-hook 'org-mode-hook #'visual-line-mode)
 
-(setq org-stuck-projects
-      '("+project/-DONE-MAYBE-DELEGATED-CANCELLED" ("NEXT" "WAITING") nil ""))
+(setopt org-stuck-projects
+        '("+project/-DONE-MAYBE-DELEGATED-CANCELLED" ("NEXT" "WAITING") nil ""))
 
-(setq org-todo-keywords
-      '((sequence "NEXT(n)" "TODO(t)" "WAITING" "MAYBE" "|"
-                  "DONE(d)" "DELEGATED" "CANCELLED")))
+(setopt org-todo-keywords
+        '((sequence "NEXT(n)" "TODO(t)" "WAITING" "MAYBE" "|"
+                    "DONE(d)" "DELEGATED" "CANCELLED")))
 
-(setq org-tag-alist (quote ((:startgroup)
-                            ("@errand"  . ?e)
-                            ("@office"  . ?o)
-                            ("@home"    . ?h)
-                            (:endgroup)
-                            ("project"  . ?p)
-                            ("meeting"  . ?m)
-                            ("maybe"    . ?M)
-                            ("note"     . ?n)
-                            ("review"   . ?r)
-                            ("tasks"    . ?t)
-                            ("flagged"  . ??))))
+(setopt org-tag-alist (quote ((:startgroup)
+                              ("@errand"  . ?e)
+                              ("@office"  . ?o)
+                              ("@home"    . ?h)
+                              (:endgroup)
+                              ("project"  . ?p)
+                              ("meeting"  . ?m)
+                              ("maybe"    . ?M)
+                              ("note"     . ?n)
+                              ("review"   . ?r)
+                              ("tasks"    . ?t)
+                              ("flagged"  . ??))))
 
 (with-eval-after-load 'org
   ;; Prevent Org from overriding the bindings for windmove.

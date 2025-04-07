@@ -8,11 +8,11 @@
 
 (add-to-list 'auto-mode-alist '("\\.pom$" . nxml-mode))
 
-(setq nxml-child-indent 4
-      nxml-attribute-indent 4
-      nxml-auto-insert-xml-declaration-flag nil
-      nxml-bind-meta-tab-to-complete-flag t
-      nxml-slash-auto-complete-flag t)
+(setopt nxml-child-indent 4
+        nxml-attribute-indent 4
+        nxml-auto-insert-xml-declaration-flag nil
+        nxml-bind-meta-tab-to-complete-flag t
+        nxml-slash-auto-complete-flag t)
 
 (provide 'nyx-xml)
 ;;; nyx-xml.el ends here
