@@ -17,6 +17,7 @@
          ("C-c g b" . gptel)
          ("C-c g c" . gptel-add)
          ("C-c g f" . gptel-add-file)
+         ("C-c g d" . gptel-context-remove-all)
          ("C-c g o" . gptel-org-set-topic)
          ("C-c g O" . gptel-org-set-properties)
          ("C-c g r" . gptel-rewrite))

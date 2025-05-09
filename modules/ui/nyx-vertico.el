@@ -4,7 +4,8 @@
 
 (use-package vertico
   :ensure t
-  :custom ((vertico-count 15))
+  :custom
+  (vertico-count 15)
   :init
   (vertico-mode))
 
