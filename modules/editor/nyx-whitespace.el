@@ -15,6 +15,22 @@
 (delete-selection-mode t)
 (global-auto-revert-mode t)
 
+(define-minor-mode nyx-whitespace-mode
+  "Enable automatic whitespace cleanup."
+  :global t
+  :group 'nyx
+  :lighter " nws")
+
+(nyx-whitespace-mode +1)
+
+(defun nyx-whitespace-cleanup ()
+  "Cleanup whitespace if enabled."
+  (when (and nyx-whitespace-mode
+             (derived-mode-p 'prog-mode))
+    (whitespace-cleanup)))
+
+(add-hook 'before-save-hook 'nyx-whitespace-cleanup)
+
 ;; Built-in package for handling tabs and spaces
 (use-package tabify
   :ensure nil
