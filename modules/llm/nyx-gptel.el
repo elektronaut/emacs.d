@@ -24,7 +24,7 @@
   :commands gptel-end-of-response
   :custom ((gptel-default-mode #'org-mode)
            (gptel-display-buffer-action '(pop-to-buffer-same-window))
-           (gptel-model 'claude-3-7-sonnet-20250219)
+           (gptel-model 'claude-opus-4-20250514)
            (gptel-prompt-prefix-alist
             '((markdown-mode . "## ")
               (org-mode      . "")
