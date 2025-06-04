@@ -37,6 +37,11 @@
     :config
     (exec-path-from-shell-initialize))
 
+  (use-package mise
+    :ensure t
+    :config
+    (global-mise-mode))
+
   ;; Add Homebrew to the load path
   (let ((default-directory (concat homebrew-path "/share/emacs/site-lisp/")))
     (normal-top-level-add-subdirs-to-load-path))
