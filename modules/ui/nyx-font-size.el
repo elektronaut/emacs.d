@@ -1,4 +1,4 @@
-;;; nyx-font-size.el --- Font size
+;;; nyx-font-size.el --- Font size  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;; Code:
 

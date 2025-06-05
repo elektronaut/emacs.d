@@ -1,4 +1,4 @@
-;;; early-init.el --- early bird  -*- no-byte-compile: t -*-
+;;; early-init.el --- early bird  -*- lexical-binding: t; no-byte-compile: t -*-
 
 ;; Defer GC for now
 (setopt gc-cons-threshold most-positive-fixnum)
