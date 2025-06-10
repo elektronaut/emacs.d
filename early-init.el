@@ -1,5 +1,13 @@
 ;;; early-init.el --- early bird  -*- lexical-binding: t; no-byte-compile: t -*-
 
+;; Workaround for mangled PATH in emacs-plus on MacOS Sequoia.
+;; See https://github.com/d12frosted/homebrew-emacs-plus/issues/733
+(setenv "PATH" "/Users/inge/.local/share/mise/installs/ruby/3.4.3/bin:/Users/inge/.local/share/mise/installs/node/22.14.0/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/Users/inge/.bin:/
+Users/inge/.iterm2:/Users/inge/.asdf/bin:/Users/inge/.asdf/shims:/Users/inge/Library/Qt5.5.1/5.5/clang_64/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.crypte
+xd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin
+:/opt/X11/bin:/Users/inge/Library/pnpm:/Applications/Ghostty.app/Contents/MacOS")
+(setq exec-path (split-string (getenv "PATH") path-separator))
+
 ;; Defer GC for now
 (setopt gc-cons-threshold most-positive-fixnum)
 
