@@ -46,14 +46,13 @@
            (recent (-filter (lambda (name) (member name all)) persp-recent-perspectives)))
       (-distinct (append recent all))))
 
-  (defun persp-register-current-as-recent ()
+  (defun persp-register-current-as-recent (&rest _)
     "Register the current perspective as recent."
     (let* ((current (get-current-persp))
            (name (if current (persp-name current) "none")))
       (persp-register-recent name)))
 
-  (add-to-list 'persp-activated-functions
-               (lambda (_) (persp-register-current-as-recent)))
+  (add-hook 'persp-activated-functions #'persp-register-current-as-recent)
 
   (defun persp-clear-on-kill ()
     "Kill empty perspectives"
