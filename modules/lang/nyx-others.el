@@ -111,9 +111,9 @@
   :ensure tuareg
   :mode "\\.ml\\'")
 
-(use-package vcl-mode
-  :ensure t
-  :mode "\\.vcl\\'")
+;; (use-package vcl-mode
+;;   :ensure t
+;;   :mode "\\.vcl\\'")
 
 (provide 'nyx-others)
 ;;; nyx-others.el ends here

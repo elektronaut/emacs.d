@@ -38,8 +38,8 @@
    ["Insert"
     ("i t" "Time" (lambda () (interactive) (org-time-stamp t)))
     ("i T" "Time (inactive)" (lambda () (interactive) (org-time-stamp-inactive t)))
-    ("i t" "Date" org-time-stamp)
-    ("i T" "Date (inactive)" org-time-stamp-inactive)
+    ("i d" "Date" org-time-stamp)
+    ("i D" "Date (inactive)" org-time-stamp-inactive)
     ("i l" "Link" org-insert-link)]])
 
 (transient-define-prefix nyx-org-roam-transient ()
