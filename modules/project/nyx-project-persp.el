@@ -36,9 +36,27 @@
         :action   (lambda (dir) (project-persp-project dir))
         :items    #'project-known-project-roots))
 
+(defun project-persp--git-worktree-p (dir)
+  "Return non-nil if DIR is a git worktree."
+  (let ((git-file (expand-file-name ".git" dir)))
+    (and (file-exists-p git-file)
+         (not (file-directory-p git-file)))))
+
+(defun project-persp--name-for-dir (dir)
+  "Generate perspective name for DIR.
+If DIR is a git worktree, returns \"parent/worktree\".
+Otherwise returns just the directory name."
+  (let* ((dir (directory-file-name dir))
+         (basename (file-name-nondirectory dir))
+         (parent-dir (file-name-directory dir))
+         (parent-name (file-name-nondirectory (directory-file-name parent-dir))))
+    (if (project-persp--git-worktree-p dir)
+        (format "%s/%s" parent-name basename)
+      basename)))
+
 (defun project-persp-project (dir)
   "Switch to perspective for project in DIR."
-  (let* ((persp-name (file-name-nondirectory (directory-file-name dir)))
+  (let* ((persp-name (project-persp--name-for-dir dir))
          (persp-exists (persp-with-name-exists-p persp-name)))
     (persp-add-new persp-name)
     (persp-frame-switch persp-name)
