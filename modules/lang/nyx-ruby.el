@@ -58,11 +58,6 @@
            (ruby-deep-indent-paren t))
   :hook (ruby-mode . subword-mode))
 
-;; Interface for Ruby's Bundler package manager
-(use-package bundler
-  :ensure t
-  :after (ruby-mode))
-
 ;; REPL for interactive Ruby development
 (use-package inf-ruby
   :ensure t

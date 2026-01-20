@@ -19,10 +19,10 @@
   :hook ((magit-post-refresh . diff-hl-magit-post-refresh)))
 
 ;; Extends magit with GitHub/GitLab integration
-(use-package forge
-  :ensure t
-  :after (magit)
-  :defer t)
+;; (use-package forge
+;;   :ensure t
+;;   :after (magit)
+;;   :defer t)
 
 (provide 'nyx-magit)
 ;;; nyx-magit.el ends here
