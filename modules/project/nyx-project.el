@@ -60,6 +60,22 @@ If the current buffer does not belong to a project, call `previous-buffer'."
                              (lambda (_arg) "*bin/dev*")))
       (error "%s does not exist!" path))))
 
+(defun project-add-all-in-dir (dir)
+  "Recursively add all projects found in DIR to known projects.
+Stops descending into a directory once a project is found there."
+  (interactive (list (read-directory-name "Parent directory: ")))
+  (let ((added 0))
+    (cl-labels ((search (d)
+                  (if-let ((project (project-current nil d)))
+                      (progn
+                        (project--remember-dir (project-root project))
+                        (cl-incf added))
+                    (dolist (subdir (directory-files d t "\\`[^.]"))
+                      (when (file-directory-p subdir)
+                        (search subdir))))))
+      (search (expand-file-name dir)))
+    (message "Added %d projects from %s" added dir)))
+
 ;; Hide the bin/dev buffer
 (add-to-list 'display-buffer-alist
              '("\\*bin/dev\\*" (display-buffer-reuse-window display-buffer-no-window)))
