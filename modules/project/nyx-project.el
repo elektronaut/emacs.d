@@ -4,6 +4,60 @@
 
 (require 'nyx-consult)
 
+;;
+;; Worktree support
+;;
+
+(defvar project-worktree-parents nil
+  "List of parent directories that use worktree structure.
+Projects that are direct subdirectories of these paths will use
+\"parent/project\" naming convention.")
+
+(defun project-add-worktree-parent (dir)
+  "Add DIR to `project-worktree-parents'."
+  (interactive "DWorktree parent to add: ")
+  (let ((dir (directory-file-name (expand-file-name dir))))
+    (if (member dir project-worktree-parents)
+        (message "Already in worktree parents: %s" dir)
+      (add-to-list 'project-worktree-parents dir)
+      (message "Added to worktree parents: %s" dir))))
+
+(defun project--git-worktree-child-p (dir)
+  "Return non-nil if DIR is a git worktree child (not the main repo)."
+  (let ((git-file (expand-file-name ".git" dir)))
+    (and (file-exists-p git-file)
+         (not (file-directory-p git-file)))))
+
+(defun project--worktree-parent-p (dir)
+  "Return non-nil if DIR is a subdirectory of a configured worktree parent."
+  (let ((parent-dir (file-name-directory (directory-file-name dir))))
+    (cl-some (lambda (worktree-parent)
+               (file-equal-p parent-dir (expand-file-name worktree-parent)))
+             project-worktree-parents)))
+
+(defun project-worktree-p (dir)
+  "Return non-nil if DIR uses worktree naming (parent/project).
+True if any of:
+- DIR is a git worktree child (.git is a file)
+- DIR basename is \"main\" or \"master\"
+- DIR parent is in `project-worktree-parents'"
+  (let ((basename (file-name-nondirectory (directory-file-name dir))))
+    (or (project--git-worktree-child-p dir)
+        (member basename '("main" "master"))
+        (project--worktree-parent-p dir))))
+
+(defun project-display-name (dir)
+  "Generate display name for project in DIR.
+If DIR uses worktree structure, returns \"parent/project\".
+Otherwise returns just the directory name."
+  (let* ((dir (directory-file-name dir))
+         (basename (file-name-nondirectory dir))
+         (parent-dir (file-name-directory dir))
+         (parent-name (file-name-nondirectory (directory-file-name parent-dir))))
+    (if (project-worktree-p dir)
+        (format "%s/%s" parent-name basename)
+      basename)))
+
 ;; From https://andreyor.st/posts/2022-07-16-project-el-enhancements/
 (defun project-save-some-buffers (&optional arg)
   "Save some modified file-visiting buffers in the current project.

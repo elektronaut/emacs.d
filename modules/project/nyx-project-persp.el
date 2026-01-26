@@ -4,6 +4,7 @@
 
 (require 'nyx-consult)
 (require 'nyx-persp)
+(require 'nyx-project)
 
 (defvar project-persp--dir-history nil)
 (defvar project-persp--persp-history nil)
@@ -36,59 +37,9 @@
         :action   (lambda (dir) (project-persp-project dir))
         :items    #'project-known-project-roots))
 
-(defvar project-persp-worktree-parents nil
-  "List of parent directories that use worktree structure.
-Projects that are direct subdirectories of these paths will use
-\"parent/project\" naming convention.")
-
-(defun project-persp-add-worktree-parent (dir)
-  "Add DIR to `project-persp-worktree-parents'."
-  (interactive "Worktree parent to add: ")
-  (let ((dir (directory-file-name (expand-file-name dir))))
-    (if (member dir project-persp-worktree-parents)
-        (message "Already in worktree parents: %s" dir)
-      (add-to-list 'project-persp-worktree-parents dir)
-      (message "Added to worktree parents: %s" dir))))
-
-(defun project-persp--git-worktree-child-p (dir)
-  "Return non-nil if DIR is a git worktree child (not the main repo)."
-  (let ((git-file (expand-file-name ".git" dir)))
-    (and (file-exists-p git-file)
-         (not (file-directory-p git-file)))))
-
-(defun project-persp--worktree-parent-p (dir)
-  "Return non-nil if DIR is a subdirectory of a configured worktree parent."
-  (let ((parent-dir (file-name-directory (directory-file-name dir))))
-    (cl-some (lambda (worktree-parent)
-               (file-equal-p parent-dir (expand-file-name worktree-parent)))
-             project-persp-worktree-parents)))
-
-(defun project-persp--worktree-structure-p (dir)
-  "Return non-nil if DIR uses worktree naming (parent/project).
-True if any of:
-- DIR is a git worktree child (.git is a file)
-- DIR basename is \"main\" or \"master\"
-- DIR parent is in `project-persp-worktree-parents'"
-  (let ((basename (file-name-nondirectory (directory-file-name dir))))
-    (or (project-persp--git-worktree-child-p dir)
-        (member basename '("main" "master"))
-        (project-persp--worktree-parent-p dir))))
-
-(defun project-persp--name-for-dir (dir)
-  "Generate perspective name for DIR.
-If DIR uses worktree structure, returns \"parent/project\".
-Otherwise returns just the directory name."
-  (let* ((dir (directory-file-name dir))
-         (basename (file-name-nondirectory dir))
-         (parent-dir (file-name-directory dir))
-         (parent-name (file-name-nondirectory (directory-file-name parent-dir))))
-    (if (project-persp--worktree-structure-p dir)
-        (format "%s/%s" parent-name basename)
-      basename)))
-
 (defun project-persp-project (dir)
   "Switch to perspective for project in DIR."
-  (let* ((persp-name (project-persp--name-for-dir dir))
+  (let* ((persp-name (project-display-name dir))
          (persp-exists (persp-with-name-exists-p persp-name)))
     (persp-add-new persp-name)
     (persp-frame-switch persp-name)

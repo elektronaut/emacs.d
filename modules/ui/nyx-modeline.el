@@ -7,6 +7,7 @@
 ;;; Code:
 
 (require 'nyx-modeline-faces)
+(require 'nyx-project)
 
 ;; Selected window
 
@@ -131,34 +132,48 @@
 
 (defun nyx-modeline-project ()
   "Project name."
-  (let ((name (when (and (nyx-modeline-project-p)
-                         (or buffer-file-name (eq major-mode 'dired-mode)))
-                (project-name (project-current)))))
-    (when name
-      (concat (propertize name 'face (if nyx-modeline-active 'mode-line-project-face))
-              (propertize "/" 'face (if nyx-modeline-active 'mode-line-folder-face))))))
+  (unless nyx-modeline--persp-is-worktree
+    (let ((name (when (and (nyx-modeline-project-p)
+                           (or buffer-file-name (eq major-mode 'dired-mode)))
+                  (project-name (project-current)))))
+      (when name
+        (concat (propertize name 'face (if nyx-modeline-active 'mode-line-project-face))
+                (propertize "/" 'face (if nyx-modeline-active 'mode-line-folder-face)))))))
 
 ;;
 ;; Perspective
 ;;
 
 (defvar-local nyx-modeline--persp-name nil)
+(defvar-local nyx-modeline--persp-is-worktree nil)
 
 (defun nyx-modeline-update-persp-name (&rest _)
   "Update the modeline persp name."
+  (setq nyx-modeline--persp-is-worktree nil)
   (setq nyx-modeline--persp-name
-        (if persp-mode
-            (let* ((persp (get-frame-persp (selected-frame)))
-                   (persp-name (safe-persp-name persp)))
-              (unless (and (nyx-modeline-project-p)
-                           (equal persp-name (project-name (project-current))))
-                persp-name)))))
+        (when persp-mode
+          (let* ((persp (get-frame-persp (selected-frame)))
+                 (persp-name (safe-persp-name persp)))
+            (cond
+             ;; Worktree: show display name, skip separate project name
+             ((and (nyx-modeline-project-p)
+                   (project-worktree-p (project-root (project-current))))
+              (setq nyx-modeline--persp-is-worktree t)
+              (project-display-name (project-root (project-current))))
+             ;; Non-worktree: show persp name only if different from project
+             ((not (and (nyx-modeline-project-p)
+                        (equal persp-name (project-name (project-current)))))
+              persp-name))))))
 
 (defun nyx-modeline-persp-name ()
   "Displays the current perspective name if it differs from the current project."
   (when nyx-modeline--persp-name
-    (propertize (concat "[" nyx-modeline--persp-name "] ")
-                'face (if nyx-modeline-active 'mode-line-persp-face))))
+    (if nyx-modeline--persp-is-worktree
+        (concat (propertize nyx-modeline--persp-name
+                            'face (if nyx-modeline-active 'mode-line-project-face))
+                (propertize "/" 'face (if nyx-modeline-active 'mode-line-folder-face)))
+      (propertize (concat "[" nyx-modeline--persp-name "] ")
+                  'face (if nyx-modeline-active 'mode-line-persp-face)))))
 
 (add-hook 'find-file-hook #'nyx-modeline-update-persp-name)
 (add-hook 'persp-activated-functions #'nyx-modeline-update-persp-name)
