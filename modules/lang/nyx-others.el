@@ -59,6 +59,10 @@
   :ensure t
   :mode "\\.json\\'")
 
+(use-package kdl-mode
+  :ensure t
+  :mode "\\.kdl\\'")
+
 (use-package kivy-mode
   :ensure t
   :mode "\\.kv\\'")
