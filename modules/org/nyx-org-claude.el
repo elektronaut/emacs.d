@@ -176,6 +176,18 @@ Excludes the structural bucket containers in inbox.org (see
                         (append (nyx-org-claude--entry-alist)
                                 (list (cons "body" (nyx-org-claude--entry-body))))))))))))
 
+(defun nyx-org-claude-get (target)
+  "Return TARGET's entry as JSON, including its full (uncapped) body text.
+Like a single-entry `query' result with an added \"body\" field.  Use this to
+read a task's notes/content through the bridge instead of opening the raw
+.org file.  Body is the text between the entry's metadata and its first child
+heading (property drawer and planning lines excluded)."
+  (org-with-point-at (nyx-org-claude--target target)
+    (org-back-to-heading t)
+    (json-encode
+     (append (nyx-org-claude--entry-alist)
+             (list (cons "body" (nyx-org-claude--entry-body most-positive-fixnum)))))))
+
 ;;;; ---- write (single-entry; auto-saves) -------------------------------
 
 (defun nyx-org-claude-state (target state)

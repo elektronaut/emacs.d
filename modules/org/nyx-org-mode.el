@@ -9,12 +9,12 @@
 (require 'nyx-consult)
 
 (add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
-(add-to-list 'auto-mode-alist '("\\.org-archive\\'" . org-mode))
+(add-to-list 'auto-mode-alist '("\\.org_archive\\'" . org-mode))
 
 (keymap-global-set "C-c l" 'org-store-link)
 
 (setopt org-directory "~/Library/CloudStorage/Dropbox/org"
-        org-archive-location "%s-archive::datetree/"
+        org-archive-location "%s_archive::datetree/"
 
         org-refile-allow-creating-parent-nodes 'confirm
         org-refile-targets '((org-agenda-files :maxlevel . 3))
@@ -122,6 +122,30 @@
 
 (dolist (protocol '("zpl" "readdle-spark"))
   (org-link-set-parameters protocol :follow (nyx-external-link-opener protocol)))
+
+(defun nyx-org-set-closed-from-children ()
+  "Set CLOSED on the entry at point from the latest CLOSED among its descendants.
+Scan every descendant for a CLOSED timestamp and stamp the entry itself with the
+most recent one.  No-op (with a message) when the entry already has a CLOSED, or
+when no descendant carries one.  Useful before archiving a project that was
+retired by tagging :ARCHIVE: rather than a DONE transition, so the archive
+datetree files it under a real completion date instead of today."
+  (interactive)
+  (org-back-to-heading t)
+  (if (org-entry-get nil "CLOSED")
+      (message "Entry already has CLOSED; leaving it untouched.")
+    (let* ((stamps (delq nil
+                         (org-map-entries
+                          (lambda () (org-entry-get nil "CLOSED"))
+                          nil 'tree)))
+           (latest (car (sort stamps
+                              (lambda (a b)
+                                (> (org-time-string-to-seconds a)
+                                   (org-time-string-to-seconds b)))))))
+      (if (null latest)
+          (message "No descendant has a CLOSED timestamp; nothing to set.")
+        (org-add-planning-info 'closed (org-time-string-to-time latest))
+        (message "Set CLOSED to %s (latest among children)." latest)))))
 
 (provide 'nyx-org-mode)
 ;;; nyx-org-mode.el ends here
