@@ -34,25 +34,41 @@
         (not (descendants (todo "NEXT" "WAITING" "DELEGATED"))))
   "Query for stuck projects.")
 
+(defvar nyx-next-actions-query
+  '(and (todo "NEXT")
+        (not (scheduled))
+        (not (tags "ARCHIVE" "inbox"))
+        (not (ancestors (todo "WAITING" "MAYBE")))
+        (not (priority "A")))
+  "Query for unscheduled, non-high-priority next actions.")
+
+(defvar nyx-waiting-query
+  '(and (todo "WAITING" "DELEGATED") (not (tags "ARCHIVE")))
+  "Query for waiting/delegated items.")
+
+(defvar nyx-high-priority-query
+  '(and (todo) (priority "A") (not (tags "ARCHIVE")))
+  "Query for high-priority tasks.")
+
+(defvar nyx-inbox-query
+  '(and (todo) (tags "inbox"))
+  "Query for inbox items awaiting triage.")
+
 (use-package org-ql
   :ensure t
   :config
   (setq org-agenda-custom-commands
         '(("n" "Next actions"
            ((agenda "" ((org-agenda-span 7)))
-            (org-ql-block '(and (todo) (priority "A") (not (tags "ARCHIVE")))
+            (org-ql-block nyx-high-priority-query
                           ((org-ql-block-header "High Priority Tasks")))
-            (org-ql-block '(and (todo) (tags "inbox"))
+            (org-ql-block nyx-inbox-query
                           ((org-ql-block-header "Inbox")))
-            (org-ql-block '(and (todo "NEXT")
-                                (not (scheduled))
-                                (not (tags "ARCHIVE" "inbox"))
-                                (not (ancestors (todo "WAITING" "MAYBE")))
-                                (not (priority "A")))
+            (org-ql-block nyx-next-actions-query
                           ((org-ql-block-header "Next Actions")))
             (org-ql-block nyx-stuck-projects-query
                           ((org-ql-block-header "Stuck Projects")))
-            (org-ql-block '(and (todo "WAITING" "DELEGATED") (not (tags "ARCHIVE")))
+            (org-ql-block nyx-waiting-query
                           ((org-ql-block-header "Waiting/Delegated Items")))))
 
           ("p" "Projects"
@@ -82,7 +98,7 @@
                                 (not (tags "ARCHIVE"))
                                 (not (ancestors (todo "WAITING" "MAYBE"))))
                           ((org-ql-block-header "Actionable items")))
-            (org-ql-block '(and (todo "WAITING" "DELEGATED") (not (tags "ARCHIVE")))
+            (org-ql-block nyx-waiting-query
                           ((org-ql-block-header "Waiting/Delegated Items")))
             (org-ql-block '(and (todo "MAYBE") (not (tags "ARCHIVE")))
                           ((org-ql-block-header "Maybe"))))))))
