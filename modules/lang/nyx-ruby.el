@@ -49,7 +49,7 @@
          "Guardfile\\'" "Podfile\\'" "Puppetfile\\'" "Rakefile\\'"
          "Thorfile\\'" "Vagrantfile\\'"
          "\\.axlsx\\'" "\\.builder\\'" "\\.cap\\'" "\\.gemspec\\'"
-         "\\.jbuilder\\'" "\\.podspec\\'" "\\.prawn\\'" "\\.rabl\\'"
+         "\\.jb\\'" "\\.jbuilder\\'" "\\.podspec\\'" "\\.prawn\\'" "\\.rabl\\'"
          "\\.rake\\'" "\\.rb\\'" "\\.ru\\'" "\\.thor\\'")
   :custom ((ruby-align-chained-calls t)
            (ruby-align-to-stmt-keywords nil)

@@ -12,7 +12,8 @@
          (tsx-ts-mode . lsp-deferred))
   :commands (lsp)
   :config
-  (dolist (dir '("[/\\\\]\\tmp"
+  (dolist (dir '("[/\\\\]\\.bundle\\'"
+                 "[/\\\\]\\tmp"
                  "[/\\\\]\\coverage"
                  "[/\\\\]\\db/dis"))
     (push dir lsp-file-watch-ignored-directories)))

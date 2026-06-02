@@ -47,6 +47,10 @@
          (file+olp nyx-org-capture-inbox-target "Tasks")
          "* TODO %?\n%U\n%a\n%i" :prepend t)
 
+        ("p" "Project" entry
+         (file+olp nyx-org-capture-inbox-target "Projects")
+         "* %? :project:\n** Tasks [0/0]" :prepend t)
+
         ("n" "Note" entry
          (file+olp nyx-org-capture-inbox-target "Notes")
          "* %? %U\n%i" :prepend t)
