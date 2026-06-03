@@ -55,13 +55,21 @@
   ;; Enable use-package :ensure support for Elpaca.
   (elpaca-use-package-mode))
 
-;; Emacs.app bundles an older `compat' which elpaca treats as satisfying the
-;; dependency (it's listed in `elpaca-ignored-dependencies'), so packages that
-;; need a newer compat -- e.g. transient/magit/consult using `static-when',
-;; `static-if' or `incf' -- get compiled and loaded against the stale built-in
-;; and fail with `void-function'/`invalid-function'.  Drop it from the ignore
-;; list so elpaca installs and manages a current compat as a normal dependency.
-(setq elpaca-ignored-dependencies (delq 'compat elpaca-ignored-dependencies))
+;; Emacs.app bundles older `compat' and `transient' which elpaca treats as
+;; satisfying the dependency (they're listed in `elpaca-ignored-dependencies'),
+;; so packages that need newer versions get compiled and loaded against the
+;; stale built-ins.  Two failure modes:
+;;   - compat: packages using `static-when', `static-if' or `incf' (transient,
+;;     magit, consult) fail with `void-function'/`invalid-function'.
+;;   - transient: because it's ignored, elpaca doesn't walk *its* dependencies
+;;     when ordering builds, so dependents like `rg' get byte-compiled before
+;;     transient 0.9.2's own dep `cond-let' is on the load path.  That build
+;;     errors out and the package is silently left unbuilt -- e.g. `rg-project'
+;;     then fails at runtime with "Cannot open load file: ... rg".
+;; Drop both from the ignore list so elpaca installs and manages current
+;; versions (and their transitive deps) as normal, correctly-ordered packages.
+(dolist (pkg '(compat transient))
+  (setq elpaca-ignored-dependencies (delq pkg elpaca-ignored-dependencies)))
 
 ;;When installing a package used in the init file itself,
 ;;e.g. a package which adds a use-package key word,
