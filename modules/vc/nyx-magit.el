@@ -16,7 +16,12 @@
            (magit-repository-directories
             '(("~/Dev/anyone/apps" . 1)
               ("~/Dev/gems" . 1))))
-  :hook ((magit-post-refresh . diff-hl-magit-post-refresh)))
+  :hook ((magit-post-refresh . diff-hl-magit-post-refresh))
+  :config
+  (magit-add-section-hook 'magit-status-sections-hook
+                          #'magit-insert-worktrees
+                          #'magit-insert-stashes
+                          'append))
 
 ;; Extends magit with GitHub/GitLab integration
 ;; (use-package forge
