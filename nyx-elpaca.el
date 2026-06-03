@@ -3,6 +3,7 @@
 ;;; Code:
 
 (defvar elpaca-installer-version 0.12)
+(defvar elpaca-lock-file (expand-file-name "elpaca-lock.eld" user-emacs-directory))
 (defvar elpaca-directory (expand-file-name "elpaca/" user-emacs-directory))
 (defvar elpaca-builds-directory (expand-file-name "builds/" elpaca-directory))
 (defvar elpaca-sources-directory (expand-file-name "sources/" elpaca-directory))
@@ -53,6 +54,14 @@
 (elpaca elpaca-use-package
   ;; Enable use-package :ensure support for Elpaca.
   (elpaca-use-package-mode))
+
+;; Emacs.app bundles an older `compat' which elpaca treats as satisfying the
+;; dependency (it's listed in `elpaca-ignored-dependencies'), so packages that
+;; need a newer compat -- e.g. transient/magit/consult using `static-when',
+;; `static-if' or `incf' -- get compiled and loaded against the stale built-in
+;; and fail with `void-function'/`invalid-function'.  Drop it from the ignore
+;; list so elpaca installs and manages a current compat as a normal dependency.
+(setq elpaca-ignored-dependencies (delq 'compat elpaca-ignored-dependencies))
 
 ;;When installing a package used in the init file itself,
 ;;e.g. a package which adds a use-package key word,
