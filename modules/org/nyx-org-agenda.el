@@ -55,7 +55,7 @@
   "Query for inbox items awaiting triage.")
 
 (use-package org-ql
-  :ensure t
+  :ensure (:wait t)
   :config
   (setq org-agenda-custom-commands
         '(("n" "Next actions"
