@@ -58,16 +58,7 @@
 ;; Emacs.app bundles older `compat' and `transient' which elpaca treats as
 ;; satisfying the dependency (they're listed in `elpaca-ignored-dependencies'),
 ;; so packages that need newer versions get compiled and loaded against the
-;; stale built-ins.  Two failure modes:
-;;   - compat: packages using `static-when', `static-if' or `incf' (transient,
-;;     magit, consult) fail with `void-function'/`invalid-function'.
-;;   - transient: because it's ignored, elpaca doesn't walk *its* dependencies
-;;     when ordering builds, so dependents like `rg' get byte-compiled before
-;;     transient 0.9.2's own dep `cond-let' is on the load path.  That build
-;;     errors out and the package is silently left unbuilt -- e.g. `rg-project'
-;;     then fails at runtime with "Cannot open load file: ... rg".
-;; Drop both from the ignore list so elpaca installs and manages current
-;; versions (and their transitive deps) as normal, correctly-ordered packages.
+;; stale built-ins.
 (dolist (pkg '(compat transient))
   (setq elpaca-ignored-dependencies (delq pkg elpaca-ignored-dependencies)))
 
