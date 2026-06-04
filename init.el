@@ -55,6 +55,21 @@
   :ensure (:wait t)
   :demand t)
 
+;; Transient must be installed and loaded before any module is read.  It is a
+;; build- and load-time dependency of many packages spread across the module
+;; tree (magit, rg, gptel, org-ql, ...), and several modules call
+;; `transient-define-prefix' -- a macro that only exists once transient.el is
+;; fully loaded, and which is *not* autoloaded -- at top level.  If transient is
+;; first pulled in as an ordinary (non-blocking) dependency of one of those
+;; modules, elpaca ignores any later `:wait' declaration ("previously queued as
+;; dependency of ..."), the macro is still undefined when the next module loads,
+;; and init fails with `void-function transient-define-prefix'.  Queue it first
+;; with `:wait' so it is fully built and loaded up front.  See nyx-elpaca.el for
+;; why it is no longer in `elpaca-ignored-dependencies'.
+(use-package transient
+  :ensure (:wait t)
+  :demand t)
+
 
 ;;-----------------------------------------------------------------------------
 ;; Server

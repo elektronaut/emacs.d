@@ -2,9 +2,11 @@
 ;;; Commentary:
 ;;; Code:
 
-(use-package transient
-  :ensure (:wait t)
-  :demand t)
+;; Transient itself is installed eagerly in init.el, before any module loads,
+;; so it is never queued as a plain dependency first (which would defeat
+;; `:wait').  Here we only need to guarantee it is loaded for modules that call
+;; `transient-define-prefix' at top level and `(require 'nyx-transient)'.
+(require 'transient)
 
 (provide 'nyx-transient)
 ;;; nyx-transient.el ends here
