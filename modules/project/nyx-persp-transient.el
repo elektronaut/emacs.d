@@ -3,7 +3,7 @@
 ;;; Code:
 
 (require 'nyx-persp)
-(require 'nyx-transient)
+(require 'transient)
 
 (transient-define-prefix nyx-persp-transient ()
   "persp-mode transient"

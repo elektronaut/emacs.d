@@ -3,7 +3,7 @@
 ;;; Code:
 
 (require 'org)
-(require 'nyx-transient)
+(require 'transient)
 
 (transient-define-prefix nyx-org-transient ()
   "org-mode transient"

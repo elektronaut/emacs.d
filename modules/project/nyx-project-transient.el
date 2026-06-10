@@ -6,7 +6,7 @@
 (require 'nyx-project)
 (require 'nyx-project-org)
 (require 'nyx-project-persp)
-(require 'nyx-transient)
+(require 'transient)
 
 (transient-define-prefix nyx-project-transient ()
   "project.el transient"
