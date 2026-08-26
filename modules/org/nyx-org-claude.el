@@ -268,11 +268,35 @@ With MATCH, keep only targets whose heading name contains MATCH (case-insensitiv
         (org-delete-property name)
       (org-set-property name value))))
 
+(defun nyx-org-claude--nest-body-headings (text min-level)
+  "Shift column-0 Org headings in TEXT so its shallowest heading sits at MIN-LEVEL.
+Body text is inserted verbatim, so a line like \"* Foo\" would otherwise become a
+top-level sibling and split the target out of its subtree.  This shifts the whole
+block uniformly (preserving relative nesting) so its shallowest heading becomes a
+child of the target.  TEXT with no headings, or whose headings are already at depth
+>= MIN-LEVEL, is returned unchanged."
+  (let ((shallowest most-positive-fixnum)
+        (lines (split-string text "\n")))
+    (dolist (l lines)
+      (when (string-match "\\`\\(\\*+\\)[ \t]" l)
+        (setq shallowest (min shallowest (length (match-string 1 l))))))
+    (let ((shift (if (= shallowest most-positive-fixnum) 0
+                   (max 0 (- min-level shallowest)))))
+      (if (zerop shift) text
+        (mapconcat (lambda (l)
+                     (if (string-match "\\`\\*+[ \t]" l)
+                         (concat (make-string shift ?*) l)
+                       l))
+                   lines "\n")))))
+
 (defun nyx-org-claude-body (target mode text)
-  "Edit TARGET's body.  MODE is \"append\" or \"replace\"."
+  "Edit TARGET's body.  MODE is \"append\" or \"replace\".
+Column-0 Org headings in TEXT are shifted to nest under TARGET so inserted content
+cannot break out of the subtree (see `nyx-org-claude--nest-body-headings')."
   (nyx-org-claude--at-target target
-    (let ((beg (save-excursion (org-end-of-meta-data t) (point)))
-          (end (save-excursion (outline-next-heading) (point))))
+    (let* ((text (nyx-org-claude--nest-body-headings text (1+ (org-current-level))))
+           (beg (save-excursion (org-end-of-meta-data t) (point)))
+           (end (save-excursion (outline-next-heading) (point))))
       (if (string= mode "replace")
           (progn (delete-region beg end)
                  (goto-char beg)
