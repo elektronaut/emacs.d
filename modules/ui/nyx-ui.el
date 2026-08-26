@@ -38,7 +38,7 @@
                                 nyx-keyboard-quit))
     (ding)))
 (setopt ring-bell-function 'nyx-bell-function
-        visible-bell 'top-bottom)
+        visible-bell t)
 
 ;; Frame title
 (setopt frame-title-format
