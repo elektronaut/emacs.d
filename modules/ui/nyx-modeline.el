@@ -8,6 +8,7 @@
 
 (require 'nyx-modeline-faces)
 (require 'nyx-project)
+(require 'nyx-worktree)
 
 ;; Selected window
 
@@ -122,57 +123,92 @@
                    'mode-line-position-face)) "%p"))
 
 ;;
-;; Project
+;; Project and worktree
 ;;
+
+(defcustom nyx-modeline-worktree-width 22
+  "Maximum number of columns for a worktree name in the mode line."
+  :type 'integer
+  :group 'nyx-modeline)
+
+(defvar-local nyx-modeline--repo-name nil)
+(defvar-local nyx-modeline--worktree-name nil)
+(defvar-local nyx-modeline--persp-label nil)
+(defvar-local nyx-modeline--persp-same-repo nil)
 
 (defun nyx-modeline-project-p ()
   "Should we display the project modeline?"
   (if (and (not (file-remote-p default-directory))
            (project-current)) t))
 
-(defun nyx-modeline-project ()
-  "Project name."
-  (unless nyx-modeline--persp-is-worktree
-    (let ((name (when (and (nyx-modeline-project-p)
-                           (or buffer-file-name (eq major-mode 'dired-mode)))
-                  (project-name (project-current)))))
-      (when name
-        (concat (propertize name 'face (if nyx-modeline-active 'mode-line-project-face))
-                (propertize "/" 'face (if nyx-modeline-active 'mode-line-folder-face)))))))
+(defun nyx-modeline--worktree-budget ()
+  "Columns available for a worktree name."
+  (max 8 (min nyx-modeline-worktree-width
+              (/ (window-total-width (selected-window)) 5))))
 
-;;
-;; Perspective
-;;
-
-(defvar-local nyx-modeline--persp-name nil)
-(defvar-local nyx-modeline--persp-is-worktree nil)
+(defun nyx-modeline--persp-worktree ()
+  "Worktree of the current perspective, if it has one."
+  (when persp-mode
+    (when-let* ((root (persp-parameter 'project-worktree-root)))
+      (project-worktree-at root))))
 
 (defun nyx-modeline-update-persp-name (&rest _)
-  "Update the modeline persp name."
-  (setq nyx-modeline--persp-is-worktree nil)
-  (setq nyx-modeline--persp-name
-        (when persp-mode
-          (let* ((persp (get-frame-persp (selected-frame)))
-                 (persp-name (safe-persp-name persp)))
+  "Recompute the repository, worktree and perspective segments."
+  (let* ((worktree (and (nyx-modeline-project-p)
+                        (or buffer-file-name (eq major-mode 'dired-mode))
+                        (project-worktree-current)))
+         (persp-worktree (nyx-modeline--persp-worktree))
+         (persp-name (when persp-mode
+                       (safe-persp-name (get-frame-persp (selected-frame))))))
+    (setq nyx-modeline--repo-name
+          (and worktree (project-worktree-repo-name worktree)))
+    (setq nyx-modeline--worktree-name
+          (and worktree
+               (if (project-worktree-linked-p worktree)
+                   (project-worktree-short-name worktree)
+                 (and (project-worktree-siblings worktree) "main"))))
+    (setq nyx-modeline--persp-same-repo nil)
+    (setq nyx-modeline--persp-label
+          (cond
+           ((null persp-name) nil)
+           (persp-worktree
             (cond
-             ;; Worktree: show display name, skip separate project name
-             ((and (nyx-modeline-project-p)
-                   (project-worktree-p (project-root (project-current))))
-              (setq nyx-modeline--persp-is-worktree t)
-              (project-display-name (project-root (project-current))))
-             ;; Non-worktree: show persp name only if different from project
-             ((not (and (nyx-modeline-project-p)
-                        (equal persp-name (project-name (project-current)))))
-              persp-name))))))
+             ((and worktree (equal (project-worktree-root persp-worktree)
+                                   (project-worktree-root worktree)))
+              nil)
+             ((and worktree (equal (project-worktree-repo-root persp-worktree)
+                                   (project-worktree-repo-root worktree)))
+              (setq nyx-modeline--persp-same-repo t)
+              (if (project-worktree-linked-p persp-worktree)
+                  (project-worktree-short-name persp-worktree)
+                "main"))
+             (t (project-worktree-display-name persp-worktree))))
+           ((and worktree (equal persp-name (project-worktree-persp-name worktree))) nil)
+           (t persp-name)))))
+
+(defun nyx-modeline-project ()
+  "Repository and worktree for the current buffer."
+  (when nyx-modeline--repo-name
+    (concat
+     (propertize nyx-modeline--repo-name
+                 'face (if nyx-modeline-active 'mode-line-project-face))
+     (when nyx-modeline--worktree-name
+       (concat
+        (propertize "·" 'face (if nyx-modeline-active 'mode-line-folder-face))
+        (propertize (project-worktree-truncate nyx-modeline--worktree-name
+                                               (nyx-modeline--worktree-budget))
+                    'face (if nyx-modeline-active 'mode-line-worktree-face))))
+     (propertize "/" 'face (if nyx-modeline-active 'mode-line-folder-face)))))
 
 (defun nyx-modeline-persp-name ()
-  "Displays the current perspective name if it differs from the current project."
-  (when nyx-modeline--persp-name
-    (if nyx-modeline--persp-is-worktree
-        (concat (propertize nyx-modeline--persp-name
-                            'face (if nyx-modeline-active 'mode-line-project-face))
-                (propertize "/" 'face (if nyx-modeline-active 'mode-line-folder-face)))
-      (propertize (concat "[" nyx-modeline--persp-name "] ")
+  "The current perspective, when it differs from the buffer's worktree."
+  (when nyx-modeline--persp-label
+    (let ((label (if nyx-modeline--persp-same-repo
+                     (concat "·" (project-worktree-truncate
+                                  nyx-modeline--persp-label
+                                  (nyx-modeline--worktree-budget)))
+                   nyx-modeline--persp-label)))
+      (propertize (concat "[" label "] ")
                   'face (if nyx-modeline-active 'mode-line-persp-face)))))
 
 (add-hook 'find-file-hook #'nyx-modeline-update-persp-name)
@@ -228,13 +264,19 @@
   `(:eval
     (let* ((nyx-modeline-active (eq (selected-window) nyx-modeline-selected-window))
            (width (window-total-width (selected-window)))
+           (dedicated (nyx-modeline-dedicated))
+           (macro-recording (nyx-modeline-macro-recording))
+           (persp (nyx-modeline-persp-name))
+           (remote-host (nyx-modeline-remote-host))
+           (project (nyx-modeline-project))
+           (buffer-name (nyx-modeline-buffer-name))
            (path-width (max (- width
-                               (length (nyx-modeline-dedicated))
-                               (length (nyx-modeline-macro-recording))
-                               (length (nyx-modeline-persp-name))
-                               (length (nyx-modeline-remote-host))
-                               (length (nyx-modeline-project))
-                               (length (nyx-modeline-buffer-name))
+                               (length dedicated)
+                               (length macro-recording)
+                               (length persp)
+                               (length remote-host)
+                               (length project)
+                               (length buffer-name)
                                (length (nyx-modeline-buffer-encoding-abbrev))
                                (length (nyx-modeline-vc))
                                (length (nyx-modeline-major-mode))
@@ -243,13 +285,13 @@
                             4))
            (lhs (list
                  " "
-                 (nyx-modeline-dedicated)
-                 (nyx-modeline-macro-recording)
-                 (nyx-modeline-persp-name)
-                 (nyx-modeline-remote-host)
-                 (nyx-modeline-project)
+                 dedicated
+                 macro-recording
+                 persp
+                 remote-host
+                 project
                  (nyx-modeline-buffer-path path-width)
-                 (nyx-modeline-buffer-name)))
+                 buffer-name))
            (rhs (list
                  (nyx-modeline-buffer-encoding-abbrev)
                  (nyx-modeline-vc)

@@ -111,10 +111,8 @@
   ;; Both < and C-+ work reasonably well.
   (setopt consult-narrow-key "<") ;; (kbd "C-+")
 
-  ;; Optionally make narrowing help available in the minibuffer.
-  ;; You may want to use `embark-prefix-help-command' or which-key instead.
-  ;; (keymap-set consult-narrow-map "< ?" 'consult-narrow-help)
-  )
+  ;; Narrowing help in the minibuffer.
+  (keymap-set consult-narrow-map "< ?" 'consult-narrow-help))
 
 (use-package consult-company
   :ensure t

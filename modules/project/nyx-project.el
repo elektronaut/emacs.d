@@ -3,60 +3,30 @@
 ;;; Code:
 
 (require 'nyx-consult)
-
-;;
-;; Worktree support
-;;
-
-(defvar project-worktree-parents nil
-  "List of parent directories that use worktree structure.
-Projects that are direct subdirectories of these paths will use
-\"parent/project\" naming convention.")
-
-(defun project-add-worktree-parent (dir)
-  "Add DIR to `project-worktree-parents'."
-  (interactive "DWorktree parent to add: ")
-  (let ((dir (directory-file-name (expand-file-name dir))))
-    (if (member dir project-worktree-parents)
-        (message "Already in worktree parents: %s" dir)
-      (add-to-list 'project-worktree-parents dir)
-      (message "Added to worktree parents: %s" dir))))
-
-(defun project--git-worktree-child-p (dir)
-  "Return non-nil if DIR is a git worktree child (not the main repo)."
-  (let ((git-file (expand-file-name ".git" dir)))
-    (and (file-exists-p git-file)
-         (not (file-directory-p git-file)))))
-
-(defun project--worktree-parent-p (dir)
-  "Return non-nil if DIR is a subdirectory of a configured worktree parent."
-  (let ((parent-dir (file-name-directory (directory-file-name dir))))
-    (cl-some (lambda (worktree-parent)
-               (file-equal-p parent-dir (expand-file-name worktree-parent)))
-             project-worktree-parents)))
-
-(defun project-worktree-p (dir)
-  "Return non-nil if DIR uses worktree naming (parent/project).
-True if any of:
-- DIR is a git worktree child (.git is a file)
-- DIR basename is \"main\" or \"master\"
-- DIR parent is in `project-worktree-parents'"
-  (let ((basename (file-name-nondirectory (directory-file-name dir))))
-    (or (project--git-worktree-child-p dir)
-        (member basename '("main" "master"))
-        (project--worktree-parent-p dir))))
+(require 'nyx-worktree)
 
 (defun project-display-name (dir)
-  "Generate display name for project in DIR.
-If DIR uses worktree structure, returns \"parent/project\".
-Otherwise returns just the directory name."
-  (let* ((dir (directory-file-name dir))
-         (basename (file-name-nondirectory dir))
-         (parent-dir (file-name-directory dir))
-         (parent-name (file-name-nondirectory (directory-file-name parent-dir))))
-    (if (project-worktree-p dir)
-        (format "%s/%s" parent-name basename)
-      basename)))
+  "Perspective name for the project in DIR."
+  (if-let* ((worktree (project-worktree-at dir)))
+      (project-worktree-persp-name worktree)
+    (file-name-nondirectory (directory-file-name dir))))
+
+(defun project--worktree-name (orig project)
+  "Name PROJECT after its worktree, unless an explicit name is configured."
+  (let ((name (funcall orig project)))
+    (if-let* ((root (ignore-errors (project-root project)))
+              ((equal name (file-name-nondirectory (directory-file-name root))))
+              (worktree (project-worktree-at root)))
+        (project-worktree-persp-name worktree)
+      name)))
+
+(advice-add #'project-name :around #'project--worktree-name)
+
+(defun project-worktree-warm-known ()
+  "Populate the worktree cache for all known projects."
+  (project-worktree-warm (project-known-project-roots)))
+
+(run-with-idle-timer 5 nil #'project-worktree-warm-known)
 
 ;; From https://andreyor.st/posts/2022-07-16-project-el-enhancements/
 (defun project-save-some-buffers (&optional arg)
@@ -141,6 +111,8 @@ Stops descending into a directory once a project is found there."
                      ("a" . project-persp-find-and-switch)
                      ("p" . project-persp-switch)
                      ("P" . project-switch-project)
+                     ("w" . project-worktree-switch)
+                     ("o" . project-worktree-visit-counterpart)
                      ("O" . project-org-open)
                      ("f" . project-find-file)
                      ("F" . project-or-external-find-file)
@@ -153,7 +125,8 @@ Stops descending into a directory once a project is found there."
                      ("s s" . consult-ripgrep)
                      ("s S" . rg-project)
                      ("C-x s" . project-save-some-buffers))
-  :custom ((project-vc-extra-root-markers '(".project" ".projectile"))))
+  :custom ((project-vc-extra-root-markers '(".project" ".projectile"))
+           (project-prompter #'project-prompt-project-name)))
 
 (provide 'nyx-project)
 ;;; nyx-project.el ends here

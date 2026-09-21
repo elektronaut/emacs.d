@@ -15,6 +15,7 @@
 (make-face 'mode-line-remote-host-face)
 (make-face 'mode-line-persp-face)
 (make-face 'mode-line-project-face)
+(make-face 'mode-line-worktree-face)
 (make-face 'mode-line-vcs-face)
 (make-face 'mode-line-vcs-info-face)
 (make-face 'mode-line-vcs-warning-face)
@@ -36,7 +37,8 @@
           (modified         (face-attribute 'font-lock-string-face :foreground))
           (muted            (face-attribute 'outline-1 :foreground))
           (warning          (face-attribute 'error :foreground))
-          (ok               (face-attribute 'success :foreground)))
+          (ok               (face-attribute 'success :foreground))
+          (worktree         (face-attribute 'outline-1 :foreground)))
 
       (set-face-attribute 'mode-line nil
                           :foreground foreground :background background
@@ -70,6 +72,9 @@
       (set-face-attribute 'mode-line-project-face nil
                           :inherit 'mode-line-face
                           :foreground context :weight 'bold)
+      (set-face-attribute 'mode-line-worktree-face nil
+                          :inherit 'mode-line-face
+                          :foreground worktree)
       (set-face-attribute 'mode-line-folder-face nil
                           :inherit 'mode-line-face
                           :foreground context)

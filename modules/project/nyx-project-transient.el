@@ -23,6 +23,12 @@
     ("a" "Add and switch" project-persp-find-and-switch)
     ("x" "Forget" project-forget-project)
     ("X" "Forget zombie projects" project-forget-zombie-projects)]
+   ["Worktree"
+    ("<S-left>" "Previous" project-worktree-previous)
+    ("<S-right>" "Next" project-worktree-next)
+    ("w" "Switch" project-worktree-switch)
+    ("o" "Same file, other worktree" project-worktree-visit-counterpart)
+    ("R" "Reap deleted worktrees" project-worktree-reap)]
    ["Find"
     ("f" "File" project-find-file)
     ("F" "File (or external)" project-or-external-find-file)

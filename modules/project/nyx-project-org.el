@@ -5,6 +5,7 @@
 (require 'no-littering)
 (require 'project)
 (require 'nyx-org-agenda)
+(require 'nyx-worktree)
 
 (defcustom project-org-files-file
   (no-littering-expand-var-file-name "project-org-files.el")
@@ -17,15 +18,22 @@
   :type '(alist :key-type string :value-type file)
   :group 'project-org)
 
+(defun project-org-name ()
+  "Name the org file is looked up under, shared by a repository's worktrees."
+  (when-let* ((project (project-current)))
+    (if-let* ((worktree (project-worktree-at (project-root project))))
+        (project-worktree-repo-name worktree)
+      (project-name project))))
+
 (defun project-org-file ()
   "`org-mode' file for project."
-  (if (project-current)
-      (let* ((basename (concat (project-name (project-current)) ".org"))
-             (files (seq-filter (lambda (f) (string-match-p basename f))
-                                (org-agenda-files))))
-        (or (cdr (assoc (project-name (project-current)) project-org-files))
-            (car files)
-            (concat org-directory "/" basename)))))
+  (when-let* ((name (project-org-name)))
+    (let* ((basename (concat name ".org"))
+           (files (seq-filter (lambda (f) (string-match-p basename f))
+                              (org-agenda-files))))
+      (or (cdr (assoc name project-org-files))
+          (car files)
+          (concat org-directory "/" basename)))))
 
 (defun project-org-open ()
   "Open `org-mode' file for project."
@@ -51,10 +59,10 @@
 (defun project-org-set-file (org-file)
   "Set ORG-FILE for the current project."
   (interactive (list (read-file-name "Set org file: " (concat org-directory "/"))))
-  (when (project-current)
+  (when-let* ((name (project-org-name)))
     (setopt project-org-files
-            (cons (cons (project-name (project-current)) org-file)
-                  (assoc-delete-all (project-name (project-current)) project-org-files)))
+            (cons (cons name org-file)
+                  (assoc-delete-all name project-org-files)))
     (project-org-files-save)))
 
 (project-org-files-load)
