@@ -19,6 +19,7 @@
     ("r" "Rename" persp-rename)]
    ["Projects"
     ("p" "Switch" project-persp-switch)
+    ("W" "Switch (this workspace)" project-persp-switch-workspace)
     ("P" "Switch (in this perspective)" project-switch-project)
     ("a" "Add and switch" project-persp-find-and-switch)
     ("x" "Forget" project-forget-project)

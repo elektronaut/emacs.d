@@ -16,6 +16,22 @@
   "Face used to highlight projects in `project-persp'."
   :group 'project-persp)
 
+(defvar project-persp--scope nil
+  "Workspace the switcher is limited to, or nil to offer every project.")
+
+(defun project-persp-workspace ()
+  "Return the workspace we are in, by perspective or by buffer."
+  (when-let* ((root (or (project-worktree-persp-root
+                         (safe-persp-name (get-current-persp)))
+                        (when-let* ((project (project-current)))
+                          (project-root project)))))
+    (project-workspace-of root)))
+
+(defun project-persp--in-scope-p (root)
+  "Return non-nil if ROOT belongs to the workspace the switcher is limited to."
+  (or (null project-persp--scope)
+      (and root (project-workspace-contains-p project-persp--scope root))))
+
 (defun project-persp-visit (name)
   "Switch to perspective NAME, saying so when its worktree is gone.
 Switching still happens: a buffer in the perspective may hold unsaved
@@ -24,6 +40,12 @@ changes, and that is the only copy left."
   (when (project-worktree-persp-dead-p name)
     (message "%s: worktree no longer exists (%s to clear it)"
              name (substitute-command-keys "\\[project-worktree-reap]"))))
+
+(defun project-persp--persp-items ()
+  "Return the perspectives to offer, most recent first."
+  (seq-filter (lambda (name)
+                (project-persp--in-scope-p (project-worktree-persp-root name)))
+              (persp-names-recent)))
 
 (defvar project-persp--source-persp
   (list :name     "Perspectives"
@@ -41,7 +63,7 @@ changes, and that is the only copy left."
                          (t (abbreviate-file-name root)))
                       "Perspective"))
         :action   #'project-persp-visit
-        :items    #'persp-names-recent))
+        :items    #'project-persp--persp-items))
 
 (defvar project-persp--project-roots (make-hash-table :test 'equal)
   "Maps a candidate label to the project root it stands for.")
@@ -57,7 +79,8 @@ changes, and that is the only copy left."
               (inhibit-message t))
     (project--delete-zombie-projects pred))
   (clrhash project-persp--project-roots)
-  (let* ((roots (project-known-project-roots))
+  (let* ((roots (seq-filter #'project-persp--in-scope-p
+                            (project-known-project-roots)))
          (names (mapcar #'project-display-name roots))
          (counts (make-hash-table :test 'equal)))
     (dolist (name names)
@@ -304,15 +327,30 @@ rest by name."
         (user-error "%s does not exist in %s" relative
                     (project-worktree-persp-name target))))))
 
-(defun project-persp-switch ()
-  "Switch to project perspective."
+(defun project-persp-switch (&optional workspace)
+  "Switch to project perspective.
+With a prefix argument WORKSPACE, offer only the projects and
+perspectives of the workspace we are in. Worktrees stay unscoped, since
+reaching another workspace is what they are for."
+  (interactive "P")
+  (let ((project-persp--scope
+         (when workspace
+           (or (project-persp-workspace)
+               (user-error "Not inside a workspace")))))
+    (consult--multi '(project-persp--source-persp
+                      project-persp--source-project
+                      project-persp--source-worktree)
+                    :prompt (if project-persp--scope
+                                (format "Switch to (%s): "
+                                        (project-workspace-name project-persp--scope))
+                              "Switch to: ")
+                    :history 'project-persp--persp-history
+                    :sort nil)))
+
+(defun project-persp-switch-workspace ()
+  "Switch to a project perspective within the workspace we are in."
   (interactive)
-  (when-let (buffer (consult--multi '(project-persp--source-persp
-                                      project-persp--source-project
-                                      project-persp--source-worktree)
-                                    :prompt "Switch to: "
-                                    :history 'project-persp--persp-history
-                                    :sort nil))))
+  (project-persp-switch t))
 
 (defun project-persp-find-and-switch ()
   "Find a directory and create/switch to its project perspective."

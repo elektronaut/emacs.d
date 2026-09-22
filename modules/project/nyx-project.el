@@ -22,6 +22,32 @@
 
 (advice-add #'project-name :around #'project--worktree-name)
 
+(defun project-workspace--parent (root)
+  "Return the directory holding ROOT."
+  (file-name-directory (directory-file-name (expand-file-name root))))
+
+(defun project-workspace-of (root)
+  "Return the workspace ROOT belongs to, or nil if it stands alone.
+A workspace is a directory holding several checkouts side by side, as
+<workspace>/<repo> does for a set of worktrees. A directory becomes one
+only once it holds more than one known project, so a lone checkout never
+makes a workspace of wherever it happens to live."
+  (let ((parent (project-workspace--parent root)))
+    (when (> (seq-count (lambda (other)
+                          (equal (project-workspace--parent other) parent))
+                        (project-known-project-roots))
+             1)
+      parent)))
+
+(defun project-workspace-name (workspace)
+  "Return the name of WORKSPACE."
+  (file-name-nondirectory (directory-file-name workspace)))
+
+(defun project-workspace-contains-p (workspace root)
+  "Return non-nil if ROOT is a project of WORKSPACE."
+  (equal (project-workspace--parent root)
+         (file-name-as-directory (expand-file-name workspace))))
+
 (defun project-worktree-warm-known ()
   "Populate the worktree cache for all known projects."
   (project-worktree-warm (project-known-project-roots)))
@@ -110,6 +136,7 @@ Stops descending into a directory once a project is found there."
   :bind (:prefix-map nyx-project-prefix-map :prefix "C-c p"
                      ("a" . project-persp-find-and-switch)
                      ("p" . project-persp-switch)
+                     ("W" . project-persp-switch-workspace)
                      ("P" . project-switch-project)
                      ("w" . project-worktree-switch)
                      ("o" . project-worktree-visit-counterpart)
