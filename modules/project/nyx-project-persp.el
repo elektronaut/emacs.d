@@ -163,11 +163,11 @@ Dired and a status buffer by comparing that against DIRECTORY."
   (advice-add 'magit-diff-visit-directory :around #'project-worktree--follow-magit))
 
 (defun project-worktree-switch ()
-  "Switch to another worktree of the current repository."
+  "Switch to a worktree of the current repository."
   (interactive)
   (let* ((current (or (project-worktree-current)
                       (user-error "Not inside a git repository")))
-         (target (project-worktree--read-sibling
+         (target (project-worktree--read
                   current (format "Worktree in %s: "
                                   (project-worktree-repo-name current)))))
     (project-persp-project (project-worktree-root target))))
@@ -205,13 +205,31 @@ Dired and a status buffer by comparing that against DIRECTORY."
 (with-eval-after-load 'magit
   (advice-add 'magit-worktree-delete :after #'project-worktree--reap-magit))
 
-(defun project-worktree--siblings (worktree)
-  "Return the other worktrees of WORKTREE's repository, freshly read."
+(defun project-worktree--fresh-list (worktree)
+  "Return the worktrees of WORKTREE's repository, freshly read."
   (let ((repo-root (project-worktree-repo-root worktree)))
     (project-worktree-forget repo-root)
-    (seq-remove (lambda (other)
-                  (equal (project-worktree-root other) (project-worktree-root worktree)))
-                (project-worktree-list repo-root))))
+    (project-worktree-list repo-root)))
+
+(defun project-worktree--siblings (worktree)
+  "Return the other worktrees of WORKTREE's repository, freshly read."
+  (seq-remove (lambda (other)
+                (equal (project-worktree-root other) (project-worktree-root worktree)))
+              (project-worktree--fresh-list worktree)))
+
+(defun project-worktree--read (worktree prompt)
+  "Read a worktree of WORKTREE's repository using PROMPT.
+WORKTREE itself is offered too, marked as the one we are in, so the
+prompt looks the same whatever the number of worktrees."
+  (let* ((root (project-worktree-root worktree))
+         (table (mapcar (lambda (other) (cons (project-worktree-label other) other))
+                        (project-worktree--fresh-list worktree)))
+         (completion-extra-properties
+          (list :annotation-function
+                (lambda (label)
+                  (when (equal (project-worktree-root (cdr (assoc label table))) root)
+                    (propertize " current" 'face 'completions-annotations))))))
+    (cdr (assoc (completing-read prompt table nil t) table))))
 
 (defun project-worktree--read-sibling (worktree prompt)
   "Read one of WORKTREE's siblings using PROMPT, or return the only one."
