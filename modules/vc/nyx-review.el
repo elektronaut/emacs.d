@@ -56,7 +56,7 @@
   :group 'nyx-review)
 
 (defface nyx-review-comment
-  '((t :inherit font-lock-comment-face :slant italic))
+  '((t :inherit (font-lock-comment-face hl-line) :slant italic :extend t))
   "Face for a review comment shown below the lines it refers to."
   :group 'nyx-review)
 
@@ -286,16 +286,20 @@ falling back to the line it was written on."
             (overlays-in (pos-bol) (min (point-max) (1+ (pos-eol))))))
 
 (defun nyx-review--comment-string (note)
-  "Return the string NOTE's comment is displayed as."
+  "Return the string NOTE's comment is displayed as.
+Every line is terminated by a newline of its own, so the background of
+`nyx-review-comment' reaches the edge of the window."
   (propertize
-   (concat "\n" (mapconcat (lambda (line) (concat "  ▏ " line))
-                           (split-string (nyx-review-note-text note) "\n")
-                           "\n"))
+   (mapconcat (lambda (line) (concat "  ▏ " line "\n"))
+              (split-string (nyx-review-note-text note) "\n")
+              "")
    'face 'nyx-review-comment))
 
 (defun nyx-review--draw (note beg end)
-  "Draw NOTE over the lines from BEG to END."
-  (let ((overlay (make-overlay beg end)))
+  "Draw NOTE over the lines from BEG to END.
+The overlay reaches past the newline ending END so that the comment is
+displayed on the lines below it rather than at the end of the last one."
+  (let ((overlay (make-overlay beg (min (point-max) (1+ end)))))
     (overlay-put overlay 'nyx-review note)
     (overlay-put overlay 'nyx-review-overlay t)
     (overlay-put overlay 'face 'nyx-review-annotated)
