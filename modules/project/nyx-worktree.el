@@ -54,6 +54,20 @@
 ;; Names
 ;;
 
+(defun project-worktree--names (roots)
+  "Return a name per root in ROOTS.
+The name is the innermost path component that is not shared by every
+worktree, so layouts that repeat the repository name in each checkout,
+like <workspace>/<repo>, still tell their worktrees apart."
+  (let ((tails (mapcar (lambda (root) (reverse (split-string root "/" t))) roots))
+        (depth 0))
+    (while (and (cdr tails)
+                (cl-every (lambda (tail) (nthcdr (1+ depth) tail)) tails)
+                (let ((component (nth depth (car tails))))
+                  (cl-every (lambda (tail) (equal (nth depth tail) component)) tails)))
+      (setq depth (1+ depth)))
+    (mapcar (lambda (tail) (nth depth tail)) tails)))
+
 (defun project-worktree--strip-repo (name repo-name)
   "Remove REPO-NAME from NAME as a whole component."
   (if (equal name repo-name)
@@ -129,7 +143,7 @@ reference and the final component intact for as long as they fit."
         (setq root nil branch nil))))
     (when root (push (list root branch) entries))
     (setq entries (nreverse entries))
-    (let* ((names (mapcar (lambda (entry) (file-name-nondirectory (car entry))) entries))
+    (let* ((names (project-worktree--names (mapcar #'car entries)))
            (short-names (project-worktree--short-names names repo-name)))
       (seq-map-indexed
        (lambda (entry index)
